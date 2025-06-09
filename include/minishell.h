@@ -21,6 +21,11 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/include/libft.h"
-# include "src/env/env.h"
+# include "../src/env/env.h"
+
+typedef struct s_data
+{
+	t_env_var	*env;
+}	t_data;
 
 #endif

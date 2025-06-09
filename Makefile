@@ -1,6 +1,6 @@
 CC      = cc
-# # CFLAGS  = -Wall -Wextra -Werror 
-# CFLAGS  = -Wall -Wextra -Werror -fsanitize=address -g3 -O0
+# CFLAGS  = -Wall -Wextra -Werror 
+CFLAGS  = -Wall -Wextra -Werror -fsanitize=address -g3 -O0
 
 SRC_DIR     = src
 INC_DIR     = include

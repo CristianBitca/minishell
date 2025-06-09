@@ -28,11 +28,20 @@ void	print_header(void)
 
 int	main(int argc, char **argv, char **env)
 {
+	t_data	*data;
+
+	argc = 0;
+	argv = 0;
+	data = ft_calloc(sizeof(t_data), sizeof(t_data));
+	data->env = parse_env(data->env, env);
 	print_header();
-	
+	while (data->env)
+	{
+		printf("%s\n", data->env->value);
+		data->env = data->env->next;
+	}
 	while (1)
 	{
-		printf("%s\n", env[0]);
 		pause();
 	}
 }
