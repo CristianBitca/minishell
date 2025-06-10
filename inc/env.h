@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbitca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/18 18:48:25 by cbitca            #+#    #+#             */
-/*   Updated: 2025/05/18 18:48:29 by cbitca           ###   ########.fr       */
+/*   Created: 2025/05/20 18:55:35 by cbitca            #+#    #+#             */
+/*   Updated: 2025/05/20 18:55:37 by cbitca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef ENV_H
+# define ENV_H
 
-# include <errno.h>
-# include <sys/wait.h>
-# include <sys/types.h>
-# include <signal.h>
-# include <termios.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../lib/libft/include/libft.h"
-# include "../src/env/env.h"
-
-typedef struct s_data
+typedef struct s_env_var
 {
-	t_env_var	*env;
-}	t_data;
+	char				*key;
+	char				*value;
+	struct s_env_var	*next;
+}	t_env_var;
+
+t_env_var	*parse_env(t_env_var *env, char **env_var);
 
 #endif

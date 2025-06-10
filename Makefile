@@ -1,19 +1,26 @@
-CC      = cc
-# CFLAGS  = -Wall -Wextra -Werror 
-CFLAGS  = -Wall -Wextra -Werror -fsanitize=address -g3 -O0
+NAME    = minishell
 
-SRC_DIR     = src
-INC_DIR     = include
-LIB_DIR     = lib
+CC      = cc
+CFLAGS  = -Wall -Wextra -Werror -fsanitize=address -g3 -O0 -Iinc
+
+SRC_DIR     = src/
+OBJ_DIR     = obj/
+INC_DIR     = inc/
+LIB_DIR     = lib/
 LIBFT_DIR   = $(LIB_DIR)/libft
 
 LIBFT_A     = $(LIBFT_DIR)/libft.a
 LIBFT_LIB   = -L$(LIBFT_DIR) -lft
 
-SRCS    = $(shell find $(SRC_DIR) -name "*.c")
-OBJS    = $(SRCS:.c=.o)
+SRCS    = ./src/main.c \
+		  ./src/env/parse_env.c \
+		  ./src/env/utilits.c \
 
-NAME    = minishell
+OBJS    = $(patsubst %.c, $(OBJ_DIR)%.o, $(SRCS))
+
+$(OBJ_DIR)%.o : $(SRCS)%.c
+	mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(LIBFT_A) $(NAME)
 
