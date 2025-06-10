@@ -12,13 +12,16 @@ LIBFT_DIR   = $(LIB_DIR)/libft
 LIBFT_A     = $(LIBFT_DIR)/libft.a
 LIBFT_LIB   = -L$(LIBFT_DIR) -lft
 
-SRCS    = ./src/main.c \
-		  ./src/env/parse_env.c \
-		  ./src/env/utilits.c \
+SRC    = main.c \
+		  env/parse_env.c \
+		  env/utilits.c \
 
-OBJS    = $(patsubst %.c, $(OBJ_DIR)%.o, $(SRCS))
+SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
-$(OBJ_DIR)%.o : $(SRCS)%.c
+OBJS    = $(SRCS:.c=.o)
+OBJECTS = $(addprefix $(OBJ_DIR), $(OBJS))
+
+$(OBJ_DIR)%.o : $(SRC_DIR)%.c | $(OBJ_DIR)
 	mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
