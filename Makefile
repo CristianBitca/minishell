@@ -18,7 +18,7 @@ SRC    = main.c \
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
-OBJS    = $(SRCS:.c=.o)
+OBJS    = $(SRC:.c=.o)
 OBJECTS = $(addprefix $(OBJ_DIR), $(OBJS))
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c | $(OBJ_DIR)
@@ -31,9 +31,9 @@ $(LIBFT_A):
 	@echo "Compiling libft..."
 	$(MAKE) -sC $(LIBFT_DIR)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJECTS)
 	@echo "Compiling $(NAME)..."
-	$(CC) $(CFLAGS) $(OBJS) -I$(INC_DIR) -I$(LIBFT_DIR) $(LIBFT_LIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJECTS) -I$(INC_DIR) -I$(LIBFT_DIR) $(LIBFT_LIB) -o $(NAME)
 
 clean:
 	@echo "Cleaning object files..."
