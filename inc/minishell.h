@@ -6,7 +6,7 @@
 /*   By: cbitca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 18:48:25 by cbitca            #+#    #+#             */
-/*   Updated: 2025/05/18 18:48:29 by cbitca           ###   ########.fr       */
+/*   Updated: 2025/06/11 12:00:43 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,13 @@ typedef struct s_data
 {
 	t_env_var	*env;
 }	t_data;
+
+typedef struct s_cmd_data
+{
+	char	**argv;
+	char	**envp;
+	int	infilefd;
+	int	outfilefd;
+} t_cmd_data;
 
 #endif

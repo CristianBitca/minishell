@@ -6,7 +6,7 @@
 /*   By: cbitca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 18:45:30 by cbitca            #+#    #+#             */
-/*   Updated: 2025/05/18 18:45:32 by cbitca           ###   ########.fr       */
+/*   Updated: 2025/06/11 12:21:31 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,16 @@ int	main(int argc, char **argv, char **env)
 {
 	t_data	*data;
 
-	argc = 0;
-	argv = 0;
 	data = ft_calloc(sizeof(t_data), sizeof(t_data));
 	data->env = parse_env(data->env, env);
 	print_header();
 	while (data->env)
 	{
+		printf("%s : ", data->env->key);
 		printf("%s\n", data->env->value);
 		data->env = data->env->next;
 	}
-	while (1)
-	{
-		pause();
-	}
+	return (0);
+	(void)argc;
+	(void)argv;
 }
