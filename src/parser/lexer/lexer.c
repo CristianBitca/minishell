@@ -1,29 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbitca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/20 18:55:35 by cbitca            #+#    #+#             */
-/*   Updated: 2025/05/20 18:55:37 by cbitca           ###   ########.fr       */
+/*   Created: 2025/06/09 17:35:21 by cbitca            #+#    #+#             */
+/*   Updated: 2025/06/09 17:35:23 by cbitca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
+#include "lexer.h"
 
-typedef struct s_env_var
-{
-	char				*key;
-	char				*value;
-	struct s_env_var	*next;
-}	t_env_var;
 
-t_env_var	*parse_env(t_env_var *env, char **env_var);
-void		append_stack(t_env_var **node_lst, t_env_var *new);
-char		*find_env(t_env_var *node, char *find);
-t_env_var	*new_node(char *key, char *value);
-t_env_var	*stack_last(t_env_var *first);
-
-#endif

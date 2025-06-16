@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <stdio.h>
+#include <readline/readline.h>
 
 void	print_header(void)
 {
@@ -18,7 +20,7 @@ void	print_header(void)
 	printf("╔════════════════════════════════════════════════════════╗\n");
 	printf("║                                                        ║\n");
 	printf("║   🐚  Welcome to Minishell v0.42                       ║\n");
-	printf("║   ✨  A project by cbitca                              ║\n");
+	printf("║   ✨  A project by cbitca and skirwan                  ║\n");
 	printf("║                                                        ║\n");
 	printf("║                                                        ║\n");
 	printf("║                                                        ║\n");
@@ -26,22 +28,24 @@ void	print_header(void)
 	printf("\033[0m");
 }
 
+t_data	*init_data(t_data *data, char **env)
+{
+	data->env = parse_env(data->env, env);
+	return (data);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_data	*data;
 
-	argc = 0;
-	argv = 0;
+	(void)argc;
+	(void)argv;
 	data = ft_calloc(sizeof(t_data), sizeof(t_data));
-	data->env = parse_env(data->env, env);
+	data = init_data(data, env);
 	print_header();
-	while (data->env)
-	{
-		printf("%s\n", data->env->value);
-		data->env = data->env->next;
-	}
 	while (1)
 	{
-		pause();
+		cmd_line(data);
 	}
+	return (0);
 }

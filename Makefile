@@ -1,5 +1,5 @@
-CC      = cc
-# CFLAGS  = -Wall -Wextra -Werror 
+CC      = gcc
+# CFLAGS  = -Wall -Wextra -Werror
 CFLAGS  = -Wall -Wextra -Werror -fsanitize=address -g3 -O0
 
 SRC_DIR     = src
@@ -23,7 +23,7 @@ $(LIBFT_A):
 
 $(NAME): $(OBJS)
 	@echo "Compiling $(NAME)..."
-	$(CC) $(CFLAGS) $(OBJS) -I$(INC_DIR) -I$(LIBFT_DIR) $(LIBFT_LIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -I$(INC_DIR) -I$(LIBFT_DIR) $(LIBFT_LIB) -o $(NAME) -lreadline
 
 clean:
 	@echo "Cleaning object files..."
