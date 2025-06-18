@@ -1,7 +1,7 @@
 NAME    = minishell
 
 CC      = cc
-CFLAGS  = -Wall -Wextra -Werror -fsanitize=address -g3 -O0 -Iinc
+CFLAGS  = -Wall -Wextra -Werror -g3 -O0 -Iinc
 
 SRC_DIR     = src/
 OBJ_DIR     = obj/
@@ -14,7 +14,6 @@ LIBFT_LIB   = -L$(LIBFT_DIR) -lft
 
 SRC    = main.c \
 		  env/parse_env.c \
-		  env/utilits.c \
 		  input/get_input.c
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))

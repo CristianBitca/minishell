@@ -10,11 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "minishell.h"
 #include "input.h"
-#include <stdlib.h>
-#include <unistd.h>
 
 char	*rl_loop(t_data *data)
 {
@@ -28,6 +25,7 @@ char	*rl_loop(t_data *data)
 		free(prompt);
 		if (input && *input)
 		{
+			input_to_cmd(data, input);
 			add_history(input);
 		}
 	}
@@ -55,4 +53,17 @@ char	*create_prompt(t_data *data)
 	prompt[i + 3] = '\0';
 	(free(cwd), free(ex_status));
 	return (prompt);
+}
+
+void	input_to_cmd(t_data *data, char *input)
+{
+	char	**s_argv;
+	t_cmd	*cmd;
+
+	cmd = malloc(sizeof(*cmd));
+	s_argv = ft_split(input, ' ');
+	cmd->argv = s_argv;
+	cmd->infilefd = 0;
+	cmd->outfilefd = 1;
+	ft_lstadd_back(&data->cmd_list, ft_lstnew(cmd));
 }

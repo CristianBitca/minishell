@@ -6,7 +6,7 @@
 /*   By: cbitca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:57:52 by cbitca            #+#    #+#             */
-/*   Updated: 2025/05/20 18:57:53 by cbitca           ###   ########.fr       */
+/*   Updated: 2025/06/18 17:35:45 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_env_var	*new_node(char *key, char *value)
 		return (0);
 	node->key = key;
 	node->value = value;
+	node->next = NULL;
 	return (node);
 }
 
@@ -52,29 +53,25 @@ void	append_stack(t_env_var **node_lst, t_env_var *new)
 	}
 }
 
-void	split_env(t_env_var *env, char *env_value)
+void	split_env(t_data *data, char *envp_str)
 {
 	char	*key;
 	char	*value;
 	int		i;
 
 	i = 0;
-	while (env_value[i] != '=')
+	while (envp_str[i] != '=')
 		i++;
-	key = ft_substr(env_value, 0, i);
-	value = ft_strdup(&env_value[i + 1]);
-	append_stack(&env, new_node(key, value));
+	key = ft_substr(envp_str, 0, i);
+	value = ft_strdup(&envp_str[i + 1]);
+	append_stack(&data->env, new_node(key, value));
 }
 
-t_env_var	*parse_env(t_env_var *env, char **env_var)
+void	parse_env(t_data *data, char **envp)
 {
-	env = ft_calloc(sizeof(t_env_var), 1);
-	if (!env)
-		perror("Error:");
-	while (*env_var)
+	while (*envp)
 	{
-		split_env(env, *env_var);
-		env_var++;
+		split_env(data, *envp);
+		envp++;
 	}
-	return (env);
 }

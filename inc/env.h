@@ -6,7 +6,7 @@
 /*   By: cbitca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:55:35 by cbitca            #+#    #+#             */
-/*   Updated: 2025/06/12 15:08:01 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/06/18 17:38:43 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include "minishell.h"
 
-t_env_var	*parse_env(t_env_var *env, char **env_var);
+void	parse_env(t_data *data, char **env_var);
 
 #endif

@@ -20,5 +20,6 @@
 
 char	*rl_loop(t_data *data);
 char	*create_prompt(t_data *data);
+void	input_to_cmd(t_data *data, char *input);
 
 #endif

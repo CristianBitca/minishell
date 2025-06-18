@@ -6,7 +6,7 @@
 /*   By: cbitca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 18:48:25 by cbitca            #+#    #+#             */
-/*   Updated: 2025/06/18 11:56:50 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/06/18 16:02:35 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,7 @@ typedef struct s_cmd
 	int	infilefd;
 	int	outfilefd;
 } t_cmd;
+
+void	print_env(t_env_var *env);
 
 #endif
