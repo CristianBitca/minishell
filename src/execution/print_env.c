@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:40:36 by skirwan           #+#    #+#             */
-/*   Updated: 2025/06/18 15:51:30 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/06/18 18:27:03 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 
 char	**join_key_val(t_data *data)
 {
-	t_env_var	*env_value;
+	t_env_var	*env;
 	char	**envp;
 	int	i;
 
-	env_value = data->env;
+	env = data->env;
 	i = 0;
-	while (env_value != NULL)
+	while (env != NULL)
 	{
-		env_value = env_value->next;
+		env = env->next;
 		i++;
 	}
 	envp = malloc(sizeof(*envp) * i);

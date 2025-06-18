@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:35:27 by skirwan           #+#    #+#             */
-/*   Updated: 2025/06/18 11:55:16 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/06/18 18:22:15 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ char	*create_prompt(t_data *data)
 
 void	input_to_cmd(t_data *data, char *input)
 {
-	char	**s_argv;
+	char	**split_argv;
 	t_cmd	*cmd;
 
 	cmd = malloc(sizeof(*cmd));
-	s_argv = ft_split(input, ' ');
-	cmd->argv = s_argv;
+	split_argv = ft_split(input, ' ');
+	cmd->argv = split_argv;
 	cmd->infilefd = 0;
 	cmd->outfilefd = 1;
 	ft_lstadd_back(&data->cmd_list, ft_lstnew(cmd));
