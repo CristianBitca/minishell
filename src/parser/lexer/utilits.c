@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   utilits.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbitca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/09 17:40:33 by cbitca            #+#    #+#             */
-/*   Updated: 2025/06/09 17:40:34 by cbitca           ###   ########.fr       */
+/*   Created: 2025/06/18 16:20:42 by cbitca            #+#    #+#             */
+/*   Updated: 2025/06/18 16:20:43 by cbitca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "lexer.h"
 
-void	parse(t_data *data)
+char	*ft_joinchar(char *s, char c)
 {
-	t_lexer	*lex;
+	char	*buffer;
+	int		l;
 
-	lex = lexer(data);
-	printf("%s\n", data->line);
-	printf("%u\n", lex->first->type);
+	l = ft_strlen(s);
+	buffer = ft_calloc(l + 2, sizeof(char));
+	if (!buffer)
+		return (0);
+	ft_strcpy(buffer, s);
+	buffer[l + 1] = c;
+	buffer[l + 2] = '\0';
+	free(s);
+	return (buffer);
 }

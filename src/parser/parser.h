@@ -14,6 +14,7 @@
 # define PARSER_H
 
 # include "../../include/minishell.h"
+# include "lexer/lexer.h"
 
 typedef struct s_data	t_data;
 
