@@ -15,6 +15,7 @@ LIBFT_LIB   = -L$(LIBFT_DIR) -lft
 SRC    = main.c \
 		  env/parse_env.c \
 		  env/utilits.c \
+		  input/get_input.c
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
@@ -33,11 +34,11 @@ $(LIBFT_A):
 
 $(NAME): $(OBJECTS)
 	@echo "Compiling $(NAME)..."
-	$(CC) $(CFLAGS) $(OBJECTS) -I$(INC_DIR) -I$(LIBFT_DIR) $(LIBFT_LIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJECTS) -I$(INC_DIR) $(LIBFT_LIB) -lreadline -o $(NAME)
 
 clean:
 	@echo "Cleaning object files..."
-	rm -f $(OBJS)
+	rm -f $(OBJECTS)
 	$(MAKE) -sC $(LIBFT_DIR) clean
 
 fclean: clean

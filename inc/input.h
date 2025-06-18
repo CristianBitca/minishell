@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   input.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbitca <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/20 18:55:35 by cbitca            #+#    #+#             */
-/*   Updated: 2025/06/12 15:08:01 by skirwan          ###   ########.fr       */
+/*   Created: 2025/06/18 11:56:30 by skirwan           #+#    #+#             */
+/*   Updated: 2025/06/18 11:56:46 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
+#ifndef INPUT_H
+# define INPUT_H
 
-# include "minishell.h"
+#include "minishell.h"
+#include <readline/history.h>
+#include <readline/readline.h>
+#include <unistd.h>
 
-t_env_var	*parse_env(t_env_var *env, char **env_var);
+char	*rl_loop(t_data *data);
+char	*create_prompt(t_data *data);
 
 #endif
