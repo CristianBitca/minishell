@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.h                                            :+:      :+:    :+:   */
+/*   print_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/18 11:56:30 by skirwan           #+#    #+#             */
-/*   Updated: 2025/06/18 11:56:46 by skirwan          ###   ########.fr       */
+/*   Created: 2025/06/18 15:40:36 by skirwan           #+#    #+#             */
+/*   Updated: 2025/06/18 15:51:30 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INPUT_H
-# define INPUT_H
-
 #include "minishell.h"
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <unistd.h>
+#include "execution.h"
 
-char	*rl_loop(t_data *data);
-char	*create_prompt(t_data *data);
-void	input_to_cmd(t_data *data, char *input);
+char	**join_key_val(t_data *data)
+{
+	t_env_var	*env_value;
+	char	**envp;
+	int	i;
 
-#endif
+	env_value = data->env;
+	i = 0;
+	while (env_value != NULL)
+	{
+		env_value = env_value->next;
+		i++;
+	}
+	envp = malloc(sizeof(*envp) * i);
+	return (envp);
+}
