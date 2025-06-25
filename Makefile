@@ -14,7 +14,8 @@ LIBFT_LIB   = -L$(LIBFT_DIR) -lft
 
 SRC    = main.c \
 		  env/parse_env.c \
-		  input/get_input.c
+		  input/get_input.c \
+		  execution/print_env.c \
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
