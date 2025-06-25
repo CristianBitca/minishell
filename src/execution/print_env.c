@@ -79,7 +79,7 @@ char	**make_envp(t_data *data)
 void	free_envp(char	**envp)
 {
 	char	*env_var;
-	int	i;
+	int		i;
 
 	i = 0;
 	env_var = envp[i];
@@ -95,7 +95,7 @@ void	free_envp(char	**envp)
 void	print_envp(t_data *data)
 {
 	char	**envp;
-	int	i;
+	int		i;
 
 	envp = make_envp(data);
 	i = 0;

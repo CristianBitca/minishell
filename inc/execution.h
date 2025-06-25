@@ -13,7 +13,7 @@
 #ifndef EXECUTION_H
 # define EXECUTION_H
 
-#include "minishell.h"
+# include "minishell.h"
 
 char	**make_envp(t_data *data);
 char	**join_key_val(char	**envp, t_env_var *env);

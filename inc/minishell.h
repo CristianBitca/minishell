@@ -37,9 +37,9 @@ typedef struct s_data
 typedef struct s_cmd
 {
 	char	**argv;
-	int	infilefd;
-	int	outfilefd;
-} t_cmd;
+	int		infilefd;
+	int		outfilefd;
+}	t_cmd;
 
 void	print_env(t_env_var *env);
 

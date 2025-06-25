@@ -13,10 +13,10 @@
 #ifndef INPUT_H
 # define INPUT_H
 
-#include "minishell.h"
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <unistd.h>
+# include "minishell.h"
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <unistd.h>
 
 char	*rl_loop(t_data *data);
 char	*create_prompt(t_data *data);
