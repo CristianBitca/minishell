@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:35:27 by skirwan           #+#    #+#             */
-/*   Updated: 2025/06/18 18:22:15 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/06/30 13:03:47 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ char	*rl_loop(t_data *data)
 		free(prompt);
 		if (input && *input)
 		{
-			input_to_cmd(data, input);
 			add_history(input);
+			input_to_cmd(data, input);
 		}
 	}
 	return (input);

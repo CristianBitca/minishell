@@ -6,15 +6,13 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:40:36 by skirwan           #+#    #+#             */
-/*   Updated: 2025/06/18 18:27:03 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/06/30 14:34:55 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 #include "execution.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 int	evar_size(t_env_var *env)
 {
@@ -23,8 +21,9 @@ int	evar_size(t_env_var *env)
 	i = 0;
 	while (env != NULL)
 	{
+		if (env->value != NULL)
+			i++;
 		env = env->next;
-		i++;
 	}
 	return (i);
 }
@@ -66,6 +65,11 @@ char	**make_envp(t_data *data)
 	env = data->env;
 	while (env != NULL)
 	{
+		if (env->value == NULL)
+		{
+			env = env->next;
+			continue ;
+		}
 		env_var_size = ft_strlen(env->key) + ft_strlen(env->value) + 3;
 		envp[i] = malloc(sizeof(*envp[i]) * env_var_size);
 		i++;

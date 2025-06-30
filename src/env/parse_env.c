@@ -53,25 +53,31 @@ void	append_stack(t_env_var **node_lst, t_env_var *new)
 	}
 }
 
-void	split_env(t_data *data, char *envp_str)
+void	parse_env(t_data *data, char **envp)
 {
 	char	*key;
 	char	*value;
 	int		i;
 
-	i = 0;
-	while (envp_str[i] != '=')
-		i++;
-	key = ft_substr(envp_str, 0, i);
-	value = ft_strdup(&envp_str[i + 1]);
-	append_stack(&data->env, new_node(key, value));
-}
-
-void	parse_env(t_data *data, char **envp)
-{
 	while (*envp)
 	{
-		split_env(data, *envp);
+		i = 0;
+		while ((*envp)[i] != '=')
+			i++;
+		key = ft_substr(*envp, 0, i);
+		value = ft_strdup(&((*envp)[i + 1]));
+		append_stack(&data->env, new_node(key, value));
 		envp++;
 	}
+}
+
+char	*find_env(t_env_var *node, char *find)
+{
+	while (node)
+	{
+		if (!ft_strncmp(node->key, find, ft_strlen(node->key)))
+			return (node->value);
+		node = node->next;
+	}
+	return (0);
 }
