@@ -79,5 +79,5 @@ char	*find_env(t_env_var *node, char *find)
 			return (node->value);
 		node = node->next;
 	}
-	return (0);
+	return (NULL);
 }
