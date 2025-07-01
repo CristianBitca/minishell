@@ -57,8 +57,7 @@ int	find_equality(char	*str)
 }
 
 // if the variable exported has no value, key is appended with NULL to allow it to be found for
-// export with no options or arguments. Otherwise adds key and value to our environment
-// representation
+// export with no options or arguments. Otherwise adds key and value to env list
 void	export(t_data *data, char **args)
 {
 	char		*key;
