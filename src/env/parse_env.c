@@ -71,12 +71,23 @@ void	parse_env(t_data *data, char **envp)
 	}
 }
 
-char	*find_env(t_env_var *node, char *find)
+char	*find_env(t_env_var *node, char *key_to_find)
 {
 	while (node)
 	{
-		if (!ft_strncmp(node->key, find, ft_strlen(node->key)))
+		if (!ft_strncmp(node->key, key_to_find, ft_strlen(node->key) + 1))
 			return (node->value);
+		node = node->next;
+	}
+	return (NULL);
+}
+
+t_env_var	*find_env_node(t_env_var *node, char *key_to_find)
+{
+	while (node)
+	{
+		if (!ft_strncmp(node->key, key_to_find, ft_strlen(node->key) + 1))
+			return (node);
 		node = node->next;
 	}
 	return (NULL);

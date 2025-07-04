@@ -15,20 +15,22 @@
 #include "env.h"
 #include "execution.h"
 #include "input.h"
-#include <stdlib.h>
+#include <stdio.h>
 
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
-	char	*test;
+	char	**test;
 
 	data = ft_calloc(sizeof(t_data), sizeof(t_data));
 	parse_env(data, envp);
 	// print_envp(data);
 	// export(data, NULL);
+	// export(data, test);
+	// print_envp(data);
 	// data->exit_status = 0;
-	test = rl_loop(data);
+	// test = rl_loop(data);
 	free(data);
 	return (0);
 	(void)argc;
