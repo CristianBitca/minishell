@@ -15,11 +15,18 @@
 #include "env.h"
 #include "execution.h"
 
+// checks if the given dest exists in the file system using access
+// if not found throws an error, file not found.
+// If file exists, check if OLDPWD exists in environment to update
+// it to the directory which we left from. If chdir returns != 0
+// the dest was not a valid directory, so we throw an error.
+// exit status is set to 1, mimicing bash, rather than a specific error code.
 void	change_directory(t_data *data, char *dest)
 {
 	t_env_var	*old_pwd_var;
 	char		*current_wd;
 
+	current_wd = NULL;
 	if (access(dest, F_OK) == 0)
 	{
 		if (find_env(data->env, "OLDPWD") != NULL)
@@ -62,7 +69,8 @@ void	cd_home(t_data *data)
 
 // when cd is called with '-', directory is changed to the last directory
 // which is stored in the OLDPWD env variable, if OLDPWD is not present,
-// the env_node is not found and 'cd -' thorws an error
+// the env_node is not found and 'cd -' thorws an error. After changing
+// the directory, we print the cwd, mimicing bash
 void	cd_oldpwd(t_data *data)
 {
 	t_env_var	*old_pwd_var;

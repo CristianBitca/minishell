@@ -15,7 +15,6 @@
 #include "env.h"
 #include "execution.h"
 #include "input.h"
-#include <stdio.h>
 
 
 int	main(int argc, char **argv, char **envp)

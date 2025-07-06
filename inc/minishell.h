@@ -41,6 +41,4 @@ typedef struct s_cmd
 	int		outfilefd;
 }	t_cmd;
 
-void	print_env(t_env_var *env);
-
 #endif
