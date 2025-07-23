@@ -27,11 +27,11 @@ typedef enum e_tokentype
 	REDIR_OUT,
 	REDIR_APPEND,
 	REDIR_HEREDOC,
+	S_QUATE,
+	D_QUATE,
 	AND,
 	OR,
-	SEMI,
 	OPTION,
-	OPERATOR,
 }	t_tokentype;
 
 typedef struct s_token
@@ -58,9 +58,12 @@ t_token	*new_token(char *value, t_tokentype type);
 void	append_token(t_token **tokens, t_token *new);
 t_token	*tokens_last(t_token *first);
 
-char	*ft_joinchar(char *s, char c);
-int		find_operator(t_lexer *lex);
+int		append_operator(t_lexer *lex);
 int		is_operator(t_lexer *lex);
+void	append_redir(t_lexer *lex);
+void	append_quote(t_lexer *lex);
+void	append_var(t_lexer *lex);
+
 
 void	tokenize(t_lexer *lex);
 
