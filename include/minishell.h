@@ -18,6 +18,7 @@
 # include <sys/types.h>
 # include <signal.h>
 # include <termios.h>
+# include <stdbool.h>
 # include "../lib/libft/include/libft.h"
 # include "../src/env/env.h"
 # include "../src/parser/parser.h"

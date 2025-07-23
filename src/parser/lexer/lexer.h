@@ -14,10 +14,54 @@
 #ifndef LEXER_H
 # define LEXER_H
 
+# include "../../../include/minishell.h"
+
+typedef struct s_data	t_data;
+
+typedef enum e_tokentype
+{
+	WORD,
+	PIPE,
+	VAR,
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_APPEND,
+	REDIR_HEREDOC,
+	AND,
+	OR,
+	SEMI,
+	OPTION,
+	OPERATOR,
+}	t_tokentype;
+
+typedef struct s_token
+{
+	t_tokentype		type;
+	struct s_token	*next;
+	struct s_token	*prev;
+	char			*value;
+}	t_token;
+
 typedef struct s_lexer
 {
-	/* data */
+	int		pos;
+	int		start;
+	int		size;
+	char	*line;
+	t_token	*first;
+	t_token	*last;
 }	t_lexer;
 
+t_lexer	*lexer(t_data *data);
+
+t_token	*new_token(char *value, t_tokentype type);
+void	append_token(t_token **tokens, t_token *new);
+t_token	*tokens_last(t_token *first);
+
+char	*ft_joinchar(char *s, char c);
+int		find_operator(t_lexer *lex);
+int		is_operator(t_lexer *lex);
+
+void	tokenize(t_lexer *lex);
 
 #endif

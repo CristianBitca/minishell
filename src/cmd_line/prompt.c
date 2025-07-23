@@ -14,5 +14,5 @@
 
 char	*prompt(t_data *data)
 {
-	return (find_env(data->env->next, "USER"));
+	return (ft_strjoin(find_env(data->env->next, "USER"), " "));
 }

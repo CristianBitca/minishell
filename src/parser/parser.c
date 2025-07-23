@@ -12,7 +12,10 @@
 
 #include "parser.h"
 
-// void	parse(t_data *data)
-// {
+void	parse(t_data *data)
+{
+	t_lexer	*lex;
 
-// }
+	lex = lexer(data);
+	(void)lex; 
+}

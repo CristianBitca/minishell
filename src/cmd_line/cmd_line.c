@@ -17,5 +17,11 @@
 
 void	cmd_line(t_data *data)
 {
-	data->line = readline(prompt(data));
+	while (1)
+	{
+		data->line = readline(prompt(data));
+		if (data->line && *data->line)
+			add_history(data->line);
+		parse(data);
+	}
 }
