@@ -38,6 +38,8 @@ int	append_operator(t_lexer *lex)
 		append_quote(lex);
 	else if (lex->line[lex->pos] == '$')
 		append_var(lex);
+	else if (lex->line[lex->pos] == '-')
+		append_option(lex);
 	else
 		return (0);
 	lex->pos++;

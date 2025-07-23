@@ -29,6 +29,7 @@ typedef enum e_tokentype
 	REDIR_HEREDOC,
 	S_QUATE,
 	D_QUATE,
+	OPEN_QUATE,
 	AND,
 	OR,
 	OPTION,
@@ -63,6 +64,8 @@ int		is_operator(t_lexer *lex);
 void	append_redir(t_lexer *lex);
 void	append_quote(t_lexer *lex);
 void	append_var(t_lexer *lex);
+void	append_option(t_lexer *lex);
+
 
 
 void	tokenize(t_lexer *lex);
