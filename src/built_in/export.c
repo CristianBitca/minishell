@@ -12,7 +12,7 @@
 
 #include "libft.h"
 #include "minishell.h"
-#include "execution.h"
+#include "built_in.h"
 #include "env.h"
 
 // mimics behaviour of export with no options or arguments
@@ -42,18 +42,6 @@ void	print_export(t_data *data)
 		free(to_print);
 		env_var = env_var->next;
 	}
-}
-
-// checks if variable exported has a value for the key by finding '='
-int	find_equality(char	*str)
-{
-	while (*str)
-	{
-		if (*str == '=')
-			return (1);
-		str++;
-	}
-	return (0);
 }
 
 // if export argument has no '=', if the key to export already exits,
@@ -94,6 +82,36 @@ void	export_with_value(t_data *data, char *to_export)
 		append_stack(&data->env, new_node(key, value));
 }
 
+// if the first character to export is '_' and 
+int	check_valid_export(char *to_export)
+{
+	int	i;
+
+	i = 1;
+	if (to_export[0] == '_' && (to_export[1] == '\0'
+			|| to_export[1] == '='))
+		return (0);
+	if (ft_isalpha(to_export[0]) == 0 && to_export[0] != '_')
+	{
+		write (2, "export: `", 9);
+		write (2, to_export, ft_strlen(to_export));
+		write (2, "': not a valid identifier\n", 26);
+		return (0);
+	}
+	while (to_export[i] && to_export[i] != '=')
+	{
+		if (ft_isalnum(to_export[i]) == 0 && to_export[i] != '_')
+		{
+			write (2, "export: `", 9);
+			write (2, to_export, ft_strlen(to_export));
+			write (2, "': not a valid identifier\n", 26);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
 // if the variable exported has no value, key is appended with NULL
 // to allow it to be found for export with no options or arguments.
 // Otherwise adds key and value to env list
@@ -106,7 +124,9 @@ void	export(t_data *data, char **args)
 	}
 	while (*args)
 	{
-		if (find_equality(*args) == 0)
+		if (check_valid_export(*args) == 0)
+			return ;
+		if (ft_strchr(*args, '=') == 0)
 			export_without_value(data, *args);
 		else
 			export_with_value(data, *args);

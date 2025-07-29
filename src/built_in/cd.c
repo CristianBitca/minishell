@@ -6,14 +6,14 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:02:53 by skirwan           #+#    #+#             */
-/*   Updated: 2025/06/30 18:34:41 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/07/29 15:26:50 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 #include "env.h"
-#include "execution.h"
+#include "built_in.h"
 
 // checks if the given dest exists in the file system using access
 // if not found throws an error, file not found.
@@ -89,8 +89,16 @@ void	cd_oldpwd(t_data *data)
 }
 
 // chdir called on path to cd
-void	cd(t_data *data, char *path)
+void	cd(t_data *data, char **argv)
 {
+	char	*path;
+	int		i;
+
+	i = 0;
+	path = argv[1];
+	while (argv[i++]);
+	if (i > 2)
+		write(2, "cd: too many arguments\n", 23);
 	if (path == NULL)
 		cd_home(data);
 	else if (ft_strncmp(path, "-", 2) == 0)

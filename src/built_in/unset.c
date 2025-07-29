@@ -12,8 +12,7 @@
 
 #include "libft.h"
 #include "minishell.h"
-#include "execution.h"
-#include "env.h"
+#include "built_in.h"
 
 // looks for argument passed to unset in our env linked list, has to look for the
 // key in the next node so we can change the '->next' pointer to the '->next->next'
@@ -37,7 +36,7 @@ void	unset_search(t_env_var *node, char *find)
 	return ;
 }
 
-// if the argumnent passed to unset is the very first key in our env list, change the head
+// if the argument passed to unset is the very first key in our env list, change the head
 // of the list to the next node, and free the node unset
 void	unset(t_data *data, char **args)
 {

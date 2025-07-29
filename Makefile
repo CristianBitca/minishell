@@ -15,11 +15,11 @@ LIBFT_LIB   = -L$(LIBFT_DIR) -lft
 SRC    = main.c \
 		  env/parse_env.c \
 		  input/get_input.c \
-		  execution/print_env.c \
-		  execution/unset.c \
-		  execution/export.c \
-		  execution/pwd.c \
-		  execution/cd.c \
+		  built_in/print_env.c \
+		  built_in/unset.c \
+		  built_in/export.c \
+		  built_in/pwd.c \
+		  built_in/cd.c \
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 

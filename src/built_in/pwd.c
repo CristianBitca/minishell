@@ -11,9 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "minishell.h"
-#include "execution.h"
-#include "env.h"
+#include "built_in.h"
 
 void	pwd(void)
 {

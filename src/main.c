@@ -13,14 +13,14 @@
 #include "libft.h"
 #include "minishell.h"
 #include "env.h"
-#include "execution.h"
+#include "built_in.h"
 #include "input.h"
 
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
-	char	**test;
+	// char	**test;
 
 	data = ft_calloc(sizeof(t_data), sizeof(t_data));
 	parse_env(data, envp);

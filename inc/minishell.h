@@ -6,7 +6,7 @@
 /*   By: cbitca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 18:48:25 by cbitca            #+#    #+#             */
-/*   Updated: 2025/06/18 16:02:35 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/07/29 13:14:13 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,23 @@
 
 typedef struct s_env_var
 {
+	struct s_env_var	*next;
 	char				*key;
 	char				*value;
-	struct s_env_var	*next;
 }	t_env_var;
 
 typedef struct s_data
 {
-	t_env_var	*env;
-	t_list		*cmd_list;
-	int			exit_status;
+	struct s_prcs		**processes;
+	t_env_var			*env;
+	int					exit_status;
 }	t_data;
 
-typedef struct s_cmd
+typedef struct s_prcs
 {
 	char	**argv;
 	int		infilefd;
 	int		outfilefd;
-}	t_cmd;
+}	t_prcs;
 
 #endif
