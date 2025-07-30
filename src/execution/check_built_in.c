@@ -14,6 +14,8 @@
 #include "minishell.h"
 #include "built_in.h"
 #include "execution.h"
+#include <stdio.h>
+#include <unistd.h>
 
 int	is_built_in(t_data *data, t_prcs *process)
 {
@@ -37,39 +39,23 @@ int	is_built_in(t_data *data, t_prcs *process)
 int	execute_built_in(t_data *data, t_prcs *process)
 {
 	if (ft_strncmp(process->argv[0], "echo", 4) == 0)
-		echo(process->argv);
+		echo(process->argv, process->outfilefd);
 	if (ft_strncmp(process->argv[0], "cd", 2) == 0)
 		cd(data, process->argv);
 	if (ft_strncmp(process->argv[0], "pwd", 3) == 0)
-		pwd();
+		pwd(process->outfilefd);
 	if (ft_strncmp(process->argv[0], "export", 6) == 0)
-		export(data, process->argv);
+		export(data, process->argv, process->outfilefd);
 	if (ft_strncmp(process->argv[0], "unset", 5) == 0)
 		unset(data, process->argv);
 	if (ft_strncmp(process->argv[0], "env", 3) == 0)
-		print_envp(data);
+		print_envp(data, process->outfilefd);
 	if (ft_strncmp(process->argv[0], "exit", 4) == 0)
-		print_envp(data); // should be exit
+		print_envp(data, process->outfilefd); // should be exit
 	return (0);
 }
 
 void	single_cmd(t_data *data, t_prcs *process)
 {
-	int	stdin_placeholder;
-	int	stdout_placeholder;
 
-	stdin_placeholder = dup(0);
-	stdout_placeholder = dup(1);
-	if (dup2(process->infilefd, 0) == -1
-		|| dup2(process->outfilefd, 1) == -1
-		|| stdin_placeholder == -1
-		|| stdout_placeholder == -1)
-	{
-		perror(NULL);
-		data->exit_status = 1;
-	}
-	if (is_built_in(data, process) == 1)
-		return ;
-	else
-		;
 }

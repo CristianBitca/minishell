@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 #include "built_in.h"
 
@@ -103,7 +104,7 @@ void	free_envp(char	**envp)
 
 // calls on make_envp to convert env list to **char, then prints the strings and frees
 // envp afterwards
-void	print_envp(t_data *data)
+void	print_envp(t_data *data, int out_fd)
 {
 	char	**envp;
 	int		i;
@@ -112,7 +113,7 @@ void	print_envp(t_data *data)
 	i = 0;
 	while (envp[i] != NULL)
 	{
-		printf("%s", envp[i]);
+		write (out_fd, envp[i], ft_strlen(envp[i]));
 		i++;
 	}
 	free_envp(envp);

@@ -14,9 +14,10 @@
 #include "minishell.h"
 #include "built_in.h"
 #include "env.h"
+#include <unistd.h>
 
 // mimics behaviour of export with no options or arguments
-void	print_export(t_data *data)
+void	print_export(t_data *data, int out_fd)
 {
 	t_env_var	*env_var;
 	char		*to_print;
@@ -38,7 +39,8 @@ void	print_export(t_data *data)
 			to_print = ft_strjoin(to_print, "\"");
 			free(buf);
 		}
-		ft_printf("%s\n", to_print);
+		write (out_fd, to_print, ft_strlen(to_print));
+		write (out_fd, "\n", 1);
 		free(to_print);
 		env_var = env_var->next;
 	}
@@ -93,18 +95,18 @@ int	check_valid_export(char *to_export)
 		return (0);
 	if (ft_isalpha(to_export[0]) == 0 && to_export[0] != '_')
 	{
-		write (2, "export: `", 9);
-		write (2, to_export, ft_strlen(to_export));
-		write (2, "': not a valid identifier\n", 26);
+		write (STDERR_FILENO, "export: `", 9);
+		write (STDERR_FILENO, to_export, ft_strlen(to_export));
+		write (STDERR_FILENO, "': not a valid identifier\n", 26);
 		return (0);
 	}
 	while (to_export[i] && to_export[i] != '=')
 	{
 		if (ft_isalnum(to_export[i]) == 0 && to_export[i] != '_')
 		{
-			write (2, "export: `", 9);
-			write (2, to_export, ft_strlen(to_export));
-			write (2, "': not a valid identifier\n", 26);
+			write (STDERR_FILENO, "export: `", 9);
+			write (STDERR_FILENO, to_export, ft_strlen(to_export));
+			write (STDERR_FILENO, "': not a valid identifier\n", 26);
 			return (0);
 		}
 		i++;
@@ -115,11 +117,11 @@ int	check_valid_export(char *to_export)
 // if the variable exported has no value, key is appended with NULL
 // to allow it to be found for export with no options or arguments.
 // Otherwise adds key and value to env list
-void	export(t_data *data, char **args)
+void	export(t_data *data, char **args, int out_fd)
 {
 	if (args == NULL)
 	{
-		print_export(data);
+		print_export(data, out_fd);
 		return ;
 	}
 	while (*args)

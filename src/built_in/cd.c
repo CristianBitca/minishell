@@ -46,9 +46,9 @@ void	change_directory(t_data *data, char *dest)
 	}
 	else
 	{
-		write(2, "cd: ", 4);
-		write(2, dest, ft_strlen(dest));
-		write(2, ": No such file or directory\n", 28);
+		write(STDERR_FILENO, "cd: ", 4);
+		write(STDERR_FILENO, dest, ft_strlen(dest));
+		write(STDERR_FILENO, ": No such file or directory\n", 28);
 	}
 }
 
@@ -61,7 +61,7 @@ void	cd_home(t_data *data)
 	home_dir = find_env(data->env, "HOME");
 	if (home_dir == NULL)
 	{
-		write(2, "cd: HOME not set\n", 17);
+		write(STDERR_FILENO, "cd: HOME not set\n", 17);
 		return ;
 	}
 	change_directory(data, home_dir);
@@ -79,7 +79,7 @@ void	cd_oldpwd(t_data *data)
 	old_pwd_var = find_env_node(data->env, "OLDPWD");
 	if (old_pwd_var == NULL)
 	{
-		write(2, "cd: OLDPWD not set\n", 19);
+		write(STDERR_FILENO, "cd: OLDPWD not set\n", 19);
 		return ;
 	}
 	change_directory(data, old_pwd_var->value);
@@ -98,7 +98,7 @@ void	cd(t_data *data, char **argv)
 	path = argv[1];
 	while (argv[i++]);
 	if (i > 2)
-		write(2, "cd: too many arguments\n", 23);
+		write(STDERR_FILENO, "cd: too many arguments\n", 23);
 	if (path == NULL)
 		cd_home(data);
 	else if (ft_strncmp(path, "-", 2) == 0)

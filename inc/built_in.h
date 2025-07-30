@@ -20,7 +20,7 @@ int		evar_size(t_env_var *env);
 char	**join_key_val(char	**envp, t_env_var *env);
 char	**make_envp(t_data *data);
 void	free_envp(char	**envp);
-void	print_envp(t_data *data);
+void	print_envp(t_data *data, int out_fd);
 
 // cd.c
 void	change_directory(t_data *data, char *dest);
@@ -33,17 +33,17 @@ void	unset_search(t_env_var *node, char *find);
 void	unset(t_data *data, char **args);
 
 //export.c
-void	print_export(t_data *data);
+void	print_export(t_data *data, int out_fd);
 void	export_without_value(t_data *data, char *to_export);
 void	export_with_value(t_data *data, char *to_export);
 int		check_valid_export(char *to_export);
-void	export(t_data *data, char **args);
+void	export(t_data *data, char **args, int out_fd);
 
 //pwd.c
-void	pwd(void);
+void	pwd(int out_fd);
 
 //echo.c
 int		check_n(char *str);
-void	echo(char **args);
+void	echo(char **args, int out_fd);
 
 #endif

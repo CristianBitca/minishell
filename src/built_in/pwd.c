@@ -13,12 +13,12 @@
 #include "libft.h"
 #include "built_in.h"
 
-void	pwd(void)
+void	pwd(int out_fd)
 {
 	char	*cwd;
 
 	cwd = getcwd(NULL, 0);
-	write(1, cwd, ft_strlen(cwd));
-	write(1, "\n", 1);
+	write(out_fd, cwd, ft_strlen(cwd));
+	write(out_fd, "\n", 1);
 	free(cwd);
 }

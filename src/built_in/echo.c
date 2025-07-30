@@ -41,7 +41,7 @@ int	check_n(char *str)
 // and doesnt write them to stdout.
 // After -n checks, writes each arg to stdout and adds space between
 // to bring back the space lost from ft_split
-void	echo(char **args)
+void	echo(char **args, int out_fd)
 {
 	int	print_newline;
 
@@ -55,11 +55,11 @@ void	echo(char **args)
 	}
 	while (*args)
 	{
-		write (1, *args, ft_strlen(*args));
+		write (out_fd, *args, ft_strlen(*args));
 		args++;
 		if (*args)
-			write (1, " ", 1);
+			write (out_fd, " ", 1);
 	}
 	if (print_newline == 1)
-		write (1, "\n", 1);
+		write (out_fd, "\n", 1);
 }
