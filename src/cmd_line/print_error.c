@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   print_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbitca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/09 17:48:26 by cbitca            #+#    #+#             */
-/*   Updated: 2025/06/09 17:48:27 by cbitca           ###   ########.fr       */
+/*   Created: 2025/07/29 16:24:28 by cbitca            #+#    #+#             */
+/*   Updated: 2025/07/29 16:24:30 by cbitca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "cmd_line.h"
 
-# include "../../include/minishell.h"
-# include "lexer/lexer.h"
-
-typedef struct s_token	t_token;
-typedef struct s_data	t_data;
-
-void	parse(t_data *data);
-void	validate_tokens(t_lexer *lex);
-
-#endif
+int	print_error(char *msg)
+{
+	printf("%s\n", msg);
+	return 0;
+}

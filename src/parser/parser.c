@@ -17,5 +17,6 @@ void	parse(t_data *data)
 	t_lexer	*lex;
 
 	lex = lexer(data);
+	validate_tokens(lex);
 	(void)lex; 
 }

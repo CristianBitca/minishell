@@ -30,6 +30,8 @@ int	append_operator(t_lexer *lex)
 		append_token(&lex->first, new_token("&", AND));
 	else if (lex->line[lex->pos] == '|')
 		append_token(&lex->first, new_token("|", PIPE));
+	else if (lex->line[lex->pos] == ';')
+		append_token(&lex->first, new_token(";", SEMI));
 	else if (lex->line[lex->pos] == '>')
 		append_redir(lex);
 	else if (lex->line[lex->pos] == '<')

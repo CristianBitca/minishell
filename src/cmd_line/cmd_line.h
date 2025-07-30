@@ -15,9 +15,13 @@
 
 # include "../../include/minishell.h"
 
+# define ERR_QUOTE "close the quote"
+
 typedef struct s_data	t_data;
 
 char	*prompt(t_data *data);
 void	parse(t_data *data);
+
+int	print_error(char *msg);
 
 #endif

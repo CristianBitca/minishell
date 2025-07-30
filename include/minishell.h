@@ -22,6 +22,7 @@
 # include "../lib/libft/include/libft.h"
 # include "../src/env/env.h"
 # include "../src/parser/parser.h"
+# include "../src/cmd_line/cmd_line.h"
 
 typedef struct s_data
 {

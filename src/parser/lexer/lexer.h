@@ -33,6 +33,7 @@ typedef enum e_tokentype
 	AND,
 	OR,
 	OPTION,
+	SEMI,
 }	t_tokentype;
 
 typedef struct s_token
@@ -65,8 +66,6 @@ void	append_redir(t_lexer *lex);
 void	append_quote(t_lexer *lex);
 void	append_var(t_lexer *lex);
 void	append_option(t_lexer *lex);
-
-
 
 void	tokenize(t_lexer *lex);
 
