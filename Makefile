@@ -20,6 +20,9 @@ SRC    = main.c \
 		  built_in/export.c \
 		  built_in/pwd.c \
 		  built_in/cd.c \
+		  execution/check_built_in.c \
+		  execution/child_process.c \
+		  execution/single_command.c \
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 

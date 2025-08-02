@@ -26,7 +26,6 @@ char	*rl_loop(t_data *data)
 		if (input && *input)
 		{
 			add_history(input);
-			input_to_cmd(data, input);
 		}
 	}
 	return (input);
@@ -53,17 +52,4 @@ char	*create_prompt(t_data *data)
 	prompt[i + 3] = '\0';
 	(free(cwd), free(ex_status));
 	return (prompt);
-}
-
-void	input_to_cmd(t_data *data, char *input)
-{
-	char	**split_argv;
-	t_cmd	*cmd;
-
-	cmd = malloc(sizeof(*cmd));
-	split_argv = ft_split(input, ' ');
-	cmd->argv = split_argv;
-	cmd->infilefd = 0;
-	cmd->outfilefd = 1;
-	ft_lstadd_back(&data->cmd_list, ft_lstnew(cmd));
 }

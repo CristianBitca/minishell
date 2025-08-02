@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 12:46:36 by skirwan           #+#    #+#             */
-/*   Updated: 2025/07/29 16:57:39 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/08/02 16:23:11 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 #include "minishell.h"
 #include "built_in.h"
 #include "execution.h"
-#include <stdio.h>
-#include <unistd.h>
 
-int	is_built_in(t_data *data, t_prcs *process)
+int	is_built_in(t_prcs *process)
 {
 	if (ft_strncmp(process->argv[0], "echo", 4) == 0)
 		return (1);
@@ -53,9 +51,4 @@ int	execute_built_in(t_data *data, t_prcs *process)
 	if (ft_strncmp(process->argv[0], "exit", 4) == 0)
 		print_envp(data, process->outfilefd); // should be exit
 	return (0);
-}
-
-void	single_cmd(t_data *data, t_prcs *process)
-{
-
 }
