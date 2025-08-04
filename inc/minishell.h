@@ -6,7 +6,7 @@
 /*   By: cbitca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 18:48:25 by cbitca            #+#    #+#             */
-/*   Updated: 2025/07/29 13:14:13 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/08/04 11:37:57 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "libft.h"
+
+typedef struct s_prcs
+{
+	char	**argv;
+	int		infilefd;
+	int		outfilefd;
+}	t_prcs;
 
 typedef struct s_env_var
 {
@@ -34,11 +41,5 @@ typedef struct s_data
 	int					exit_status;
 }	t_data;
 
-typedef struct s_prcs
-{
-	char	**argv;
-	int		infilefd;
-	int		outfilefd;
-}	t_prcs;
 
 #endif

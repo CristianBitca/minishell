@@ -15,6 +15,7 @@ LIBFT_LIB   = -L$(LIBFT_DIR) -lft
 SRC    = main.c \
 		  env/parse_env.c \
 		  input/get_input.c \
+		  built_in/echo.c \
 		  built_in/print_env.c \
 		  built_in/unset.c \
 		  built_in/export.c \

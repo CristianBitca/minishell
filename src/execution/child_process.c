@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 16:20:51 by skirwan           #+#    #+#             */
-/*   Updated: 2025/08/04 10:29:53 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/08/04 11:44:55 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,5 @@ int	execute_in_child(t_data *data, t_prcs *process)
 		free_envp(envp);
 		// free all mallocs and exit;
 	}
-	exit(1);
+	exit (1);
 }
