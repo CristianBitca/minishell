@@ -13,7 +13,7 @@
 #include "minishell.h"
 #include "input.h"
 
-char	*rl_loop(t_data *data)
+void	rl_loop(t_data *data)
 {
 	char	*input;
 	char	*prompt;
@@ -26,9 +26,10 @@ char	*rl_loop(t_data *data)
 		if (input && *input)
 		{
 			add_history(input);
+			//tokenize(input)
 		}
 	}
-	return (input);
+	return ;
 }
 
 char	*create_prompt(t_data *data)

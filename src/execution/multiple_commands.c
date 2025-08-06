@@ -12,6 +12,12 @@
 
 #include "execution.h"
 
+// Takes the number of processes we need to execute, forks for each process
+// and executes the commands in the child. After all the child processes are
+// created, then we wait on each one with waitpid (not waiting for each one
+// to die and then forking the following process). We hold the exit status
+// of each successive child process in wstatus, which is changed by waitpid
+// but we only save the final exit status in our struct.
 void	execute_all_processes(t_data *data, int prcs_count)
 {
 	int	wstatus;
