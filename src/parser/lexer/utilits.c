@@ -14,17 +14,13 @@
 
 int	is_operator(t_lexer *lex)
 {
-	if (lex->line[lex->pos] == ' ')
-		return (1);
-	else if (lex->line[lex->pos] == '&')
+	if (lex->line[lex->pos] == '&')
 		return (1);
 	else if (lex->line[lex->pos] == '|')
 		return (1);
 	else if (lex->line[lex->pos] == '>')
 		return (1);
 	else if (lex->line[lex->pos] == '<')
-		return (1);
-	else if (lex->line[lex->pos] == '$')
 		return (1);
 	return (0);
 }

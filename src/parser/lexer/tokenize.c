@@ -17,21 +17,27 @@ void	append_word(t_lexer *lex)
 	char	*s;
 
 	lex->start = lex->pos;
-	while (lex->pos < lex->size && !is_operator(lex) 
+	while (lex->pos < lex->size && !is_operator(lex)
 		&& lex->line[lex->pos] != ' ')
-		lex->pos++;
+	{
+		if (lex->line[lex->pos] == '\'' || lex->line[lex->pos] == '"')
+		{
+			lex->pos++;
+			while (lex->line[lex->pos] != '\'' && lex->line[lex->pos] != '"'
+				&& lex->pos < lex->size)
+				lex->pos++;
+		}
+		else
+			lex->pos++;
+	}
 	s = ft_substr(lex->line, lex->start, lex->pos - lex->start);
 	append_token(&lex->first, new_token(s, WORD));
 }
 
 int	append_operator(t_lexer *lex)
 {
-	if (lex->line[lex->pos] == '&')
-		append_token(&lex->first, new_token("&", AND));
-	else if (lex->line[lex->pos] == '|')
+	if (lex->line[lex->pos] == '|')
 		append_token(&lex->first, new_token("|", PIPE));
-	else if (lex->line[lex->pos] == ';')
-		append_token(&lex->first, new_token(";", SEMI));
 	else if (lex->line[lex->pos] == '>')
 		append_redir(lex);
 	else if (lex->line[lex->pos] == '<')

@@ -52,13 +52,13 @@ void	append_stack(t_env_var **node_lst, t_env_var *new)
 	}
 }
 
-char	*find_env(t_env_var *node, char *find)
+char	*find_env(t_env_var *node, char *key_to_find)
 {
 	while (node)
 	{
-		if (!ft_strncmp(node->key, find, ft_strlen(node->key)))
+		if (!ft_strncmp(node->key, key_to_find, ft_strlen(node->key) + 1))
 			return (node->value);
 		node = node->next;
 	}
-	return (0);
+	return (NULL);
 }

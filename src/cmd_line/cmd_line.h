@@ -15,7 +15,8 @@
 
 # include "../../include/minishell.h"
 
-# define ERR_QUOTE "close the quote"
+# define ERR_QUOTE "Unclosed quote was found.\n"
+# define ERR_SYNTAX "Syntax error.\n"
 
 typedef struct s_data	t_data;
 

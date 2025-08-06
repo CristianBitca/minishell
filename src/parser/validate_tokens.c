@@ -12,38 +12,45 @@
 
 #include "parser.h"
 
+int	syntax_check(t_tokentype type)
+{
+	if (type == WORD || type == VAR
+		|| type == S_QUATE || type == D_QUATE)
+		return (0);
+	return (1);
+}
+
 int	syntax(t_token *token)
 {
-	if (token->type == PIPE || token->type == AND
-		|| token->type == OR || token->type == SEMI)
+	if (token->type == OPEN_QUATE)
+		return (print_error(ERR_QUOTE));
+	else if (token->type != WORD)
 	{
-		printf("%d\n", token->prev->type);
-		// if (token->prev->type != WORD && token->next->type != WORD)
-		// 	printf("not word");
-		// else
-		// 	printf("not word");
+		if (token->type == REDIR_APPEND || token->type == REDIR_HEREDOC
+			|| token->type == REDIR_IN || token->type == REDIR_OUT)
+		{
+			if (syntax_check(token->next->type))
+				return (print_error(ERR_SYNTAX));
+		}
+		if (token->type == OR || token->type == PIPE || token->type == OPTION)
+		{
+			if (syntax_check(token->next->type)
+				&& (token->prev == NULL || !syntax_check(token->prev->type)))
+				return (print_error(ERR_SYNTAX));
+		}
 	}
-	return (0);
+	return (1);
 }
 
 void	validate_tokens(t_lexer *lex)
 {
 	t_token	*temp;
-	int		i;
 
 	temp = lex->first;
-	i = 0;
 	while (temp)
 	{
-		printf("Token nr %d before check\n", i);
-		printf("%s\n", temp->value);
-		printf("%u\n", temp->type);
-		syntax(temp);
-		// expansion();
-		printf("Token nr %d after check\n", i);
-		printf("%s\n", temp->value);
-		printf("%u\n", temp->type);
+		if (!syntax(temp))
+			break ;
 		temp = temp->next;
-		i++;
 	}
 }
