@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:35:27 by skirwan           #+#    #+#             */
-/*   Updated: 2025/08/04 11:50:40 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/08/07 10:46:07 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ void	rl_loop(t_data *data)
 		{
 			add_history(input);
 			//tokenize(input)
+			//expand(input)
+			//retokenize(input)
+			//parse(input)
+			//(execute)
 		}
 	}
 	return ;
