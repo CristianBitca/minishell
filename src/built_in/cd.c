@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:02:53 by skirwan           #+#    #+#             */
-/*   Updated: 2025/07/29 15:26:50 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/08/08 17:55:14 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "minishell.h"
 #include "env.h"
 #include "built_in.h"
+#include <stdlib.h>
 
 // checks if the given dest exists in the file system using access
 // if not found throws an error, file not found.
@@ -34,7 +35,7 @@ void	change_directory(t_data *data, char *dest)
 		if (chdir(dest) != 0)
 		{
 			(perror(NULL), free(current_wd));
-			data->exit_status = 1;
+			data->exit_status = EXIT_FAILURE;
 			return ;
 		}
 		if (current_wd != NULL)
@@ -49,6 +50,7 @@ void	change_directory(t_data *data, char *dest)
 		write(STDERR_FILENO, "cd: ", 4);
 		write(STDERR_FILENO, dest, ft_strlen(dest));
 		write(STDERR_FILENO, ": No such file or directory\n", 28);
+		data->exit_status = EXIT_FAILURE;
 	}
 }
 
@@ -62,6 +64,7 @@ void	cd_home(t_data *data)
 	if (home_dir == NULL)
 	{
 		write(STDERR_FILENO, "cd: HOME not set\n", 17);
+		data->exit_status = EXIT_FAILURE;
 		return ;
 	}
 	change_directory(data, home_dir);
@@ -80,6 +83,7 @@ void	cd_oldpwd(t_data *data)
 	if (old_pwd_var == NULL)
 	{
 		write(STDERR_FILENO, "cd: OLDPWD not set\n", 19);
+		data->exit_status = EXIT_FAILURE;
 		return ;
 	}
 	change_directory(data, old_pwd_var->value);
@@ -98,7 +102,10 @@ void	cd(t_data *data, char **argv)
 	path = argv[1];
 	while (argv[i++]);
 	if (i > 2)
+	{
 		write(STDERR_FILENO, "cd: too many arguments\n", 23);
+		data->exit_status = EXIT_FAILURE;
+	}
 	if (path == NULL)
 		cd_home(data);
 	else if (ft_strncmp(path, "-", 2) == 0)

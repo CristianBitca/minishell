@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 10:40:34 by skirwan           #+#    #+#             */
-/*   Updated: 2025/08/07 15:33:14 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/08/08 11:53:06 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,15 @@ int		is_operator(char c);
 
 // create_tokens.c
 void	add_redir_token(t_data *data, t_lexer *lex);
-void	add_word_token(t_data *data, t_lexer *lexer);
 void	add_operator_token(t_data *data, t_lexer *lexer);
+int		handle_quotes(t_lexer *lex, char end_quote);
+int		add_word_token(t_data *data, t_lexer *lexer);
 
 // tonkenise.c
 void	tokenise(t_data *data, char *input);
+
+// validate_tokens.c
+int	syntax_error(char *invalid_val);
+int	validate_tokens(t_data *data);
 
 #endif

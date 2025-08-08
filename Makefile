@@ -13,17 +13,23 @@ LIBFT_A     = $(LIBFT_DIR)/libft.a
 LIBFT_LIB   = -L$(LIBFT_DIR) -lft
 
 SRC    = main.c \
-		  env/parse_env.c \
-		  input/get_input.c \
-		  built_in/echo.c \
-		  built_in/print_env.c \
-		  built_in/unset.c \
-		  built_in/export.c \
-		  built_in/pwd.c \
 		  built_in/cd.c \
+		  built_in/echo.c \
+		  built_in/export.c \
+		  built_in/print_env.c \
+		  built_in/pwd.c \
+		  built_in/unset.c \
+		  env/parse_env.c \
 		  execution/check_built_in.c \
 		  execution/child_process.c \
+		  execution/multiple_commands.c \
 		  execution/single_command.c \
+		  input/get_input.c \
+		  lexer/create_tokens.c \
+		  lexer/is_operator.c \
+		  lexer/tokenise.c \
+		  lexer/token_list_utils.c \
+		  lexer/validate_tokens.c \
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 

@@ -6,12 +6,13 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 16:20:51 by skirwan           #+#    #+#             */
-/*   Updated: 2025/08/04 11:44:55 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/08/08 17:56:10 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 #include "built_in.h"
+#include <unistd.h>
 
 // On success execve does not return, so we must get the exit_status of the last
 // command in the waitpid command rather than through a return value.
@@ -44,8 +45,8 @@ int	execute_in_child(t_data *data, t_prcs *process)
 	}
 	if (access(process->argv[0], F_OK | X_OK) != 0)
 	{
-		write (2, process->argv[0], ft_strlen(process->argv[0]));
-		write (2, ": command not found\n", 21);
+		write (STDERR_FILENO, process->argv[0], ft_strlen(process->argv[0]));
+		write (STDERR_FILENO, ": command not found\n", 21);
 		// free all mallocs, close all fds and exit
 		exit (127);
 	}
