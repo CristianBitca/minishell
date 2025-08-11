@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "minishell.h"
 #include "built_in.h"
 
@@ -57,4 +56,5 @@ void	unset(t_data *data, char **args)
 			unset_search(data->env, *args);
 		args++;
 	}
+	data->exit_status = EXIT_SUCCESS;
 }

@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "built_in.h"
 
 // valid options are -n, or '-' and any number of 'n' e.g
@@ -41,7 +40,7 @@ int	check_n(char *str)
 // and doesnt write them to stdout.
 // After -n checks, writes each arg to stdout and adds space between
 // to bring back the space lost from ft_split
-void	echo(char **args, int out_fd)
+void	echo(t_data *data, char **args, int out_fd)
 {
 	int	print_newline;
 
@@ -62,4 +61,5 @@ void	echo(char **args, int out_fd)
 	}
 	if (print_newline == 1)
 		write (out_fd, "\n", 1);
+	data->exit_status = EXIT_SUCCESS;
 }

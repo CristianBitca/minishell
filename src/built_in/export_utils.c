@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/30 13:01:47 by skirwan           #+#    #+#             */
-/*   Updated: 2025/06/30 13:28:33 by skirwan          ###   ########.fr       */
+/*   Created: 2025/08/11 13:32:21 by skirwan           #+#    #+#             */
+/*   Updated: 2025/08/11 13:33:43 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "built_in.h"
+#include "minishell.h"
 
-void	pwd(t_data *data, int out_fd)
+void	invalid_export_identifier(t_data *data, char *to_export)
 {
-	char	*cwd;
-
-	cwd = getcwd(NULL, 0);
-	write(out_fd, cwd, ft_strlen(cwd));
-	write(out_fd, "\n", 1);
-	free(cwd);
-	data->exit_status = 0;
+	write (STDERR_FILENO, "export: `", 9);
+	write (STDERR_FILENO, to_export, ft_strlen(to_export));
+	write (STDERR_FILENO, "': not a valid identifier\n", 26);
+	data->exit_status = EXIT_FAILURE;
+	return ;
 }

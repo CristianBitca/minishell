@@ -6,15 +6,13 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 12:23:42 by skirwan           #+#    #+#             */
-/*   Updated: 2025/06/30 17:11:40 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/08/11 13:34:05 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "minishell.h"
 #include "built_in.h"
 #include "env.h"
-#include <unistd.h>
 
 // mimics behaviour of export with no options or arguments
 void	print_export(t_data *data, int out_fd)
@@ -85,7 +83,7 @@ void	export_with_value(t_data *data, char *to_export)
 }
 
 // if the first character to export is '_' and 
-int	check_valid_export(char *to_export)
+int	check_valid_export(t_data *data, char *to_export)
 {
 	int	i;
 
@@ -95,18 +93,14 @@ int	check_valid_export(char *to_export)
 		return (0);
 	if (ft_isalpha(to_export[0]) == 0 && to_export[0] != '_')
 	{
-		write (STDERR_FILENO, "export: `", 9);
-		write (STDERR_FILENO, to_export, ft_strlen(to_export));
-		write (STDERR_FILENO, "': not a valid identifier\n", 26);
+		invalid_export_identifier(data, to_export);
 		return (0);
 	}
 	while (to_export[i] && to_export[i] != '=')
 	{
 		if (ft_isalnum(to_export[i]) == 0 && to_export[i] != '_')
 		{
-			write (STDERR_FILENO, "export: `", 9);
-			write (STDERR_FILENO, to_export, ft_strlen(to_export));
-			write (STDERR_FILENO, "': not a valid identifier\n", 26);
+			invalid_export_identifier(data, to_export);
 			return (0);
 		}
 		i++;
@@ -122,11 +116,12 @@ void	export(t_data *data, char **args, int out_fd)
 	if (args == NULL)
 	{
 		print_export(data, out_fd);
+		data->exit_status = EXIT_SUCCESS;
 		return ;
 	}
 	while (*args)
 	{
-		if (check_valid_export(*args) == 0)
+		if (check_valid_export(data, *args) == 0)
 			return ;
 		if (ft_strchr(*args, '=') == 0)
 			export_without_value(data, *args);
@@ -134,4 +129,5 @@ void	export(t_data *data, char **args, int out_fd)
 			export_with_value(data, *args);
 		args++;
 	}
+	data->exit_status = EXIT_SUCCESS;
 }

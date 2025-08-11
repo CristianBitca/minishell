@@ -10,11 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "minishell.h"
 #include "env.h"
 #include "built_in.h"
-#include <stdlib.h>
+
+
+void	invalid_cd(t_data *data, char *dest)
+{
+	write(STDERR_FILENO, "cd: ", 4);
+	write(STDERR_FILENO, dest, ft_strlen(dest));
+	write(STDERR_FILENO, ": No such file or directory\n", 28);
+	data->exit_status = EXIT_FAILURE;
+}
 
 // checks if the given dest exists in the file system using access
 // if not found throws an error, file not found.
@@ -44,14 +51,10 @@ void	change_directory(t_data *data, char *dest)
 			free(old_pwd_var->value);
 			old_pwd_var->value = current_wd;
 		}
+		data->exit_status = EXIT_SUCCESS;
 	}
 	else
-	{
-		write(STDERR_FILENO, "cd: ", 4);
-		write(STDERR_FILENO, dest, ft_strlen(dest));
-		write(STDERR_FILENO, ": No such file or directory\n", 28);
-		data->exit_status = EXIT_FAILURE;
-	}
+		invalid_cd(data, dest);
 }
 
 // when cd is called with no args, directory is changed to home directory
@@ -74,7 +77,7 @@ void	cd_home(t_data *data)
 // which is stored in the OLDPWD env variable, if OLDPWD is not present,
 // the env_node is not found and 'cd -' thorws an error. After changing
 // the directory, we print the cwd, mimicing bash
-void	cd_oldpwd(t_data *data)
+void	cd_oldpwd(t_data *data, int out_fd)
 {
 	t_env_var	*old_pwd_var;
 	char		*current_wd;
@@ -88,12 +91,12 @@ void	cd_oldpwd(t_data *data)
 	}
 	change_directory(data, old_pwd_var->value);
 	current_wd = getcwd(NULL, 0);
-	write(1, current_wd, ft_strlen(current_wd));
-	write(1, "\n", 1);
+	write(out_fd, current_wd, ft_strlen(current_wd));
+	write(out_fd, "\n", 1);
 }
 
 // chdir called on path to cd
-void	cd(t_data *data, char **argv)
+void	cd(t_data *data, char **argv, int out_fd)
 {
 	char	*path;
 	int		i;
@@ -109,7 +112,7 @@ void	cd(t_data *data, char **argv)
 	if (path == NULL)
 		cd_home(data);
 	else if (ft_strncmp(path, "-", 2) == 0)
-		cd_oldpwd(data);
+		cd_oldpwd(data, out_fd);
 	else
 		change_directory(data, path);
 }
