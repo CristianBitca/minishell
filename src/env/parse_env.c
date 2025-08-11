@@ -6,7 +6,7 @@
 /*   By: cbitca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 18:57:52 by cbitca            #+#    #+#             */
-/*   Updated: 2025/06/18 17:35:45 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/08/11 13:47:22 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,26 +69,4 @@ void	parse_env(t_data *data, char **envp)
 		append_stack(&data->env, new_node(key, value));
 		envp++;
 	}
-}
-
-char	*find_env(t_env_var *node, char *key_to_find)
-{
-	while (node)
-	{
-		if (!ft_strncmp(node->key, key_to_find, ft_strlen(node->key) + 1))
-			return (node->value);
-		node = node->next;
-	}
-	return (NULL);
-}
-
-t_env_var	*find_env_node(t_env_var *node, char *key_to_find)
-{
-	while (node)
-	{
-		if (!ft_strncmp(node->key, key_to_find, ft_strlen(node->key) + 1))
-			return (node);
-		node = node->next;
-	}
-	return (NULL);
 }
