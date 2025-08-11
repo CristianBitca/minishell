@@ -6,13 +6,12 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 16:20:51 by skirwan           #+#    #+#             */
-/*   Updated: 2025/08/08 17:56:10 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/08/11 13:41:06 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 #include "built_in.h"
-#include <unistd.h>
 
 // On success execve does not return, so we must get the exit_status of the last
 // command in the waitpid command rather than through a return value.

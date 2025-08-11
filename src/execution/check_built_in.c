@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 12:46:36 by skirwan           #+#    #+#             */
-/*   Updated: 2025/08/08 17:56:36 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/08/11 13:38:21 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ int	is_built_in(t_prcs *process)
 int	execute_built_in(t_data *data, t_prcs *process)
 {
 	if (ft_strncmp(process->argv[0], "echo\0", 5) == 0)
-		echo(process->argv, process->outfilefd);
+		echo(data, process->argv, process->outfilefd);
 	if (ft_strncmp(process->argv[0], "cd\0", 3) == 0)
-		cd(data, process->argv);
+		cd(data, process->argv, process->outfilefd);
 	if (ft_strncmp(process->argv[0], "pwd\0", 4) == 0)
-		pwd(process->outfilefd);
+		pwd(data, process->outfilefd);
 	if (ft_strncmp(process->argv[0], "export\0", 7) == 0)
 		export(data, process->argv, process->outfilefd);
 	if (ft_strncmp(process->argv[0], "unset\0", 6) == 0)
