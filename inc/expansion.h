@@ -16,10 +16,13 @@
 # include "minishell.h"
 
 // expand.c
-void	check_to_expand(t_data *data, t_token *token);
+void	find_expansions(t_data *data, t_token *token);
 void	expand(t_data *data);
 
 // expand_env.c
-void	expand_env(t_data *data, t_token *token, int i);
+void	expand_exit_code(t_data *data, t_token *token, char *expand_ptr);
+void	invalid_env_expansion(t_token *token, char *expand_ptr, int var_size);
+void	valid_expansion(t_data *data, t_token *token, char *to_expand);
+void	expand_env(t_data *data, t_token *token, char *expand_ptr);
 
 #endif

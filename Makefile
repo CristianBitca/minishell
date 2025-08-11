@@ -16,10 +16,12 @@ SRC    = main.c \
 		  built_in/cd.c \
 		  built_in/echo.c \
 		  built_in/export.c \
+		  built_in/export_utils.c \
 		  built_in/print_env.c \
 		  built_in/pwd.c \
 		  built_in/unset.c \
 		  env/parse_env.c \
+		  env/find_env.c \
 		  execution/check_built_in.c \
 		  execution/child_process.c \
 		  execution/multiple_commands.c \
@@ -30,6 +32,8 @@ SRC    = main.c \
 		  lexer/tokenise.c \
 		  lexer/token_list_utils.c \
 		  lexer/validate_tokens.c \
+		  expansion/expand.c \
+		  expansion/expand_env.c \
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
