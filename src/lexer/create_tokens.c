@@ -66,8 +66,8 @@ int	add_word_token(t_data *data, t_lexer *lex)
 
 	first_char = lex->pos;
 	while ((lex->pos < lex->line_size)
-		&& is_operator(lex->line[lex->pos] == 0)
-		&& lex->line[lex->pos] != ' ')
+		&& (is_operator(lex->line[lex->pos]) == 0)
+		&& (lex->line[lex->pos] != ' '))
 	{
 		if (lex->line[lex->pos] == '\'' || lex->line[lex->pos] == '"')
 		{

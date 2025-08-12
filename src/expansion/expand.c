@@ -24,6 +24,7 @@ void	find_expansions(t_data *data, t_token *token)
 	{
 		if (word[i] == '$' && word[i + 1] != '\0')
 			expand_env(data, token, &word[i]);
+		i++;
 	}
 }
 
@@ -32,7 +33,7 @@ void	expand(t_data *data)
 	t_token	*temp;
 
 	temp = data->tokens;
-	while (temp->next != NULL)
+	while (temp != NULL)
 	{
 		if (temp->type == WORD)
 			find_expansions(data, temp);

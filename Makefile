@@ -34,6 +34,7 @@ SRC    = main.c \
 		  lexer/validate_tokens.c \
 		  expansion/expand.c \
 		  expansion/expand_env.c \
+		  expansion/word_splitting.c \
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 

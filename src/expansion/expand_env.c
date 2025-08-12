@@ -59,23 +59,20 @@ void	valid_env_expand(t_data *data, t_token *token, char *key, char *remainder)
 {
 	char	*expand_value;
 	char	*pre_expand;
-	char	*new_word;
-	char	*temp;
 
 	pre_expand = ft_substr(token->value, 0, key - token->value);
 	expand_value = find_env(data->env, key);
-	temp = ft_strjoin(pre_expand, expand_value);
-	new_word = ft_strjoin(temp, remainder);
-	free(temp);
-	free(pre_expand);
 	free(token->value);
-	token->value = new_word;
+	token->value = pre_expand;
+	free(key);
+	split_word(token, expand_value, remainder);
 }
 
 // Checks
 void	expand_env(t_data *data, t_token *token, char *expand_ptr)
 {
 	char	*to_expand;
+	char	*hold_value;
 	int		i;
 
 	i = 1;
@@ -83,15 +80,17 @@ void	expand_env(t_data *data, t_token *token, char *expand_ptr)
 		return (expand_exit_code(data, token, expand_ptr));
 	if (ft_isalpha(expand_ptr[i]) == 0 && expand_ptr[i] != '_')
 		return (invalid_env_expansion(token, expand_ptr, 2));
-	while (expand_ptr[i] != '\0' || expand_ptr[i] != '$'
-		|| expand_ptr[i] != '"' || expand_ptr[i] != '\'')
+	while (expand_ptr[i] != '\0' && expand_ptr[i] != '$'
+		&& (expand_ptr[i] != '"') && (expand_ptr[i] != '\''))
 		i++;
-	to_expand = ft_substr(expand_ptr, 0, i);
+	to_expand = ft_substr(expand_ptr + 1, 0, (i - 1));
 	if (find_env(data->env, to_expand) == NULL)
 	{
 		invalid_env_expansion(token, expand_ptr, i);
 		free(to_expand);
 		return ;
 	}
+	hold_value = token->value;
 	valid_env_expand(data, token, to_expand, to_expand + (i + 1));
+	free(hold_value);
 }

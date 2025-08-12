@@ -23,7 +23,6 @@ int	syntax_error(char *invalid_val)
 int	validate_tokens(t_data *data)
 {
 	t_token *temp;
-	int		i;
 
 	temp = data->tokens;
 	while (temp->next != NULL)

@@ -25,4 +25,8 @@ void	invalid_env_expansion(t_token *token, char *expand_ptr, int var_size);
 void	valid_expansion(t_data *data, t_token *token, char *to_expand);
 void	expand_env(t_data *data, t_token *token, char *expand_ptr);
 
+//word_splitting.c
+void	insert_token(t_token *node, char *value);
+void	tok_branch(t_token *node, char **expansion, char *post_expand, int join_back);
+void	split_word(t_token *token, char *expand_value, char *post_expand);
 #endif

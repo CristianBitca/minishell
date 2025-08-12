@@ -50,5 +50,7 @@ void	add_token_back(t_token **token_list, t_token *new_token)
 			temp->next = new_token;
 			new_token->prev = temp;
 		}
+		else
+			*token_list = new_token;
 	}
 }
