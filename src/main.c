@@ -15,6 +15,7 @@
 #include "env.h"
 #include "built_in.h"
 #include "input.h"
+#include <stdio.h>
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -22,6 +23,7 @@ int	main(int argc, char **argv, char **envp)
 
 	data = ft_calloc(sizeof(t_data), sizeof(t_data));
 	parse_env(data, envp);
+	rl_loop(data);
 	// print_envp(data);
 	// export(data, NULL);
 	// export(data, test);

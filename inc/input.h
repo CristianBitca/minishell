@@ -14,9 +14,6 @@
 # define INPUT_H
 
 # include "minishell.h"
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <unistd.h>
 
 void	rl_loop(t_data *data);
 char	*create_prompt(t_data *data);

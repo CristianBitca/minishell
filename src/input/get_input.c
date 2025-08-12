@@ -10,28 +10,45 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 #include "input.h"
+#include "lexer.h"
+#include "expansion.h"
 
+void	print_tokens(t_data *data)
+{
+	t_token	*token;
+
+	token = data->tokens;
+	while (token != NULL)
+	{
+		printf("token value = %s\n", token->value);
+		printf("token type = %s\n", ft_itoa(token->type));
+		printf("*******\n");
+		token = token->next;
+	}
+}
 void	rl_loop(t_data *data)
 {
 	char	*input;
 	char	*prompt;
 
-	while (1)
+	prompt = create_prompt(data);
+	input = readline(prompt);
+	free(prompt);
+	if (input && *input)
 	{
-		prompt = create_prompt(data);
-		input = readline(prompt);
-		free(prompt);
-		if (input && *input)
-		{
-			add_history(input);
-			//tokenize(input)
-			//expand(input)
-			//retokenize(input)
-			//parse(input)
-			//(execute)
-		}
+		add_history(input);
+		tokenise(data, input);
+		printf("token chain pre expansion:\n:");
+		print_tokens(data);
+		expand(data);
+		printf("**********************************\n");
+		printf("token chain post expansion:\n");
+		print_tokens(data);
+		//parse(input)
+		//(execute)
 	}
 	return ;
 }
