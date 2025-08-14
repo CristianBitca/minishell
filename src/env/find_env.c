@@ -14,28 +14,28 @@
 
 char	*find_env(t_env_var *env_list, char *key_to_find)
 {
-	t_env_var	*node;
+	t_env_var	*env_node;
 
-	node = env_list;
-	while (node)
+	env_node = env_list;
+	while (env_node)
 	{
-		if (!ft_strncmp(node->key, key_to_find, ft_strlen(node->key) + 1))
-			return (node->value);
-		node = node->next;
+		if (!ft_strncmp(env_node->key, key_to_find, ft_strlen(env_node->key) + 1))
+			return (env_node->value);
+		env_node = env_node->next;
 	}
 	return (NULL);
 }
 
 t_env_var	*find_env_node(t_env_var *env_list, char *key_to_find)
 {
-	t_env_var	*node;
+	t_env_var	*env_node;
 
-	node = env_list;
-	while (node)
+	env_node = env_list;
+	while (env_node)
 	{
-		if (!ft_strncmp(node->key, key_to_find, ft_strlen(node->key) + 1))
-			return (node);
-		node = node->next;
+		if (!ft_strncmp(env_node->key, key_to_find, ft_strlen(env_node->key) + 1))
+			return (env_node);
+		env_node = env_node->next;
 	}
 	return (NULL);
 }

@@ -15,7 +15,21 @@
 #include "env.h"
 #include "built_in.h"
 #include "input.h"
-#include <stdio.h>
+
+void	test_env(t_data *data)
+{
+	t_env_var *node;
+
+	node = data->env;
+
+	while (node != NULL)
+	{
+		printf("key = %s\n", node->key);
+		printf("value = %s\n", node->value);
+		printf("\n");
+		node = node->next;
+	}
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -23,8 +37,9 @@ int	main(int argc, char **argv, char **envp)
 
 	data = ft_calloc(sizeof(t_data), sizeof(t_data));
 	parse_env(data, envp);
+	// test_env(data);
 	rl_loop(data);
-	// print_envp(data);
+	// print_envp(data, 1);
 	// export(data, NULL);
 	// export(data, test);
 	// print_envp(data);
