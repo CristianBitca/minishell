@@ -44,6 +44,7 @@ void	echo(t_data *data, char **args, int out_fd)
 {
 	int	print_newline;
 
+	args++;
 	if (check_n(*args) == 1)
 		print_newline = 1;
 	else
