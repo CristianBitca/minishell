@@ -14,30 +14,30 @@
 
 int	syntax_error(char *invalid_val)
 {
-	write (2, "syntax error near unexpected token '", 36);
+	write (2, "syntax error near unexpected token `", 36);
 	write (2, invalid_val, ft_strlen(invalid_val));
-	write (2, "\n", 1);
+	write (2, "'\n", 2);
 	return (0);
 }
 
 int	validate_tokens(t_data *data)
 {
-	t_token *temp;
+	t_token *token;
 
-	temp = data->tokens;
-	while (temp->next != NULL)
+	token = data->tokens;
+	while (token->next != NULL)
 	{
-		if (temp->type == REDIR_HEREDOC && temp->next->type != WORD)
-			return (syntax_error(temp->next->value));
-		if (temp->type == REDIR_APPEND && temp->next->type != WORD)
-			return (syntax_error(temp->next->value));
-		if (temp->type == REDIR_IN && temp->next->type != WORD)
-			return (syntax_error(temp->next->value));
-		if (temp->type == REDIR_OUT && temp->next->type != WORD)
-			return (syntax_error(temp->next->value));
-		if (temp->type == PIPE && temp->next->type == PIPE)
-			return (syntax_error(temp->next->value));
-		temp = temp->next;
+		if (token->type == REDIR_HEREDOC && token->next->type != WORD)
+			return (syntax_error(token->next->value));
+		if (token->type == REDIR_APPEND && token->next->type != WORD)
+			return (syntax_error(token->next->value));
+		if (token->type == REDIR_IN && token->next->type != WORD)
+			return (syntax_error(token->next->value));
+		if (token->type == REDIR_OUT && token->next->type != WORD)
+			return (syntax_error(token->next->value));
+		if (token->type == PIPE && token->next->type == PIPE)
+			return (syntax_error(token->next->value));
+		token = token->next;
 	}
 	return (1);
 }

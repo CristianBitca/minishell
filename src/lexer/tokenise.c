@@ -16,7 +16,7 @@
 void	tokenise(t_data *data, char *input)
 {
 	t_lexer	*lexer;
-
+	
 	lexer = malloc(sizeof(*lexer));
 	lexer->pos = 0;
 	lexer->line = input;
@@ -25,9 +25,10 @@ void	tokenise(t_data *data, char *input)
 	{
 		while (lexer->line[lexer->pos] == ' ')
 			lexer->pos++;
-		if (is_operator(lexer->line[lexer->pos] == 1))
+		if (is_operator(lexer->line[lexer->pos]) == 1)
 			add_operator_token(data, lexer);
 		else if (lexer->line[lexer->pos] != '\0')
 			add_word_token(data, lexer);
 	}
+	free(lexer);
 }
