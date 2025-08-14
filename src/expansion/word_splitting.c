@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include "libft.h"
 #include "minishell.h"
-#include <stdlib.h>
+#include <stdio.h>
 
 void	insert_token(t_token *node, char *value)
 {
@@ -23,7 +24,7 @@ void	insert_token(t_token *node, char *value)
 	new_token->prev = node;
 }
 
-void	tok_branch(t_token *node, char **expansion, char *post_expand, int join_back)
+void	split_branch(t_token *node, char **expansion, char *remainder, int join_back)
 {
 	t_token	*post_branch;
 	char	*temp;
@@ -37,36 +38,45 @@ void	tok_branch(t_token *node, char **expansion, char *post_expand, int join_bac
 	}
 	if (join_back == 1)
 	{
-		temp = node->value;
-		node->value = ft_strjoin(temp, post_expand);
+		temp = post_branch->value;
+		post_branch->value = ft_strjoin(remainder, temp);
 		free(temp);
 	}
-	else
+	else if (remainder[0] != '\0')
 	{
-		insert_token(node, post_expand);
+		insert_token(node, remainder);
 		node = node->next;
 	}
 	node->next = post_branch;
-	post_branch->prev = node;
+	if (post_branch != NULL)
+		post_branch->prev = node;
 }
 
-void	split_word(t_token *token, char *expand_value, char *post_expand)
+void	split_word(t_token *token, char *expand_value, char *remainder)
 {
 	char	**split_expansion;
 	char	*temp;
 	int		join_back;
+	int		i;
 
-	if (expand_value[ft_strlen(expand_value) - 1] == ' ')
+	if (expand_value[ft_strlen(expand_value) - 1] != ' ' && token->next != NULL)
 		join_back = 1;
 	split_expansion = ft_split(expand_value, ' ');
-	if (expand_value[0] != ' ')
+	i = 0;
+	if (expand_value[0] != ' ' || *token->value == '\0')
 	{
 		temp = token->value;
-		token->value = ft_strjoin(temp, *split_expansion);
-		(free(temp), free(*split_expansion));
-		split_expansion++;
+		token->value = ft_strjoin(temp, split_expansion[i]);
+		(free(temp), free(split_expansion[i]));
+		i++;
 	}
-	if (*split_expansion)
-		tok_branch(token, split_expansion, post_expand, join_back);
-	free(split_expansion);
+	if (split_expansion[i])
+		split_branch(token, &split_expansion[i], remainder, join_back);
+	else
+	{
+		temp = token->value;
+		token->value = ft_strjoin(temp, remainder);
+		free(temp);
+	}
+	(free(split_expansion), free(remainder));
 }

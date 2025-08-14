@@ -14,7 +14,6 @@
 #include "minishell.h"
 #include "env.h"
 #include "expansion.h"
-#include <stdlib.h>
 
 // When an invalid char follows $ (any which is not alphabetic or an '_'
 // or a '?'), or when the string following the $ is not found in the
@@ -48,10 +47,7 @@ void	expand_exit_code(t_data *data, t_token *token, char *expand_ptr)
 	temp = ft_strjoin(pre_var, exit_code);
 	post_var = expand_ptr + 2;
 	new_word = ft_strjoin(temp, post_var);
-	free(temp);
-	free(pre_var);
-	free(exit_code);
-	free(token->value);
+	(free(temp), free(pre_var), free(exit_code), free(token->value));
 	token->value = new_word;
 }
 
@@ -59,38 +55,42 @@ void	valid_env_expand(t_data *data, t_token *token, char *key, char *remainder)
 {
 	char	*expand_value;
 	char	*pre_expand;
+	int		og_length;
+	int		$_index;
 
-	pre_expand = ft_substr(token->value, 0, key - token->value);
+	og_length = ft_strlen(token->value) + 1;
+	$_index = ft_strnstr(token->value, key, og_length) - token->value;
+	pre_expand = ft_substr(token->value, 0, ($_index - 1));
 	expand_value = find_env(data->env, key);
-	free(token->value);
+	(free(token->value), free(key));
 	token->value = pre_expand;
-	free(key);
 	split_word(token, expand_value, remainder);
 }
 
 // Checks
 void	expand_env(t_data *data, t_token *token, char *expand_ptr)
 {
+	char	*remainder;
 	char	*to_expand;
-	char	*hold_value;
 	int		i;
 
 	i = 1;
 	if (expand_ptr[i] == '?')
 		return (expand_exit_code(data, token, expand_ptr));
+	if (expand_ptr[i] == '"' || expand_ptr[i] == '\'')
+		return (invalid_env_expansion(token, expand_ptr, 1));
 	if (ft_isalpha(expand_ptr[i]) == 0 && expand_ptr[i] != '_')
 		return (invalid_env_expansion(token, expand_ptr, 2));
 	while (expand_ptr[i] != '\0' && expand_ptr[i] != '$'
 		&& (expand_ptr[i] != '"') && (expand_ptr[i] != '\''))
 		i++;
-	to_expand = ft_substr(expand_ptr + 1, 0, (i - 1));
+	to_expand = ft_substr(expand_ptr, 1, i);
 	if (find_env(data->env, to_expand) == NULL)
 	{
 		invalid_env_expansion(token, expand_ptr, i);
 		free(to_expand);
 		return ;
 	}
-	hold_value = token->value;
-	valid_env_expand(data, token, to_expand, to_expand + (i + 1));
-	free(hold_value);
+	remainder = ft_strdup(expand_ptr + i);
+	valid_env_expand(data, token, to_expand, remainder);
 }
