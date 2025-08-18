@@ -12,17 +12,30 @@
 
 #include "parser.h"
 
-char	*expand_var(t_data *data, t_token *token)
+char	*expand_var(t_data *data, char *var)
 {
 	char	*buffer;
 
-	printf("THis is var: %s\n", &token->value[1]);
-	if (token->value[0] != '$')
-		return (printf("FAIL TO EXPAND VAR\n"), token->value);
-	printf("LEnght of value: %ld\n", ft_strlen(token->value));
-	buffer = find_env(data->env, &token->value[1]);
+	if (var[0] == '?')
+	{
+		printf("EXIT code\n");
+		// buffer = ft_strjoin(buffer, &var[1]);
+	}
+	else
+		buffer = find_env(data->env->next, var);
+	if (!buffer)
+		buffer = ft_strdup("");
 	return (buffer);
 }
+
+char	*exapnd_s_quote(char *value)
+{
+
+}
+
+// char	*expand_d_quote()
+
+// char	*expand_word()
 
 void	expand(t_data *data, t_lexer *lex)
 {
@@ -32,7 +45,9 @@ void	expand(t_data *data, t_lexer *lex)
 	while (temp)
 	{
 		if (temp->type == VAR)
-			expand_var(data, temp);
+			temp->value = expand_var(data, &temp->value[1]);
+		if (temp->type == S_QUATE)
+			temp->value = expand_s_quote(temp->value);
 		temp = temp->next;
 	}
 }

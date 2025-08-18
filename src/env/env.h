@@ -13,6 +13,10 @@
 #ifndef ENV_H
 # define ENV_H
 
+typedef struct s_token		t_token;
+typedef struct s_lexer		t_lexer;
+typedef struct s_data		t_data;
+
 typedef struct s_env_var
 {
 	char				*key;
