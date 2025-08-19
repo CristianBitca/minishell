@@ -1,13 +1,7 @@
-<<<<<<< HEAD
-CC      = cc
-# CFLAGS  = -Wall -Wextra -Werror
-CFLAGS  = -Wall -Wextra -Werror -fsanitize=address -g3 -O0
-=======
 NAME    = minishell
->>>>>>> skirwan
 
 CC      = cc
-CFLAGS  = -Wall -Wextra -Werror -g3 -O0 -Iinc
+CFLAGS  = -Wall -Wextra -Werror -fsanitize=address -g3 -O0 -Iinc
 
 SRC_DIR     = src/
 OBJ_DIR     = obj/
@@ -62,11 +56,7 @@ $(LIBFT_A):
 
 $(NAME): $(OBJECTS)
 	@echo "Compiling $(NAME)..."
-<<<<<<< HEAD
-	$(CC) $(CFLAGS) $(OBJS) -I$(INC_DIR) -I$(LIBFT_DIR) $(LIBFT_LIB) -o $(NAME) -lreadline
-=======
 	$(CC) $(CFLAGS) $(OBJECTS) -I$(INC_DIR) $(LIBFT_LIB) -lreadline -o $(NAME)
->>>>>>> skirwan
 
 clean:
 	@echo "Cleaning object files..."
