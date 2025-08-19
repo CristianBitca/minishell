@@ -13,7 +13,6 @@
 #include "lexer.h"
 #include "libft.h"
 #include "minishell.h"
-#include <stdio.h>
 
 void	insert_token(t_token *node, char *value)
 {

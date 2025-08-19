@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:01:14 by skirwan           #+#    #+#             */
-/*   Updated: 2025/08/11 15:36:13 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/08/19 14:37:37 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,15 @@
 // to the string before the invalid variable.
 void	invalid_env_expansion(t_token *token, char *expand_ptr, int var_size)
 {
+	char	*post_var;
 	char	*pre_var;
 	char	*new_word;
 
 	pre_var = ft_substr(token->value, 0, expand_ptr - token->value);
+	post_var = expand_ptr;
 	while (var_size-- > 0)
-		expand_ptr++;
-	new_word = ft_strjoin(pre_var, expand_ptr);
+		post_var++;
+	new_word = ft_strjoin(pre_var, post_var);
 	(free(pre_var), free(token->value));
 	token->value = new_word;
 }
@@ -82,7 +84,8 @@ void	expand_env(t_data *data, t_token *token, char *expand_ptr)
 	if (ft_isalpha(expand_ptr[i]) == 0 && expand_ptr[i] != '_')
 		return (invalid_env_expansion(token, expand_ptr, 2));
 	while (expand_ptr[i] != '\0' && expand_ptr[i] != '$'
-		&& (expand_ptr[i] != '"') && (expand_ptr[i] != '\''))
+		&& expand_ptr[i] != '"' && expand_ptr[i] != '\''
+		&& (ft_isalnum(expand_ptr[i]) == 1 || expand_ptr[i] == '_'))
 		i++;
 	to_expand = ft_substr(expand_ptr, 1, i);
 	if (find_env(data->env, to_expand) == NULL)

@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 11:45:53 by skirwan           #+#    #+#             */
-/*   Updated: 2025/08/07 15:34:43 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/08/19 13:40:32 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_token	*create_token(char *value, t_tokentype type)
 	new_token->type = type;
 	new_token->value = value;
 	new_token->next = NULL;
+	new_token->prev = NULL;
 	return (new_token);
 }
 

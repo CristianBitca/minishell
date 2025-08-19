@@ -13,7 +13,6 @@
 #include "libft.h"
 #include "minishell.h"
 #include "env.h"
-#include "built_in.h"
 #include "input.h"
 
 void	test_env(t_data *data)
@@ -47,7 +46,6 @@ int	main(int argc, char **argv, char **envp)
 	// test = rl_loop(data);
 	free(data);
 	return (0);
-	// (void)test;
 	(void)argc;
 	(void)argv;
 	(void)envp;

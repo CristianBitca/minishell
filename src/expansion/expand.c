@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 12:15:34 by skirwan           #+#    #+#             */
-/*   Updated: 2025/08/08 16:08:58 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/08/19 15:05:35 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,17 @@ void	find_expansions(t_data *data, t_token *token)
 	{
 		if (word[i] == '$' && word[i + 1] != '\0')
 		{
-			expand_env(data, token, &word[i]);
-			word = token->value;
-			i = 0;
+			if (token->prev == NULL || token->prev->type != REDIR_HEREDOC)
+			{
+				expand_env(data, token, &word[i]);
+				word = token->value;
+				i = -1;
+			}
 		}
+		else if (word[i] == '"')
+			i = -1; //expand dbl
+		else if (word[i] == '\'')
+			i = -1; //expand sgl
 		i++;
 	}
 }
