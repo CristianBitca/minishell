@@ -26,15 +26,18 @@ SRC    = main.c \
 		  execution/child_process.c \
 		  execution/multiple_commands.c \
 		  execution/single_command.c \
+		  expansion/expand.c \
+		  expansion/expand_env.c \
+		  expansion/word_splitting.c \
 		  input/get_input.c \
 		  lexer/create_tokens.c \
 		  lexer/is_operator.c \
 		  lexer/tokenise.c \
 		  lexer/token_list_utils.c \
 		  lexer/validate_tokens.c \
-		  expansion/expand.c \
-		  expansion/expand_env.c \
-		  expansion/word_splitting.c \
+		  parser/create_processes.c \
+		  parser/parse_process.c \
+		  parser/open_infiles.c
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
