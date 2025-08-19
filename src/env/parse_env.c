@@ -12,9 +12,6 @@
 
 #include "minishell.h"
 
-<<<<<<< HEAD
-void	split_env(t_env_var *env, char *env_value)
-=======
 t_env_var	*stack_last(t_env_var *first)
 {
 	t_env_var	*node;
@@ -57,7 +54,6 @@ void	append_stack(t_env_var **node_lst, t_env_var *new)
 }
 
 void	parse_env(t_data *data, char **envp)
->>>>>>> skirwan
 {
 	char	*key;
 	char	*value;

@@ -16,19 +16,6 @@
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <termios.h>
-<<<<<<< HEAD:include/minishell.h
-# include <stdbool.h>
-# include "../lib/libft/include/libft.h"
-# include "../src/env/env.h"
-# include "../src/parser/parser.h"
-# include "../src/cmd_line/cmd_line.h"
-
-typedef struct s_data
-{
-	t_env_var	*env;
-	char		*line;
-	char		*prompt;
-=======
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "libft.h"
@@ -79,7 +66,6 @@ typedef struct s_data
 	struct s_prcs		**processes;
 	t_env_var			*env;
 	int					exit_status;
->>>>>>> skirwan:inc/minishell.h
 }	t_data;
 
 void	cmd_line(t_data *data);
