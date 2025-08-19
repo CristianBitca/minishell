@@ -1,19 +1,58 @@
+<<<<<<< HEAD
 CC      = cc
 # CFLAGS  = -Wall -Wextra -Werror
 CFLAGS  = -Wall -Wextra -Werror -fsanitize=address -g3 -O0
+=======
+NAME    = minishell
+>>>>>>> skirwan
 
-SRC_DIR     = src
-INC_DIR     = include
-LIB_DIR     = lib
+CC      = cc
+CFLAGS  = -Wall -Wextra -Werror -g3 -O0 -Iinc
+
+SRC_DIR     = src/
+OBJ_DIR     = obj/
+INC_DIR     = inc/
+LIB_DIR     = lib/
 LIBFT_DIR   = $(LIB_DIR)/libft
 
 LIBFT_A     = $(LIBFT_DIR)/libft.a
 LIBFT_LIB   = -L$(LIBFT_DIR) -lft
 
-SRCS    = $(shell find $(SRC_DIR) -name "*.c")
-OBJS    = $(SRCS:.c=.o)
+SRC    = main.c \
+		  built_in/cd.c \
+		  built_in/echo.c \
+		  built_in/export.c \
+		  built_in/export_utils.c \
+		  built_in/print_env.c \
+		  built_in/pwd.c \
+		  built_in/unset.c \
+		  env/parse_env.c \
+		  env/find_env.c \
+		  execution/check_built_in.c \
+		  execution/child_process.c \
+		  execution/multiple_commands.c \
+		  execution/single_command.c \
+		  expansion/expand.c \
+		  expansion/expand_env.c \
+		  expansion/word_splitting.c \
+		  input/get_input.c \
+		  lexer/create_tokens.c \
+		  lexer/is_operator.c \
+		  lexer/tokenise.c \
+		  lexer/token_list_utils.c \
+		  lexer/validate_tokens.c \
+		  parser/create_processes.c \
+		  parser/parse_process.c \
+		  parser/open_infiles.c
 
-NAME    = minishell
+SRCS = $(addprefix $(SRC_DIR), $(SRC))
+
+OBJS    = $(SRC:.c=.o)
+OBJECTS = $(addprefix $(OBJ_DIR), $(OBJS))
+
+$(OBJ_DIR)%.o : $(SRC_DIR)%.c | $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(LIBFT_A) $(NAME)
 
@@ -21,13 +60,17 @@ $(LIBFT_A):
 	@echo "Compiling libft..."
 	$(MAKE) -sC $(LIBFT_DIR)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJECTS)
 	@echo "Compiling $(NAME)..."
+<<<<<<< HEAD
 	$(CC) $(CFLAGS) $(OBJS) -I$(INC_DIR) -I$(LIBFT_DIR) $(LIBFT_LIB) -o $(NAME) -lreadline
+=======
+	$(CC) $(CFLAGS) $(OBJECTS) -I$(INC_DIR) $(LIBFT_LIB) -lreadline -o $(NAME)
+>>>>>>> skirwan
 
 clean:
 	@echo "Cleaning object files..."
-	rm -f $(OBJS)
+	rm -f $(OBJECTS)
 	$(MAKE) -sC $(LIBFT_DIR) clean
 
 fclean: clean
