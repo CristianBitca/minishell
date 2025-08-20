@@ -15,7 +15,8 @@
 
 // Whenever we see a pipe, we know that we have another process to create
 // which will have its own argv, infile and outfile. We start at 1 process
-// because the first does not require a pipe.
+// because the first does not require a pipe. We calloc an extra prcs in the
+// array for NULL termination.
 int	allocate_processes(t_data *data)
 {
 	t_token	*traverser;

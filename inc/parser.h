@@ -23,6 +23,10 @@ void	create_processes(t_data *data);
 void	assign_prcs(t_data *data, t_token *first, int token_count, int prcs_index);
 
 // open_infiles.c
-int		open_infiles(t_token *first, int token_count);
+int		check_infile_permissions(char *file_path);
+int		*create_infilefds_array(t_token *traverser, int token_count);
+int		open_infile(int *fds, int fd_index, char *file_path);
+int		close_infilefds(int **fds, int fds_index);
+int		handle_infiles(t_token *first, int token_count, int pipe_in);
 
 #endif

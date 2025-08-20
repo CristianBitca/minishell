@@ -15,6 +15,7 @@
 #include "input.h"
 #include "lexer.h"
 #include "expansion.h"
+#include "parser.h"
 
 void	print_tokens(t_data *data)
 {
@@ -57,7 +58,8 @@ void	rl_loop(t_data *data)
 		printf("**********************************\n");
 		printf("token chain post expansion:\n");
 		print_tokens(data);
-		//parse(input)
+		//parse(data):
+		create_processes(data);
 		//(execute)
 	}
 	return ;
