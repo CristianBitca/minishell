@@ -31,10 +31,10 @@ void	find_expansions(t_data *data, t_token *token)
 				i = -1;
 			}
 		}
-		else if (word[i] == '"')
-			i = -1; //expand dbl
-		else if (word[i] == '\'')
-			i = -1; //expand sgl
+		// else if (word[i] == '"')
+		// 	i = -1; //expand dbl
+		// else if (word[i] == '\'')
+		// 	i = -1; //expand sgl
 		i++;
 	}
 }

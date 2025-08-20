@@ -51,10 +51,11 @@ void	add_operator_token(t_data *data, t_lexer *lexer)
 int	handle_quotes(t_lexer *lex, char end_quote)
 {
 	while (lex->line[lex->pos] != end_quote
-		&& (lex->pos < lex->line_size))
+		&& lex->pos < lex->line_size)
 		lex->pos++;
 	if (lex->line[lex->pos] != end_quote)
 		return (syntax_error(&end_quote));
+	lex->pos++;
 	return (1);
 }
 

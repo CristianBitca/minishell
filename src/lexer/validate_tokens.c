@@ -23,7 +23,8 @@ int	syntax_error(char *invalid_val)
 // The only valid token after a redirection is a word. Following a pipe
 // there cannot be another pipe because we are not handling the || operator.
 // Also the first token cannot be a pipe, the last token also cannot be
-// a pipe because we are not handling unclosed quotes.
+// a pipe because we are not handling unclosed quotes. The last token
+// also cannot be a redirection.
 int	validate_tokens(t_data *data)
 {
 	t_token *token;
@@ -45,7 +46,9 @@ int	validate_tokens(t_data *data)
 			return (syntax_error(token->next->value));
 		token = token->next;
 	}
-	if (token->type == PIPE)
-		return (syntax_error(token->value));
+	if (token->type == PIPE || token->type == REDIR_APPEND
+		|| token->type == REDIR_IN || token->type == REDIR_HEREDOC
+		|| token->type == REDIR_OUT)
+		return (syntax_error("newline"));
 	return (1);
 }
