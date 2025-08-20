@@ -28,11 +28,6 @@ char	*expand_var(t_data *data, char *var)
 	return (buffer);
 }
 
-char	*exapnd_s_quote(char *value)
-{
-
-}
-
 // char	*expand_d_quote()
 
 // char	*expand_word()

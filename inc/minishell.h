@@ -46,6 +46,17 @@ typedef struct s_lexer
 	int		pos;
 }	t_lexer;
 
+typedef struct s_expand
+{
+	char	*before;
+	char	*expand;
+	char	*after;
+	int		pos;
+	int		start;
+	int		size;
+}	t_expand;
+
+
 typedef struct s_prcs
 {
 	char	**argv;

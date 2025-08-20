@@ -2,6 +2,7 @@ NAME    = minishell
 
 CC      = cc
 CFLAGS  = -Wall -Wextra -Werror -fsanitize=address -g3 -O0 -Iinc
+# CFLAGS  = -Wall -Wextra -Werror -g3 -O0 -Iinc
 
 SRC_DIR     = src/
 OBJ_DIR     = obj/
@@ -28,6 +29,7 @@ SRC    = main.c \
 		  execution/single_command.c \
 		  expansion/expand.c \
 		  expansion/expand_env.c \
+		  expansion/expand_s_quote.c \
 		  expansion/word_splitting.c \
 		  input/get_input.c \
 		  lexer/create_tokens.c \

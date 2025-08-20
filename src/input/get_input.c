@@ -49,7 +49,7 @@ void	rl_loop(t_data *data)
 	{
 		add_history(input);
 		tokenise(data, input);
-		validate_tokens(data);
+		// validate_tokens(data);
 		printf("**********************************\n");
 		printf("token chain pre expansion:\n:");
 		print_tokens(data);

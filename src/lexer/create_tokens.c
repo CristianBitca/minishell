@@ -55,6 +55,7 @@ int	handle_quotes(t_lexer *lex, char end_quote)
 		lex->pos++;
 	if (lex->line[lex->pos] != end_quote)
 		return (syntax_error(&end_quote));
+	lex->pos++;
 	return (1);
 }
 

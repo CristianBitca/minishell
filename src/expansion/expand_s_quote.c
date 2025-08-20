@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   expand_s_quote.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbitca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/09 17:48:26 by cbitca            #+#    #+#             */
-/*   Updated: 2025/06/09 17:48:27 by cbitca           ###   ########.fr       */
+/*   Created: 2025/08/19 20:26:38 by cbitca            #+#    #+#             */
+/*   Updated: 2025/08/19 20:26:40 by cbitca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "minishell.h"
+#include "expansion.h"
 
-# include "../../include/minishell.h"
-# include "lexer/lexer.h"
-# include "../env/env.h"
-
-typedef struct s_token		t_token;
-typedef struct s_lexer		t_lexer;
-typedef struct s_data		t_data;
-typedef struct s_env_var	t_env_var;
-
-void	parse(t_data *data);
-void	validate_tokens(t_lexer *lex);
-
-void	expand(t_data *data, t_lexer *lex);
-
-#endif
+void	expand_s_quote(t_token *token, t_expand *exp)
+{
+	(void)token;
+	(void)exp;
+}

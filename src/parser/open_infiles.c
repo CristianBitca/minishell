@@ -22,6 +22,7 @@ int	open_infiles(t_token *first, int token_count)
 	while (token_count--)
 	{
 		if (traverser->type == REDIR_IN)
+			infilefd = 0;
 	}
 	return (infilefd);
 }

@@ -14,7 +14,7 @@
 
 int	syntax_error(char *invalid_val)
 {
-	write (STDERR_FILENO, "syntax error near unexpected token `", 36);
+	write (STDERR_FILENO, "syntax error near unexpected token '", 36);
 	write (STDERR_FILENO, invalid_val, ft_strlen(invalid_val));
 	write (STDERR_FILENO, "'\n", 2);
 	return (0);
