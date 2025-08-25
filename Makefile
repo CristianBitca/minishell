@@ -29,7 +29,7 @@ SRC    = main.c \
 		  execution/single_command.c \
 		  expansion/expand.c \
 		  expansion/expand_env.c \
-		  expansion/expand_s_quote.c \
+		  expansion/expand_quote.c \
 		  expansion/word_splitting.c \
 		  input/get_input.c \
 		  lexer/create_tokens.c \
