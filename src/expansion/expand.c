@@ -13,32 +13,47 @@
 #include "minishell.h"
 #include "expansion.h"
 
-void	split_expand(t_token *token, t_expand *exp)
+void	free_exp(t_expand *exp)
 {
-	int	after_len;
-	int	comb_len;
+	if (!exp)
+	{
+		if (!exp->after)
+			free(exp->after);
+		if (!exp->before)
+			free(exp->before);
+		if (!exp->expand)
+			free(exp->expand);
+		free(exp);
+	}
+}
 
-	exp->start = exp->pos;
-	if (token->value[exp->start] == '$')
-		while (token->value[exp->pos] != ' ' && token->value[exp->pos]
-			&& token->value[exp->pos] != '\'' && token->value[exp->pos] != '"')
-			exp->pos++;
-	else if (token->value[exp->start] == '\'')
-		while (token->value[exp->pos] != '\'')
-			exp->pos++;
-	else if (token->value[exp->start] == '"')
-		while (token->value[exp->pos] != '"')
-			exp->pos++;
-	after_len = ft_strlen(&token->value[exp->pos]);
-	comb_len = ft_strlen(&token->value[exp->start]);
-	exp->expand = ft_substr(token->value, exp->start, exp->pos - exp->start);
-	exp->after = ft_substr(token->value, exp->pos, after_len);
-	exp->before = ft_substr(token->value, 0, exp->size - comb_len);
-	printf("------------------------\n");
-	printf("ONe by one: %s: \n", exp->after);
-	printf("ONe by one: %s: \n", exp->before);
-	printf("ONe by one: %s: \n", exp->expand);
-	printf("------------------------\n");
+void	split_expand(t_token *tok, t_expand *exp)
+{
+	exp->start = exp->pos++;
+	while (tok->value[exp->start] == '$' && tok->value[exp->pos]
+		&& tok->value[exp->pos] != '$' && (ft_isalnum(tok->value[exp->pos])
+			|| tok->value[exp->pos] == '_' || tok->value[exp->pos] == '?'))
+		exp->pos++;
+	while (tok->value[exp->start] == '\''
+		&& tok->value[exp->pos] != '\'' && tok->value[exp->pos])
+		exp->pos++;
+	while (tok->value[exp->start] == '"'
+		&& tok->value[exp->pos] != '"' && tok->value[exp->pos])
+		exp->pos++;
+	if (tok->value[exp->start] == '\'' || tok->value[exp->start] == '"')
+		exp->pos++;
+	if (!exp->expand)
+		(free(exp->expand), exp->l_expand = 0);
+	exp->l_expand = exp->pos - exp->start;
+	exp->expand = ft_substr(tok->value, exp->start, exp->l_expand);
+	if (!exp->after)
+		(free(exp->after), exp->l_after = 0);
+	exp->l_after = ft_strlen(&tok->value[exp->pos]);
+	exp->after = ft_substr(tok->value, exp->pos, exp->l_after);
+	if (!exp->before)
+		(free(exp->before), exp->l_before = 0);
+	exp->l_before = exp->size - exp->l_after - exp->l_expand;
+	exp->before = ft_substr(tok->value, 0, exp->l_before);
 }
 
 void	find_expansions(t_data *data, t_token *token)
@@ -51,39 +66,35 @@ void	find_expansions(t_data *data, t_token *token)
 	{
 		if (token->value[exp->pos] == '$' && token->value[exp->pos + 1])
 		{
-			if (token->prev == NULL || token->prev->type != REDIR_HEREDOC)
-			{
-				split_expand(token, exp);
-				expand_env(data, token, exp);
-			}
+			split_expand(token, exp);
+			expand_env(data, token, exp);
 		}
 		else if (token->value[exp->pos] == '\'')
 		{
 			split_expand(token, exp);
-			// expand_s_quote(token, exp);
+			expand_s_quote(token, exp);
+		}
+		else if (token->value[exp->pos] == '"')
+		{
+			split_expand(token, exp);
+			expand_d_quote(token, exp);
 		}
 		else
 			exp->pos++;
-		// else if (word[i] == '"')
-		// 	i = -1; //expand dbl
-		// else if (word[i] == '\'')
-		// {
-		// 	expand_s_quote(token, &word[i]);
-		// 	word = token->value;
-		// }
 	}
-	(void)data;
+	free_exp(exp);
 }
 
 void	expand(t_data *data)
 {
-	t_token	*token_node;
+	t_token	*token;
 
-	token_node = data->tokens;
-	while (token_node)
+	token = data->tokens;
+	while (token)
 	{
-		if (token_node->type == WORD)
-			find_expansions(data, token_node);
-		token_node = token_node->next;
+		if (token->type == WORD
+			&& (token->prev == NULL || token->prev->type != REDIR_HEREDOC))
+			find_expansions(data, token);
+		token = token->next;
 	}
 }

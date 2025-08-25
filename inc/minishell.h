@@ -51,6 +51,9 @@ typedef struct s_expand
 	char	*before;
 	char	*expand;
 	char	*after;
+	int		l_before;
+	int		l_expand;
+	int		l_after;
 	int		pos;
 	int		start;
 	int		size;
