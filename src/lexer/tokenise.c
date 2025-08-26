@@ -13,10 +13,22 @@
 #include "minishell.h"
 #include "lexer.h"
 
+void	free_tokens(t_token *token)
+{
+	t_token	*temp;
+
+	while (token)
+	{
+		temp = token;
+		token = token->next;
+		free(temp);
+	}
+}
+
 void	tokenise(t_data *data, char *input)
 {
 	t_lexer	*lexer;
-	
+
 	lexer = malloc(sizeof(*lexer));
 	lexer->pos = 0;
 	lexer->line = input;

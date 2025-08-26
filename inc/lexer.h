@@ -31,6 +31,7 @@ int		add_word_token(t_data *data, t_lexer *lexer);
 
 // tonkenise.c
 void	tokenise(t_data *data, char *input);
+void	free_tokens(t_token *token);
 
 // validate_tokens.c
 int	syntax_error(char *invalid_val);

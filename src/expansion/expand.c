@@ -15,16 +15,16 @@
 
 void	free_exp(t_expand *exp)
 {
-	if (!exp)
+	if (exp)
 	{
-		if (!exp->after)
+		if (exp->after)
 			free(exp->after);
-		if (!exp->before)
+		if (exp->before)
 			free(exp->before);
-		if (!exp->expand)
+		if (exp->expand)
 			free(exp->expand);
-		free(exp);
 	}
+	free(exp);
 }
 
 void	split_expand(t_token *tok, t_expand *exp)
@@ -95,6 +95,8 @@ void	expand(t_data *data)
 		if (token->type == WORD
 			&& (token->prev == NULL || token->prev->type != REDIR_HEREDOC))
 			find_expansions(data, token);
+		// if (ft_strchr(token->value, ' '))
+		// 	split_word(data, token);
 		token = token->next;
 	}
 }

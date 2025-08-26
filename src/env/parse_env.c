@@ -12,6 +12,18 @@
 
 #include "minishell.h"
 
+void	free_env(t_env_var *token)
+{
+	t_env_var	*temp;
+
+	while (token)
+	{
+		temp = token;
+		token = token->next;
+		free(temp);
+	}
+}
+
 t_env_var	*stack_last(t_env_var *first)
 {
 	t_env_var	*node;
@@ -67,6 +79,8 @@ void	parse_env(t_data *data, char **envp)
 		key = ft_substr(*envp, 0, i);
 		value = ft_strdup(&((*envp)[i + 1]));
 		append_stack(&data->env, new_node(key, value));
+		free(key);
+		free(value);
 		envp++;
 	}
 }

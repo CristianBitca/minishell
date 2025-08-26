@@ -30,7 +30,6 @@ void	expand_s_quote(t_token *token, t_expand *exp);
 void	expand_d_quote(t_token *token, t_expand *exp);
 
 //word_splitting.c
-void	insert_token(t_token *node, char *value);
-void	tok_branch(t_token *node, char **expansion, char *post_expand, int join_back);
-void	split_word(t_token *token, char *expand_value, char *post_expand);
+void	insert_tokens(t_data *data, t_token *node, t_token *tokens);
+void	split_word(t_data *data, t_token *token);
 #endif
