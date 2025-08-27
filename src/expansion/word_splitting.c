@@ -13,6 +13,7 @@
 #include "lexer.h"
 #include "libft.h"
 #include "minishell.h"
+#include "expansion.h"
 
 void	insert_tokens(t_data *data, t_token *node, t_token *tokens)
 {
@@ -44,4 +45,5 @@ void	split_word(t_data *data, t_token *token)
 		split_tokens++;
 	}
 	insert_tokens(data, token, buffer->next);
+	expand(data);
 }

@@ -18,7 +18,10 @@ void	expand_s_quote(t_token *token, t_expand *exp)
 	char	*free_word;
 	char	*new_word;
 
+	free_word = exp->expand;
 	exp->expand = ft_substr(exp->expand, 1, exp->l_expand - 2);
+	free(free_word);
+	printf("INside of single quote this %s\n", exp->expand);
 	exp->l_expand = ft_strlen(exp->expand);
 	new_word = ft_strjoin(exp->before, exp->expand);
 	free_word = new_word;
@@ -35,7 +38,9 @@ void	expand_d_quote(t_token *token, t_expand *exp)
 	char	*free_word;
 	char	*new_word;
 
+	free_word = exp->expand;
 	exp->expand = ft_substr(exp->expand, 1, exp->l_expand - 2);
+	free(free_word);
 	exp->l_expand = ft_strlen(exp->expand);
 	new_word = ft_strjoin(exp->before, exp->expand);
 	free_word = new_word;

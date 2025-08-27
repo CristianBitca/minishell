@@ -34,7 +34,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
 
-	data = ft_calloc(sizeof(t_data), sizeof(t_data));
+	data = ft_calloc(sizeof(t_data), 1);
 	parse_env(data, envp);
 	// test_env(data);
 	rl_loop(data);

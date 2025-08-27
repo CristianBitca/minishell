@@ -12,8 +12,9 @@
 
 #include "minishell.h"
 #include "expansion.h"
+#include "env.h"
 
-void	free_exp(t_expand *exp)
+void	free_exp(t_data *data, t_expand *exp)
 {
 	if (exp)
 	{
@@ -21,7 +22,7 @@ void	free_exp(t_expand *exp)
 			free(exp->after);
 		if (exp->before)
 			free(exp->before);
-		if (exp->expand)
+		if (exp->expand && find_env(data->env, exp->expand))
 			free(exp->expand);
 	}
 	free(exp);
@@ -45,7 +46,7 @@ void	split_expand(t_token *tok, t_expand *exp)
 	if (!exp->expand)
 		(free(exp->expand), exp->l_expand = 0);
 	exp->l_expand = exp->pos - exp->start;
-	exp->expand = ft_substr(tok->value, exp->start, exp->l_expand);
+	exp->expand = &tok->value[exp->start];
 	if (!exp->after)
 		(free(exp->after), exp->l_after = 0);
 	exp->l_after = ft_strlen(&tok->value[exp->pos]);
@@ -82,7 +83,7 @@ void	find_expansions(t_data *data, t_token *token)
 		else
 			exp->pos++;
 	}
-	free_exp(exp);
+	free_exp(data, exp);
 }
 
 void	expand(t_data *data)
@@ -95,8 +96,6 @@ void	expand(t_data *data)
 		if (token->type == WORD
 			&& (token->prev == NULL || token->prev->type != REDIR_HEREDOC))
 			find_expansions(data, token);
-		// if (ft_strchr(token->value, ' '))
-		// 	split_word(data, token);
 		token = token->next;
 	}
 }

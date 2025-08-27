@@ -1,32 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_env.c                                        :+:      :+:    :+:   */
+/*   utilits.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbitca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/20 18:57:52 by cbitca            #+#    #+#             */
-/*   Updated: 2025/08/11 13:47:22 by skirwan          ###   ########.fr       */
+/*   Created: 2025/06/09 19:41:40 by cbitca            #+#    #+#             */
+/*   Updated: 2025/06/09 19:41:41 by cbitca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-void	free_env(t_env_var *token)
-{
-	t_env_var	*temp;
-
-	while (token)
-	{
-		temp = token;
-		token = token->next;
-		if (temp->key)
-			free(temp->key);
-		if (temp->value)
-			free(temp->value);
-		free(temp);
-	}
-}
+#include "../../include/minishell.h"
 
 t_env_var	*stack_last(t_env_var *first)
 {
@@ -49,7 +33,6 @@ t_env_var	*new_node(char *key, char *value)
 		return (0);
 	node->key = key;
 	node->value = value;
-	node->next = NULL;
 	return (node);
 }
 
@@ -69,20 +52,13 @@ void	append_stack(t_env_var **node_lst, t_env_var *new)
 	}
 }
 
-void	parse_env(t_data *data, char **envp)
+char	*find_env(t_env_var *node, char *key_to_find)
 {
-	char	*key;
-	char	*value;
-	int		i;
-
-	while (*envp)
+	while (node)
 	{
-		i = 0;
-		while ((*envp)[i] != '=')
-			i++;
-		key = ft_substr(*envp, 0, i);
-		value = ft_strdup(&((*envp)[i + 1]));
-		append_stack(&data->env, new_node(key, value));
-		envp++;
+		if (!ft_strncmp(node->key, key_to_find, ft_strlen(node->key) + 1))
+			return (node->value);
+		node = node->next;
 	}
+	return (NULL);
 }

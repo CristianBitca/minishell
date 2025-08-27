@@ -83,5 +83,6 @@ typedef struct s_data
 }	t_data;
 
 void	cmd_line(t_data *data);
+void	print_tokens(t_data *data);
 
 #endif

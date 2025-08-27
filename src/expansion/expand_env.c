@@ -29,6 +29,7 @@ void	invalid_env_expansion(t_token *token, t_expand *exp)
 	exp->expand = ft_strdup("");
 	exp->l_expand = ft_strlen(exp->expand);
 	new_word = ft_strjoin(exp->before, exp->expand);
+	free(exp->expand);
 	free_word = new_word;
 	new_word = ft_strjoin(new_word, exp->after);
 	free(token->value);
@@ -46,6 +47,7 @@ void	expand_exit_code(t_data *data, t_token *token, t_expand *exp)
 	exp->expand = ft_itoa(data->exit_status);
 	exp->l_expand = ft_strlen(exp->expand);
 	new_word = ft_strjoin(exp->before, exp->expand);
+	free(exp->expand);
 	free_word = new_word;
 	new_word = ft_strjoin(new_word, exp->after);
 	free(token->value);
@@ -77,4 +79,6 @@ void	expand_env(t_data *data, t_token *token, t_expand *exp)
 	token->value = new_word;
 	exp->pos = exp->l_before + exp->l_expand;
 	exp->size = ft_strlen(new_word);
+	if (ft_strchr(token->value, ' '))
+		split_word(data, token);
 }
