@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 #include "parser.h"
-#include <stdlib.h>
 
 int	check_infile_permissions(char *file_path)
 {
@@ -34,7 +33,7 @@ int	check_infile_permissions(char *file_path)
 // Counts how many infile redirections there are within this process and
 // allocates an int array of that size plus one.
 // The last element in the array is set to -42 as a terminator.
-// Using -142 is possible because successful calls to open() will always return
+// Using -42 is possible because successful calls to open() will always return
 // a positive number for the fd, or will be -1 on error which we will catch.
 int	*create_infilefds_array(t_token *traverser, int token_count)
 {
@@ -91,7 +90,7 @@ int	close_infilefds(int **fds, int fds_index)
 		fds_index--;
 	}
 	free(fd_array);
-	return (1);
+	return (-1);
 }
 
 int	handle_infiles(t_token *traverser, int token_count, int read_pipe_fd)
