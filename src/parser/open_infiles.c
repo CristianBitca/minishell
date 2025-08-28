@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:47:13 by skirwan           #+#    #+#             */
-/*   Updated: 2025/08/19 14:58:37 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/08/28 15:33:10 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,12 @@ int	handle_infiles(t_token *traverser, int token_count, int read_pipe_fd)
 		}
 		traverser = traverser->next;
 	}
-	infile = fds[fd_index - 1];
-	close_infilefds(&fds, fd_index - 2);
 	if (fd_index == 0 && !read_pipe_fd)
-		return (STDIN_FILENO);
+		infile = STDIN_FILENO;
 	else if (fd_index != 0)
-		return (infile);
-	return (read_pipe_fd);
+		infile = fds[fd_index - 1];
+	else
+		infile = read_pipe_fd;
+	close_infilefds(&fds, fd_index - 2);
+	return (infile);
 }
