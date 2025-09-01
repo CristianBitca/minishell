@@ -16,7 +16,7 @@
 # include "minishell.h"
 
 //parse_env.c
-void	free_env(t_env_var *token);
+void		free_env(t_env_var *token);
 t_env_var	*stack_last(t_env_var *first);
 t_env_var	*new_node(char *key, char *value);
 void		append_stack(t_env_var **node_lst, t_env_var *new);
