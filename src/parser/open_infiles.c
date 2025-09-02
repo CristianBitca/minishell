@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:47:13 by skirwan           #+#    #+#             */
-/*   Updated: 2025/08/28 15:33:10 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/02 13:35:46 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,21 @@ int	check_infile_permissions(char *file_path)
 }
 
 // Counts how many infile redirections there are within this process and
-// allocates an int array of that size plus one.
-// The last element in the array is set to -42 as a terminator.
-// Using -42 is possible because successful calls to open() will always return
-// a positive number for the fd, or will be -1 on error which we will catch.
+// allocates an int array of that size, to store all the fds which will
+// return when we open the infiles.
 int	*create_infilefds_array(t_token *traverser, int token_count)
 {
 	int	*fds;
 	int	infile_count;
 
 	infile_count = 0;
-	while (token_count-- > 0)
+	while (token_count-- > 0 && traverser != NULL)
 	{
 		if (traverser->type == REDIR_IN)
 			infile_count++;
 		traverser = traverser->next;
 	}
-	fds = malloc((infile_count) * sizeof(*fds));
+	fds = malloc(infile_count * sizeof(*fds));
 	return (fds);
 }
 
@@ -69,7 +67,7 @@ int	open_infile(int *fds, int fd_index, char *file_path)
 // in the token chain open, so we close all other fds up to that point.
 // Also if either access or open fails for an infile, we must close all open
 // fds up to that point.
-int	close_infilefds(int **fds, int fds_to_close)
+int	close_redundant_fds(int **fds, int fds_to_close)
 {
 	int	*fd_array;
 
@@ -94,7 +92,6 @@ int	close_infilefds(int **fds, int fds_to_close)
 
 int	handle_infiles(t_token *traverser, int token_count)
 {
-	char	*file_path;
 	int		*fds;
 	int		fd_index;
 	int		infile;
@@ -105,11 +102,10 @@ int	handle_infiles(t_token *traverser, int token_count)
 	{
 		if (traverser->type == REDIR_IN)
 		{
-			file_path = traverser->next->value;
-			if (check_infile_permissions(file_path) == -1)
-				return (close_infilefds(&fds, fd_index - 1));
-			if (open_infile(fds, fd_index, file_path) == -1)
-				return (close_infilefds(&fds, fd_index - 1));
+			if (check_infile_permissions(traverser->next->value) == -1)
+				return (close_redundant_fds(&fds, fd_index - 1));
+			if (open_infile(fds, fd_index, traverser->next->value) == -1)
+				return (close_redundant_fds(&fds, fd_index - 1));
 			fd_index++;
 		}
 		traverser = traverser->next;
@@ -118,6 +114,6 @@ int	handle_infiles(t_token *traverser, int token_count)
 		infile = fds[fd_index - 1];
 	else
 		infile = STDIN_FILENO;
-	close_infilefds(&fds, fd_index - 2);
+	close_redundant_fds(&fds, fd_index - 2);
 	return (infile);
 }

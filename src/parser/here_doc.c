@@ -6,11 +6,10 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 11:13:08 by skirwan           #+#    #+#             */
-/*   Updated: 2025/08/28 15:31:16 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/02 12:01:09 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "minishell.h"
 #include "parser.h"
 
