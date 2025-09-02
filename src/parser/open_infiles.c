@@ -47,8 +47,7 @@ int	*create_infilefds_array(t_token *traverser, int token_count)
 			infile_count++;
 		traverser = traverser->next;
 	}
-	fds = malloc((infile_count + 1) * sizeof(*fds));
-	fds[infile_count] = -42;
+	fds = malloc((infile_count) * sizeof(*fds));
 	return (fds);
 }
 
@@ -59,7 +58,7 @@ int	open_infile(int *fds, int fd_index, char *file_path)
 	infilefd = open(file_path, O_RDONLY);
 	if (infilefd == -1)
 	{
-		perror(NULL);
+		perror(file_path);
 		return (-1);
 	}
 	fds[fd_index] = infilefd;
@@ -70,30 +69,30 @@ int	open_infile(int *fds, int fd_index, char *file_path)
 // in the token chain open, so we close all other fds up to that point.
 // Also if either access or open fails for an infile, we must close all open
 // fds up to that point.
-int	close_infilefds(int **fds, int fds_index)
+int	close_infilefds(int **fds, int fds_to_close)
 {
 	int	*fd_array;
 
 	fd_array = *fds;
-	if (fds_index < 0)
+	if (fds_to_close < 0)
 	{
 		free(fd_array);
-		return (1);
+		return (-1);
 	}
-	while (fds_index >= 0)
+	while (fds_to_close >= 0)
 	{
-		if (close(fd_array[fds_index] == -1))
+		if (close(fd_array[fds_to_close] == -1))
 		{
 			free(fd_array);
 			return (-1);
 		}
-		fds_index--;
+		fds_to_close--;
 	}
 	free(fd_array);
 	return (-1);
 }
 
-int	handle_infiles(t_token *traverser, int token_count, int read_pipe_fd)
+int	handle_infiles(t_token *traverser, int token_count)
 {
 	char	*file_path;
 	int		*fds;
@@ -115,12 +114,10 @@ int	handle_infiles(t_token *traverser, int token_count, int read_pipe_fd)
 		}
 		traverser = traverser->next;
 	}
-	if (fd_index == 0 && !read_pipe_fd)
-		infile = STDIN_FILENO;
-	else if (fd_index != 0)
+	if (fd_index != 0)
 		infile = fds[fd_index - 1];
 	else
-		infile = read_pipe_fd;
+		infile = STDIN_FILENO;
 	close_infilefds(&fds, fd_index - 2);
 	return (infile);
 }
