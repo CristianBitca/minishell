@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 09:56:04 by skirwan           #+#    #+#             */
-/*   Updated: 2025/08/04 10:35:55 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/02 13:33:13 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,5 @@ void	execute_all_processes(t_data *data, int prcs_count)
 	}
 	if (WIFEXITED(wstatus) == 1)
 		data->exit_status = WEXITSTATUS(wstatus);
+	free(cpids);
 }

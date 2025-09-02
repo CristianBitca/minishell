@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 16:20:51 by skirwan           #+#    #+#             */
-/*   Updated: 2025/08/11 13:41:06 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/02 16:54:47 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ int	execute_in_child(t_data *data, t_prcs *process)
 	int		execve_status;
 	char	**envp;
 
+	if (process->argv[0] == NULL)
+		// free all mallocs, close all fds and exit
+		// when a command which is a valid path but is not executable (either is 
+		// a directory or has insufficient permissions, we return NULL when we 
+		// create the command. The correct exit code for this scenario is 126)
+		exit (126);
 	if (dup2(process->outfilefd, STDOUT_FILENO) < 0
 		|| dup2(process->infilefd, STDIN_FILENO < 0))
 	{
@@ -42,7 +48,7 @@ int	execute_in_child(t_data *data, t_prcs *process)
 		// free all mallocs, close all fds and exit
 		exit(data->exit_status);
 	}
-	if (access(process->argv[0], F_OK | X_OK) != 0)
+	if (access(process->argv[0], F_OK) != 0)
 	{
 		write (STDERR_FILENO, process->argv[0], ft_strlen(process->argv[0]));
 		write (STDERR_FILENO, ": command not found\n", 21);
