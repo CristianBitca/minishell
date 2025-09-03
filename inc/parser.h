@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 11:27:29 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/02 11:53:03 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/03 10:22:10 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ int	open_outfile(int *fds, int fd_index, char *file_path, int type);
 int	handle_outfiles(t_token *traverser, int token_count);
 
 // make_argv.c
-char	**make_process_argv(t_token *traverser, int token_count);
+int		count_arguments(t_token *traverser, int token_count);
+char	**make_process_argv(t_data *data, t_token *traverser, int token_count);
+
+// create_command.c
+int		check_valid_file(char *cmd);
+char	*create_command(t_data *data, char *cmd);
 
 #endif

@@ -6,30 +6,31 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 12:46:36 by skirwan           #+#    #+#             */
-/*   Updated: 2025/08/11 13:38:21 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/03 13:39:01 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "minishell.h"
 #include "built_in.h"
 #include "execution.h"
 
-int	is_built_in(t_prcs *process)
+int	is_built_in(char *cmd)
 {
-	if (ft_strncmp(process->argv[0], "echo\0", 5) == 0)
+	if (cmd == NULL)
+		return (0);
+	if (ft_strncmp(cmd, "echo\0", 5) == 0)
 		return (1);
-	if (ft_strncmp(process->argv[0], "cd\0", 3) == 0)
+	if (ft_strncmp(cmd, "cd\0", 3) == 0)
 		return (1);
-	if (ft_strncmp(process->argv[0], "pwd\0", 4) == 0)
+	if (ft_strncmp(cmd, "pwd\0", 4) == 0)
 		return (1);
-	if (ft_strncmp(process->argv[0], "export\0", 7) == 0)
+	if (ft_strncmp(cmd, "export\0", 7) == 0)
 		return (1);
-	if (ft_strncmp(process->argv[0], "unset\0", 6) == 0)
+	if (ft_strncmp(cmd, "unset\0", 6) == 0)
 		return (1);
-	if (ft_strncmp(process->argv[0], "env\0", 4) == 0)
+	if (ft_strncmp(cmd, "env\0", 4) == 0)
 		return (1);
-	if (ft_strncmp(process->argv[0], "exit\0", 5) == 0)
+	if (ft_strncmp(cmd, "exit\0", 5) == 0)
 		return (1);
 	return (0);
 }

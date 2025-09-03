@@ -6,10 +6,11 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 16:20:51 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/02 16:54:47 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/03 11:22:49 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "env.h"
 #include "execution.h"
 #include "built_in.h"
 
@@ -40,18 +41,21 @@ int	execute_in_child(t_data *data, t_prcs *process)
 	{
 		perror(NULL);
 		// free all mallocs, close all fds and exit
-		exit (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
-	if (is_built_in(process) == 1)
+	if (is_built_in(process->argv[0]) == 1)
 	{
 		execute_built_in(data, process);
 		// free all mallocs, close all fds and exit
 		exit(data->exit_status);
 	}
-	if (access(process->argv[0], F_OK) != 0)
+	if (access(process->argv[0], X_OK) != 0)
 	{
 		write (STDERR_FILENO, process->argv[0], ft_strlen(process->argv[0]));
-		write (STDERR_FILENO, ": command not found\n", 21);
+		if (find_env(data->env, "PATH") != NULL)
+			write(STDERR_FILENO, ": command not found\n", 21);
+		else
+			write(STDERR_FILENO, ": No such file or directory\n", 29);
 		// free all mallocs, close all fds and exit
 		exit (127);
 	}

@@ -6,10 +6,11 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:35:27 by skirwan           #+#    #+#             */
-/*   Updated: 2025/08/07 10:46:07 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/03 12:45:32 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "execution.h"
 #include "libft.h"
 #include "minishell.h"
 #include "input.h"
@@ -51,16 +52,17 @@ void	rl_loop(t_data *data)
 		add_history(input);
 		tokenise(data, input);
 		validate_tokens(data);
-		printf("**********************************\n");
-		printf("token chain pre expansion:\n:");
-		print_tokens(data);
+		// printf("**********************************\n");
+		// printf("token chain pre expansion:\n:");
+		// print_tokens(data);
 		expand(data);
-		printf("**********************************\n");
-		printf("token chain post expansion:\n");
-		print_tokens(data);
+		// printf("**********************************\n");
+		// printf("token chain post expansion:\n");
+		// print_tokens(data);
 		//parse(data):
 		create_processes(data);
 		//(execute)
+		single_cmd(data, data->processes[0]);
 	}
 	return ;
 }

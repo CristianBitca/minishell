@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #include "parser.h"
+#include <stdio.h>
 
 int	*create_outfilefds_array(t_token *traverser, int token_count)
 {

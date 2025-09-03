@@ -36,9 +36,12 @@ SRC    = main.c \
 		  lexer/token_list_utils.c \
 		  lexer/validate_tokens.c \
 		  parser/create_processes.c \
-		  parser/parse_process.c \
-		  parser/open_infiles.c \
 		  parser/here_doc.c \
+		  parser/make_argv.c \
+		  parser/open_infiles.c \
+		  parser/open_outfiles.c \
+		  parser/assign_process.c \
+		  parser/create_command.c \
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 

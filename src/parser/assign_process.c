@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_process.c                                    :+:      :+:    :+:   */
+/*   assign_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 11:23:23 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/02 11:53:16 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/03 12:38:15 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ void	assign_prcs(t_data *data, t_token *first, int token_count, int prcs_index)
 	process->outfilefd = handle_outfiles(first, token_count);
 	if (process->outfilefd == -1)
 		(void)data; // TODO cleanup and return to prompt
-	process->argv = make_process_argv(first, token_count);
+	process->argv = make_process_argv(data, first, token_count);
 }

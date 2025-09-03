@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 11:13:08 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/02 12:01:09 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/03 12:38:50 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	read_here_doc(char *delimiter, char *here_doc_path)
 {
 	char	*input;
 	int		here_doc_fd;
-	int		rule;
+	// int		rule;
 
 	here_doc_fd = open(here_doc_path, O_CREAT | O_TRUNC | O_RDWR, 0644);
 	if (here_doc_fd == -1)

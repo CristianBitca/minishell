@@ -6,10 +6,11 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 11:51:47 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/02 17:22:04 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/03 13:38:05 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 #include "parser.h"
 
@@ -22,7 +23,7 @@ int		count_arguments(t_token *traverser, int token_count)
 	{
 		if (traverser->type == WORD)
 		{
-			if (traverser->prev != NULL &&
+			if (traverser->prev == NULL ||
 				(traverser->prev->type == WORD || traverser->prev->type == PIPE))
 				arg_count++;
 		}
@@ -31,46 +32,80 @@ int		count_arguments(t_token *traverser, int token_count)
 	return (arg_count);
 }
 
-int		check_valid_command(char *cmd)
+char	*find_first_word(t_token *traverser, int token_count)
 {
-	struct stat	file_status;
-
-	if (access(cmd, F_OK) == 0)
+	while (token_count-- > 0 && traverser != NULL)
 	{
-		if (stat(cmd, &file_status) == -1)
+		if (traverser->type == WORD)
 		{
-			perror(cmd);
-			return (-1);
+			if (traverser->prev == NULL ||
+				(traverser->prev->type == WORD || traverser->prev->type == PIPE))
+				return (traverser->value);
 		}
-		if (file_status.st_mode & S_IFDIR)
-		{
-			write(STDERR_FILENO, cmd, ft_strlen(cmd));
-			write(STDERR_FILENO, ": Is a directory\n", 18);
-			return (-1);
-		}
-		if (access(cmd, X_OK) == 0)
-			return (0);
-		write (STDERR_FILENO, cmd, ft_strlen(cmd));
-		write (STDERR_FILENO, ": Permission denied\n", 22);
-		return (-1);
+		traverser = traverser->next;
 	}
-	return (0);
+	return (NULL);
 }
 
-char	*create_command(char *cmd)
+t_token	*move_past_first_word(t_token *traverser, int *token_count)
 {
-	if (check_valid_command(cmd) == -1)
-		return (NULL);
-	return (cmd);
+	int	count;
+
+	count = *token_count;
+	while (count-- > 0 && traverser != NULL)
+	{
+		if (traverser->type == WORD)
+		{
+			if (traverser->prev == NULL ||
+				(traverser->prev->type == WORD || traverser->prev->type == PIPE))
+			{
+				*token_count = count;
+				return (traverser->next);
+			}
+		}
+		traverser = traverser->next;
+	}
+	*token_count = count;
+	return (NULL);
 }
 
-char	**make_process_argv(t_token *traverser, int token_count)
+void	add_arguments(char **argv, t_token *traverser, int token_count)
+{
+	int	i;
+
+	i = 1;
+	traverser = move_past_first_word(traverser, &token_count);
+	while (token_count-- > 0 && traverser != NULL)
+	{
+		if (traverser->type == WORD && traverser->prev->type == WORD)
+		{
+			if (argv + i != NULL)
+			{
+				argv[i] = ft_strdup(traverser->value);
+				i++;
+			}
+		}
+		traverser = traverser->next;
+	}
+}
+
+char	**make_process_argv(t_data *data, t_token *traverser, int token_count)
 {
 	char	**argv;
+	char	*cmd;
+	char	*temp;
 	int		arg_count;
 
 	arg_count = count_arguments(traverser, token_count);
-	argv = malloc(arg_count * sizeof(*argv));
-	
+	if (arg_count == 0)
+		return (NULL);
+	argv = ft_calloc(arg_count + 1, sizeof(*argv));
+	temp = create_command(data, find_first_word(traverser, token_count));
+	if (temp == NULL)
+		cmd = NULL;
+	else
+		cmd = ft_strdup(create_command(data, find_first_word(traverser,token_count)));
+	argv[0] = cmd;
+	add_arguments(argv, traverser, token_count);
 	return (argv);
 }

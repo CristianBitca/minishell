@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:02:53 by skirwan           #+#    #+#             */
-/*   Updated: 2025/08/08 17:55:14 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/03 14:49:42 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	cd(t_data *data, char **argv, int out_fd)
 
 	i = 0;
 	path = argv[1];
-	while (argv[i++]);
+	while (argv[++i]);
 	if (i > 2)
 	{
 		write(STDERR_FILENO, "cd: too many arguments\n", 23);
