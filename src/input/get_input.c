@@ -6,17 +6,18 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:35:27 by skirwan           #+#    #+#             */
-/*   Updated: 2025/08/07 10:46:07 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/08 16:29:41 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "execution.h"
 #include "minishell.h"
 #include "input.h"
 #include "lexer.h"
 #include "expansion.h"
 #include "env.h"
 #include "parser.h"
+<<<<<<< HEAD
 
 void	print_tokens(t_data *data)
 {
@@ -42,30 +43,35 @@ void	print_tokens(t_data *data)
 }
 
 
+=======
+#include "built_in.h"
+#include <stdlib.h>
+>>>>>>> skirwan
 
 void	rl_loop(t_data *data)
 {
 	char	*input;
 	char	*prompt;
 
-	prompt = create_prompt(data);
-	input = readline(prompt);
-	free(prompt);
-	if (input && *input)
+	while (1)
 	{
-		add_history(input);
-		tokenise(data, input);
-		validate_tokens(data);
-		printf("**********************************\n");
-		printf("token chain pre expansion:\n:");
-		print_tokens(data);
-		expand(data);
-		printf("**********************************\n");
-		printf("token chain post expansion:\n");
-		print_tokens(data);
-		//parse(data):
-		create_processes(data);
-		//(execute)
+		prompt = create_prompt(data);
+		input = readline(prompt);
+		free(prompt);
+		if (input && *input)
+		{
+			add_history(input);
+			tokenise(data, input);
+			validate_tokens(data);
+			expand(data);
+			create_processes(data);
+			if (count_processes(data) > 1)
+				execute_all_processes(data, count_processes(data));
+			else
+				single_cmd(data, data->processes[0]);
+		}
+		cleanup_tokens(data);
+		cleanup_processes(data);
 	}
 	// free_tokens(data->tokens);
 	free_env(data->env);

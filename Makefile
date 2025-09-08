@@ -16,6 +16,7 @@ LIBFT_LIB   = -L$(LIBFT_DIR) -lft
 SRC    = main.c \
 		  built_in/cd.c \
 		  built_in/echo.c \
+		  built_in/exit.c \
 		  built_in/export.c \
 		  built_in/export_utils.c \
 		  built_in/print_env.c \
@@ -39,9 +40,12 @@ SRC    = main.c \
 		  lexer/token_list_utils.c \
 		  lexer/validate_tokens.c \
 		  parser/create_processes.c \
-		  parser/parse_process.c \
-		  parser/open_infiles.c \
 		  parser/here_doc.c \
+		  parser/make_argv.c \
+		  parser/open_infiles.c \
+		  parser/open_outfiles.c \
+		  parser/assign_process.c \
+		  parser/create_command.c \
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 

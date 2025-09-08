@@ -1,0 +1,111 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   make_argv.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/02 11:51:47 by skirwan           #+#    #+#             */
+/*   Updated: 2025/09/03 13:38:05 by skirwan          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+#include "minishell.h"
+#include "parser.h"
+
+int	count_arguments(t_token *traverser, int token_count)
+{
+	int	arg_count;
+
+	arg_count = 0;
+	while (token_count-- > 0 && traverser != NULL)
+	{
+		if (traverser->type == WORD)
+		{
+			if (traverser->prev == NULL || (traverser->prev->type == WORD
+					|| traverser->prev->type == PIPE))
+				arg_count++;
+		}
+		traverser = traverser->next;
+	}
+	return (arg_count);
+}
+
+char	*find_first_word(t_token *traverser, int token_count)
+{
+	while (token_count-- > 0 && traverser != NULL)
+	{
+		if (traverser->type == WORD)
+		{
+			if (traverser->prev == NULL || (traverser->prev->type == WORD
+					|| traverser->prev->type == PIPE))
+				return (traverser->value);
+		}
+		traverser = traverser->next;
+	}
+	return (NULL);
+}
+
+t_token	*move_past_first_word(t_token *traverser, int *token_count)
+{
+	int	count;
+
+	count = *token_count;
+	while (count-- > 0 && traverser != NULL)
+	{
+		if (traverser->type == WORD)
+		{
+			if (traverser->prev == NULL || (traverser->prev->type == WORD
+					|| traverser->prev->type == PIPE))
+			{
+				*token_count = count;
+				return (traverser->next);
+			}
+		}
+		traverser = traverser->next;
+	}
+	*token_count = count;
+	return (NULL);
+}
+
+void	add_arguments(char **argv, t_token *traverser, int token_count)
+{
+	int	i;
+
+	i = 1;
+	traverser = move_past_first_word(traverser, &token_count);
+	while (token_count-- > 0 && traverser != NULL)
+	{
+		if (traverser->type == WORD && traverser->prev->type == WORD)
+		{
+			if (argv + i != NULL)
+			{
+				argv[i] = ft_strdup(traverser->value);
+				i++;
+			}
+		}
+		traverser = traverser->next;
+	}
+}
+
+char	**make_process_argv(t_data *data, t_token *trvrsr, int tokens)
+{
+	char	**argv;
+	char	*cmd;
+	char	*temp;
+	int		arg_count;
+
+	arg_count = count_arguments(trvrsr, tokens);
+	if (arg_count == 0)
+		return (NULL);
+	argv = ft_calloc(arg_count + 1, sizeof(*argv));
+	temp = create_command(data, find_first_word(trvrsr, tokens));
+	if (temp == NULL)
+		cmd = NULL;
+	else
+		cmd = ft_strdup(create_command(data, find_first_word(trvrsr, tokens)));
+	argv[0] = cmd;
+	add_arguments(argv, trvrsr, tokens);
+	return (argv);
+}

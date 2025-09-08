@@ -34,11 +34,21 @@ int	allocate_processes(t_data *data)
 	return (prcs_count);
 }
 
+int	count_processes(t_data *data)
+{
+	int	prcs_count;
+
+	prcs_count = 0;
+	while (data->processes[prcs_count] != NULL)
+		prcs_count++;
+	return (prcs_count);
+}
+
 void	create_processes(t_data *data)
 {
 	t_token	*first_process_token;
 	t_token	*traverser;
-	int		process_token_count;
+	int		token_count;
 	int		i;
 
 	allocate_processes(data);
@@ -46,16 +56,19 @@ void	create_processes(t_data *data)
 	i = 0;
 	while (traverser != NULL)
 	{
-		process_token_count = 0;
+		token_count = 0;
 		first_process_token = traverser;
 		while (traverser != NULL && traverser->type != PIPE)
 		{
-			process_token_count++;
+			token_count++;
 			traverser = traverser->next;
 		}
 		if (traverser != NULL && traverser->type == PIPE)
-			process_token_count++;
-		assign_prcs(data, first_process_token, process_token_count, i);
+		{
+			token_count++;
+			traverser = traverser->next;
+		}
+		assign_prcs(data, first_process_token, token_count, i);
 		i++;
 	}
 }
