@@ -56,5 +56,6 @@ char	*expand_input(t_data *data, char *input, int *exp_flag)
 		else
 			exp->pos++;
 	}
+	free_exp(data, exp);
 	return (input);
 }

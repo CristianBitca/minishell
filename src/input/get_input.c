@@ -68,7 +68,7 @@ void	rl_loop(t_data *data)
 		//(execute)
 	}
 	// free_tokens(data->tokens);
-	// free_env(data->env);
+	free_env(data->env);
 	// free(input);
 	return ;
 }

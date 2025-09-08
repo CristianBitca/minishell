@@ -14,6 +14,23 @@
 #include "expansion.h"
 #include "env.h"
 
+// static char	*ft_exp_strjoin(char *dest, char *src)
+// {
+// 	int		s_len;
+// 	int		d_len;
+// 	char	*buffer;
+
+// 	s_len = ft_strlen(src);
+// 	d_len = ft_strlen(dest);
+// 	buffer = ft_calloc(s_len + d_len + 1, sizeof(char));
+// 	if (!buffer)
+// 		return (NULL);
+// 	ft_strcpy(buffer, dest);
+// 	ft_strcpy(&buffer[d_len], src);
+// 	free(dest);
+// 	return (buffer);
+// }
+
 void	free_exp(t_data *data, t_expand *exp)
 {
 	if (exp)
