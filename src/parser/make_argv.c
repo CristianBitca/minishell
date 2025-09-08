@@ -14,7 +14,7 @@
 #include "minishell.h"
 #include "parser.h"
 
-int		count_arguments(t_token *traverser, int token_count)
+int	count_arguments(t_token *traverser, int token_count)
 {
 	int	arg_count;
 
@@ -23,8 +23,8 @@ int		count_arguments(t_token *traverser, int token_count)
 	{
 		if (traverser->type == WORD)
 		{
-			if (traverser->prev == NULL ||
-				(traverser->prev->type == WORD || traverser->prev->type == PIPE))
+			if (traverser->prev == NULL || (traverser->prev->type == WORD
+					|| traverser->prev->type == PIPE))
 				arg_count++;
 		}
 		traverser = traverser->next;
@@ -38,8 +38,8 @@ char	*find_first_word(t_token *traverser, int token_count)
 	{
 		if (traverser->type == WORD)
 		{
-			if (traverser->prev == NULL ||
-				(traverser->prev->type == WORD || traverser->prev->type == PIPE))
+			if (traverser->prev == NULL || (traverser->prev->type == WORD
+					|| traverser->prev->type == PIPE))
 				return (traverser->value);
 		}
 		traverser = traverser->next;
@@ -56,8 +56,8 @@ t_token	*move_past_first_word(t_token *traverser, int *token_count)
 	{
 		if (traverser->type == WORD)
 		{
-			if (traverser->prev == NULL ||
-				(traverser->prev->type == WORD || traverser->prev->type == PIPE))
+			if (traverser->prev == NULL || (traverser->prev->type == WORD
+					|| traverser->prev->type == PIPE))
 			{
 				*token_count = count;
 				return (traverser->next);
@@ -89,23 +89,23 @@ void	add_arguments(char **argv, t_token *traverser, int token_count)
 	}
 }
 
-char	**make_process_argv(t_data *data, t_token *traverser, int token_count)
+char	**make_process_argv(t_data *data, t_token *trvrsr, int tokens)
 {
 	char	**argv;
 	char	*cmd;
 	char	*temp;
 	int		arg_count;
 
-	arg_count = count_arguments(traverser, token_count);
+	arg_count = count_arguments(trvrsr, tokens);
 	if (arg_count == 0)
 		return (NULL);
 	argv = ft_calloc(arg_count + 1, sizeof(*argv));
-	temp = create_command(data, find_first_word(traverser, token_count));
+	temp = create_command(data, find_first_word(trvrsr, tokens));
 	if (temp == NULL)
 		cmd = NULL;
 	else
-		cmd = ft_strdup(create_command(data, find_first_word(traverser,token_count)));
+		cmd = ft_strdup(create_command(data, find_first_word(trvrsr, tokens)));
 	argv[0] = cmd;
-	add_arguments(argv, traverser, token_count);
+	add_arguments(argv, trvrsr, tokens);
 	return (argv);
 }

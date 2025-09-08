@@ -58,11 +58,11 @@ void	valid_env_expand(t_data *data, t_token *token, char *key, char *remainder)
 	char	*expand_value;
 	char	*pre_expand;
 	int		og_length;
-	int		$_index;
+	int		dlr_index;
 
 	og_length = ft_strlen(token->value) + 1;
-	$_index = ft_strnstr(token->value, key, og_length) - token->value;
-	pre_expand = ft_substr(token->value, 0, ($_index - 1));
+	dlr_index = ft_strnstr(token->value, key, og_length) - token->value;
+	pre_expand = ft_substr(token->value, 0, (dlr_index - 1));
 	expand_value = find_env(data->env, key);
 	(free(token->value), free(key));
 	token->value = pre_expand;

@@ -16,26 +16,6 @@
 #include "lexer.h"
 #include "expansion.h"
 #include "parser.h"
-#include <stdio.h>
-
-void	print_tokens(t_data *data)
-{
-
-	//test func to be deleted
-	t_token	*token;
-
-	token = data->tokens;
-	while (token != NULL)
-	{
-		if (*token->value == '\0')
-			printf("token value = NULL\n");
-		else
-			printf("token value = %s\n", token->value);
-		printf("token type = %s\n", ft_itoa(token->type));
-		printf("*******\n");
-		token = token->next;
-	}
-}
 
 void	rl_loop(t_data *data)
 {
@@ -49,7 +29,6 @@ void	rl_loop(t_data *data)
 		free(prompt);
 		if (input && *input)
 		{
-			printf("input = %s\n", input);
 			add_history(input);
 			tokenise(data, input);
 			validate_tokens(data);

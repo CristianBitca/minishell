@@ -36,14 +36,7 @@ int	main(int argc, char **argv, char **envp)
 
 	data = ft_calloc(sizeof(t_data), sizeof(t_data));
 	parse_env(data, envp);
-	// test_env(data);
 	rl_loop(data);
-	// print_envp(data, 1);
-	// export(data, NULL);
-	// export(data, test);
-	// print_envp(data);
-	// data->exit_status = 0;
-	// test = rl_loop(data);
 	free(data);
 	return (0);
 	(void)argc;

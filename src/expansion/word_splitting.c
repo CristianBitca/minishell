@@ -23,7 +23,7 @@ void	insert_token(t_token *node, char *value)
 	new_token->prev = node;
 }
 
-void	split_branch(t_token *node, char **expansion, char *remainder, int join_back)
+void	split_branch(t_token *node, char **expansion, char *remainder, int rmndr)
 {
 	t_token	*post_branch;
 	char	*temp;
@@ -35,7 +35,7 @@ void	split_branch(t_token *node, char **expansion, char *remainder, int join_bac
 		expansion++;
 		node = node->next;
 	}
-	if (join_back == 1)
+	if (rmndr == 1)
 	{
 		temp = post_branch->value;
 		post_branch->value = ft_strjoin(remainder, temp);

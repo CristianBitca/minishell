@@ -15,7 +15,7 @@
 #include "minishell.h"
 #include "parser.h"
 
-int		check_valid_file(char *cmd)
+int	check_valid_file(char *cmd)
 {
 	struct stat	file_status;
 

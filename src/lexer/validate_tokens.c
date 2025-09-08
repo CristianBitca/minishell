@@ -27,7 +27,7 @@ int	syntax_error(char *invalid_val)
 // also cannot be a redirection.
 int	validate_tokens(t_data *data)
 {
-	t_token *token;
+	t_token	*token;
 
 	token = data->tokens;
 	if (token->type == PIPE)

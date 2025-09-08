@@ -14,8 +14,8 @@
 #include "minishell.h"
 #include "built_in.h"
 
-// counts all the nodes in the env list, if there is a node with no value (becuase it has
-// been exported without an '='), it is not counted
+// counts all the nodes in the env list, if there is a node with no value
+// (becuase it has been exported without an '='), it is not counted
 int	evar_size(t_env_var *env)
 {
 	int	i;
@@ -30,8 +30,9 @@ int	evar_size(t_env_var *env)
 	return (i);
 }
 
-// joins the key and values stored in the env list together in memory allocated strings
-// in **envp such that each string looks like "<key>=<value>"
+// joins the key and values stored in the env list together in
+// memory allocated strings in **envp such that each string looks
+// like "<key>=<value>"
 char	**join_key_val(char	**envp, t_env_var *env)
 {
 	int	env_var_size;
@@ -57,7 +58,8 @@ char	**join_key_val(char	**envp, t_env_var *env)
 	return (envp);
 }
 
-// Converts env list into a **char, used for env built in and also passed to execve
+// Converts env list into a **char, used for env built in
+// and also passed to execve
 char	**make_envp(t_data *data)
 {
 	t_env_var	*env;
@@ -85,7 +87,8 @@ char	**make_envp(t_data *data)
 	return (envp);
 }
 
-// frees all the memory allocated strings in envp, used after a call to execve or print_env
+// frees all the memory allocated strings in envp
+// used after a call to execve or print_env
 void	free_envp(char	**envp)
 {
 	char	*env_var;
@@ -102,8 +105,8 @@ void	free_envp(char	**envp)
 	free(envp);
 }
 
-// calls on make_envp to convert env list to **char, then prints the strings and frees
-// envp afterwards
+// calls on make_envp to convert env list to **char,
+// then prints the strings and frees envp afterwards
 void	print_envp(t_data *data, int out_fd)
 {
 	char	**envp;

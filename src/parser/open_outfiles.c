@@ -75,7 +75,8 @@ int	handle_outfiles(t_token *traverser, int token_count)
 		{
 			if (check_outfile_permissions(traverser->next->value) == -1)
 				return (close_redundant_fds(&fds, fd_index - 1));
-			if (open_outfile(fds, fd_index, traverser->next->value, traverser->type) == -1)
+			if (open_outfile(fds, fd_index, traverser->next->value,
+					traverser->type) == -1)
 				return (close_redundant_fds(&fds, fd_index - 1));
 			fd_index++;
 		}

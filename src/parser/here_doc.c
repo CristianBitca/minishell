@@ -66,7 +66,7 @@ int	read_here_doc(char *delimiter, char *here_doc_path)
 int	convert_here_docs(t_token *traverser, int token_count, int prcs_index)
 {
 	char	*here_doc_path;
-	
+
 	while (token_count-- > 0)
 	{
 		if (traverser->type == REDIR_HEREDOC)

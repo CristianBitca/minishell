@@ -13,13 +13,13 @@
 #include "minishell.h"
 #include "parser.h"
 
-void	assign_prcs(t_data *data, t_token *first, int token_count, int prcs_index)
+void	assign_prcs(t_data *data, t_token *first, int token_count, int i)
 {
 	t_prcs	*process;
 
-	data->processes[prcs_index] = malloc(sizeof(*(data->processes[prcs_index])));
-	process = data->processes[prcs_index];
-	if (convert_here_docs(first, token_count, prcs_index) == -1)
+	data->processes[i] = malloc(sizeof(*(data->processes[i])));
+	process = data->processes[i];
+	if (convert_here_docs(first, token_count, i) == -1)
 		(void)data; // TODO cleanup and return to prompt
 	process->infilefd = handle_infiles(first, token_count);
 	if (process->infilefd == -1)

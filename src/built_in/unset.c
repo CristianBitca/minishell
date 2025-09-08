@@ -13,9 +13,10 @@
 #include "minishell.h"
 #include "built_in.h"
 
-// looks for argument passed to unset in our env linked list, has to look for the
-// key in the next node so we can change the '->next' pointer to the '->next->next'
-// and preserve the connections of the linked list
+// looks for argument passed to unset in our env linked list,
+// has to look for the key in the next node so we can change the '->next'
+// pointer to the '->next->next' and preserve the connections of
+// the linked list
 void	unset_search(t_env_var *node, char *find)
 {
 	t_env_var	*temp;
@@ -25,7 +26,7 @@ void	unset_search(t_env_var *node, char *find)
 		if (!ft_strncmp(node->next->key, find, ft_strlen(node->next->key)))
 		{
 			temp = node->next;
-			free(temp->key), free(temp->value);
+			(free(temp->key), free(temp->value));
 			node->next = temp->next;
 			free(temp);
 			return ;
@@ -35,8 +36,8 @@ void	unset_search(t_env_var *node, char *find)
 	return ;
 }
 
-// if the argument passed to unset is the very first key in our env list, change the head
-// of the list to the next node, and free the node unset
+// if the argument passed to unset is the very first key in our env list,
+// change the head of the list to the next node, and free the node unset
 void	unset(t_data *data, char **args)
 {
 	t_env_var	*env_node;
