@@ -16,16 +16,10 @@
 # include "minishell.h"
 
 // here_doc.c
-<<<<<<< HEAD
-char	*create_here_doc_temp_file_path(int prcs_index, int here_doc_count);
+char	*create_here_doc_temp_file_path(int prcs_index);
 int	convert_here_docs(t_data *data, int token_count, int prcs_index);
 char	*here_doc_readline(t_data *data, int here_doc_fd, char *delimiter, int	*exp_flag);
 int	read_here_doc(t_data *data, char *delimiter, char *here_doc_path);
-=======
-char	*create_here_doc_temp_file_path(int prcs_indexdoc_count);
-int		convert_here_docs(t_token *traverser, int token_count, int prcs_index);
-int		read_here_doc(char *delimiter, char *here_doc_path);
->>>>>>> skirwan
 
 // create_processes.c
 int		count_processes(t_data *data);

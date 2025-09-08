@@ -17,36 +17,8 @@
 #include "expansion.h"
 #include "env.h"
 #include "parser.h"
-<<<<<<< HEAD
-
-void	print_tokens(t_data *data)
-{
-
-	//test func to be deleted
-	t_token	*token;
-	char	*number;
-
-	token = data->tokens;
-	while (token != NULL)
-	{
-		if (*token->value == '\0')
-			printf("token value = NULL\n");
-		else
-			printf("token value = %s\n", token->value);
-		number = ft_itoa(token->type);
-		printf("token type = %s\n", number);
-		printf("*******\n");
-		token = token->next;
-		if (number)
-			free(number);
-	}
-}
-
-
-=======
 #include "built_in.h"
 #include <stdlib.h>
->>>>>>> skirwan
 
 void	rl_loop(t_data *data)
 {

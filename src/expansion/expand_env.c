@@ -39,7 +39,6 @@ char	*expand_exit_code(t_data *data, char *input, t_expand *exp)
 {
 	char	*new_word;
 
-<<<<<<< HEAD
 	exp->expand = ft_itoa(data->exit_status);
 	exp->l_expand = ft_strlen(exp->expand);
 	new_word = ft_strjoin(exp->before, exp->expand);
@@ -48,31 +47,6 @@ char	*expand_exit_code(t_data *data, char *input, t_expand *exp)
 	exp->size = ft_strlen(new_word);
 	return (new_word);
 	(void)input;
-=======
-	exit_code = ft_itoa(data->exit_status);
-	pre_var = ft_substr(token->value, 0, expand_ptr - token->value);
-	temp = ft_strjoin(pre_var, exit_code);
-	post_var = expand_ptr + 2;
-	new_word = ft_strjoin(temp, post_var);
-	(free(temp), free(pre_var), free(exit_code), free(token->value));
-	token->value = new_word;
-}
-
-void	valid_env_expand(t_data *data, t_token *token, char *key, char *remainder)
-{
-	char	*expand_value;
-	char	*pre_expand;
-	int		og_length;
-	int		dlr_index;
-
-	og_length = ft_strlen(token->value) + 1;
-	dlr_index = ft_strnstr(token->value, key, og_length) - token->value;
-	pre_expand = ft_substr(token->value, 0, (dlr_index - 1));
-	expand_value = find_env(data->env, key);
-	(free(token->value), free(key));
-	token->value = pre_expand;
-	split_word(token, expand_value, remainder);
->>>>>>> skirwan
 }
 
 // Checks
