@@ -17,7 +17,7 @@ void	assign_prcs(t_data *data, t_token *first, int token_count, int prcs_index)
 {
 	t_prcs	*process;
 
-	data->processes[prcs_index] = malloc(sizeof(*data->processes[prcs_index]));
+	data->processes[prcs_index] = malloc(sizeof(*(data->processes[prcs_index])));
 	process = data->processes[prcs_index];
 	if (convert_here_docs(first, token_count, prcs_index) == -1)
 		(void)data; // TODO cleanup and return to prompt

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "execution.h"
-#include <sys/wait.h>
 
 // If we only have one cmd to execute, a built-in command does not fork.
 // We get the exit status from passing the &wstatus pointer to waitpid

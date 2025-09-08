@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #include "parser.h"
+#include <stdio.h>
 
 int	check_infile_permissions(char *file_path)
 {
@@ -79,7 +80,7 @@ int	close_redundant_fds(int **fds, int fds_to_close)
 	}
 	while (fds_to_close >= 0)
 	{
-		if (close(fd_array[fds_to_close] == -1))
+		if (close(fd_array[fds_to_close]) == -1)
 		{
 			free(fd_array);
 			return (-1);
