@@ -17,10 +17,9 @@
 
 void	test_env(t_data *data)
 {
-	t_env_var *node;
+	t_env_var	*node;
 
 	node = data->env;
-
 	while (node != NULL)
 	{
 		printf("key = %s\n", node->key);

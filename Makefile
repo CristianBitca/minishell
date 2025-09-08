@@ -15,6 +15,7 @@ LIBFT_LIB   = -L$(LIBFT_DIR) -lft
 SRC    = main.c \
 		  built_in/cd.c \
 		  built_in/echo.c \
+		  built_in/exit.c \
 		  built_in/export.c \
 		  built_in/export_utils.c \
 		  built_in/print_env.c \

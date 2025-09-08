@@ -16,7 +16,7 @@
 void	tokenise(t_data *data, char *input)
 {
 	t_lexer	*lexer;
-	
+
 	lexer = malloc(sizeof(*lexer));
 	lexer->pos = 0;
 	lexer->line = input;

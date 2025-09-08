@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 09:56:04 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/02 13:33:13 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/08 16:42:15 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	execute_all_processes(t_data *data, int prcs_count)
 			close(data->processes[prcs]->infilefd);
 		if (data->processes[prcs]->outfilefd != STDOUT_FILENO)
 			close(data->processes[prcs]->outfilefd);
+		free(data->processes[prcs]->argv);
 		prcs++;
 	}
 	(wait_on_processes(data, cpids, prcs_count), free(cpids));

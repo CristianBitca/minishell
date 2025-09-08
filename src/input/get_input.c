@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:35:27 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/03 12:45:32 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/08 16:29:41 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "lexer.h"
 #include "expansion.h"
 #include "parser.h"
+#include "built_in.h"
+#include <stdlib.h>
 
 void	rl_loop(t_data *data)
 {
@@ -39,6 +41,8 @@ void	rl_loop(t_data *data)
 			else
 				single_cmd(data, data->processes[0]);
 		}
+		cleanup_tokens(data);
+		cleanup_processes(data);
 	}
 	return ;
 }

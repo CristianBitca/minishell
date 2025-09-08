@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 09:57:29 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/03 12:40:20 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/08 16:40:42 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "execution.h"
 #include "minishell.h"
 #include "parser.h"
+#include <stdlib.h>
 
 int	check_valid_file(char *cmd)
 {
@@ -78,8 +79,9 @@ char	*create_command(t_data *data, char *cmd)
 	exe = search_exe_in_path(paths, cmd);
 	if (ft_strncmp(exe, cmd, ft_strlen(exe) == 0))
 	{
-		free(exe);
+		(free(exe), free(paths));
 		return (cmd);
 	}
+	free(paths);
 	return (exe);
 }

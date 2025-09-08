@@ -6,11 +6,13 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 16:21:51 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/03 12:49:19 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/08 16:44:19 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include <stdlib.h>
+#include <unistd.h>
 
 // If we only have one cmd to execute, a built-in command does not fork.
 // We get the exit status from passing the &wstatus pointer to waitpid
@@ -31,6 +33,11 @@ int	single_cmd(t_data *data, t_prcs *process)
 		else
 			waitpid(cpid, &wstatus, 0);
 	}
+	free(process->argv);
+	if (process->infilefd != STDIN_FILENO)
+		close(process->infilefd);
+	if (process->outfilefd != STDOUT_FILENO)
+		close(process->outfilefd);
 	if (WIFEXITED(wstatus) == 1)
 		data->exit_status = WEXITSTATUS(wstatus);
 	return (0);
