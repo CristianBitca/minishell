@@ -59,6 +59,7 @@ typedef struct s_expand
 	int		pos;
 	int		start;
 	int		size;
+	int		exp_heredoc;
 }	t_expand;
 
 

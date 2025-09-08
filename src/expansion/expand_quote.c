@@ -13,41 +13,30 @@
 #include "minishell.h"
 #include "expansion.h"
 
-void	expand_s_quote(t_token *token, t_expand *exp)
+char	*expand_s_quote(char *input, t_expand *exp)
 {
-	char	*free_word;
 	char	*new_word;
 
-	free_word = exp->expand;
 	exp->expand = ft_substr(exp->expand, 1, exp->l_expand - 2);
-	free(free_word);
-	printf("INside of single quote this %s\n", exp->expand);
 	exp->l_expand = ft_strlen(exp->expand);
 	new_word = ft_strjoin(exp->before, exp->expand);
-	free_word = new_word;
 	new_word = ft_strjoin(new_word, exp->after);
-	free(token->value);
-	free(free_word);
-	token->value = new_word;
 	exp->pos = exp->l_before + exp->l_expand;
 	exp->size = ft_strlen(new_word);
+	return (new_word);
+	(void)input;
 }
 
-void	expand_d_quote(t_token *token, t_expand *exp)
+char	*expand_d_quote(char *input, t_expand *exp)
 {
-	char	*free_word;
 	char	*new_word;
 
-	free_word = exp->expand;
 	exp->expand = ft_substr(exp->expand, 1, exp->l_expand - 2);
-	free(free_word);
 	exp->l_expand = ft_strlen(exp->expand);
 	new_word = ft_strjoin(exp->before, exp->expand);
-	free_word = new_word;
 	new_word = ft_strjoin(new_word, exp->after);
-	free(token->value);
-	free(free_word);
-	token->value = new_word;
 	exp->pos = exp->l_before;
 	exp->size = ft_strlen(new_word);
+	return (new_word);
+	(void)input;
 }

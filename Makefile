@@ -31,6 +31,7 @@ SRC    = main.c \
 		  expansion/expand_env.c \
 		  expansion/expand_quote.c \
 		  expansion/word_splitting.c \
+		  expansion/expand_heredoc.c \
 		  input/get_input.c \
 		  lexer/create_tokens.c \
 		  lexer/is_operator.c \

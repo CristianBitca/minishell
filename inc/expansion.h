@@ -17,18 +17,23 @@
 
 // expand.c
 void	free_exp(t_data *data, t_expand *exp);
-void	split_expand(t_token *token, t_expand *exp);
+void	split_expand(char *input, t_expand *exp);
 void	find_expansions(t_data *data, t_token *token);
 void	expand(t_data *data);
 
 // expand_env.c
-void	expand_exit_code(t_data *data, t_token *token, t_expand *exp);
-void	invalid_env_expansion(t_token *token, t_expand *exp);
-void	expand_env(t_data *data, t_token *token, t_expand *exp);
-void	expand_s_quote(t_token *token, t_expand *exp);
-void	expand_d_quote(t_token *token, t_expand *exp);
+char	*expand_exit_code(t_data *data, char *input, t_expand *exp);
+char	*invalid_env_expansion(char *input, t_expand *exp);
+char	*expand_env(t_data *data,t_token *token, char *input, t_expand *exp);
+char	*expand_s_quote(char *input, t_expand *exp);
+char	*expand_d_quote(char *input, t_expand *exp);
 
 //word_splitting.c
 void	insert_tokens(t_data *data, t_token *node, t_token *tokens);
-void	split_word(t_data *data, t_token *token);
+void	split_word(t_data *data, t_token *token, char *input);
+
+//expand_heredoc.c
+char	*expand_delimiter(char *delimiter, int *exp_flag);
+char	*expand_input(t_data *data, char *input, int *exp_flag);
+
 #endif
