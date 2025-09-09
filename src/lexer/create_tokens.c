@@ -75,12 +75,12 @@ int	add_word_token(t_data *data, t_lexer *lex)
 			end_quote = lex->line[lex->pos];
 			lex->pos++;
 			if (handle_quotes(lex, end_quote) == 0)
-				return (0);
+				return (-1);
 		}
 		else
 			lex->pos++;
 	}
 	word = ft_substr(lex->line, first_char, (lex->pos - first_char));
 	add_token_back(&data->tokens, create_token(word, WORD));
-	return (1);
+	return (0);
 }
