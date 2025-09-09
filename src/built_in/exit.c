@@ -25,7 +25,7 @@ void	cleanup_tokens(t_data *data)
 	{
 		temp = traverser;
 		traverser = traverser->next;
-		if (temp->type == WORD)
+		if (temp->value)
 			free(temp->value);
 		free(temp);
 	}

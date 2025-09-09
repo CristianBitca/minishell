@@ -69,12 +69,12 @@ void	find_expansions(t_data *data, t_token *token)
 		else if (token->value[exp->pos] == '\'')
 		{
 			split_expand(token->value, exp);
-			token->value = expand_s_quote(exp);
+			token->value = expand_s_quote(token, exp);
 		}
 		else if (token->value[exp->pos] == '"')
 		{
 			split_expand(token->value, exp);
-			token->value = expand_d_quote(exp);
+			token->value = expand_d_quote(token, exp);
 		}
 		else
 			exp->pos++;

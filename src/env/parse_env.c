@@ -81,7 +81,7 @@ void	parse_env(t_data *data, char **envp)
 		while ((*envp)[i] != '=')
 			i++;
 		key = ft_substr(*envp, 0, i);
-		value = ft_strdup(&((*envp)[i + 1]));
+		value = ft_strdup(&((*envp)[i]));
 		append_stack(&data->env, new_node(key, value));
 		envp++;
 	}

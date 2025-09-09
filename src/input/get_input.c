@@ -72,7 +72,8 @@ void	rl_loop(t_data *data)
 				execute_all_processes(data, count_processes(data));
 			else
 				single_cmd(data, data->processes[0]);
-			print_tokens(data);
+			// print_tokens(data);
+			// free_tokens(data->tokens);
 			cleanup_tokens(data);
 			cleanup_processes(data);
 		}

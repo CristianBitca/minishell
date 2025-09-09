@@ -13,7 +13,7 @@
 #include "minishell.h"
 #include "expansion.h"
 
-char	*expand_s_quote(t_expand *exp)
+char	*expand_s_quote(t_token *token, t_expand *exp)
 {
 	char	*new_word;
 	char	*temp;
@@ -26,11 +26,12 @@ char	*expand_s_quote(t_expand *exp)
 	free(temp);
 	exp->pos = exp->l_before + exp->l_expand;
 	exp->size = ft_strlen(new_word);
+	free(token->value);
 	free_exp_value(exp);
 	return (new_word);
 }
 
-char	*expand_d_quote(t_expand *exp)
+char	*expand_d_quote(t_token *token, t_expand *exp)
 {
 	char	*new_word;
 	char	*temp;
@@ -43,6 +44,7 @@ char	*expand_d_quote(t_expand *exp)
 	free(temp);
 	exp->pos = exp->l_before;
 	exp->size = ft_strlen(new_word);
+	free(token->value);
 	free_exp_value(exp);
 	return (new_word);
 }
