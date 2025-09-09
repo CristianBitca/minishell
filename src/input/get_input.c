@@ -17,7 +17,6 @@
 #include "expansion.h"
 #include "parser.h"
 #include "built_in.h"
-#include <stdlib.h>
 
 void	rl_loop(t_data *data)
 {
@@ -48,9 +47,9 @@ void	rl_loop(t_data *data)
 				execute_all_processes(data, count_processes(data));
 			else
 				single_cmd(data, data->processes[0]);
+			cleanup_tokens(data);
+			cleanup_processes(data);
 		}
-		cleanup_tokens(data);
-		cleanup_processes(data);
 	}
 	return ;
 }

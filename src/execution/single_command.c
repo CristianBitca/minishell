@@ -31,7 +31,6 @@ int	single_cmd(t_data *data, t_prcs *process)
 		else
 			waitpid(cpid, &wstatus, 0);
 	}
-	free(process->argv);
 	if (process->infilefd != STDIN_FILENO)
 		close(process->infilefd);
 	if (process->outfilefd != STDOUT_FILENO)
