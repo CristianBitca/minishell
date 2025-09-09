@@ -32,8 +32,16 @@ void	rl_loop(t_data *data)
 		if (input && *input)
 		{
 			add_history(input);
-			tokenise(data, input);
-			validate_tokens(data);
+			if (tokenise(data, input) == -1)
+			{
+				cleanup_tokens(data);
+				continue ;
+			}
+			if (validate_tokens(data) == -1)
+			{
+				cleanup_tokens(data);
+				continue ;
+			}
 			expand(data);
 			create_processes(data);
 			if (count_processes(data) > 1)
