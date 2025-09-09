@@ -20,6 +20,29 @@
 #include "built_in.h"
 #include <stdlib.h>
 
+void	print_tokens(t_data *data)
+{
+
+	//test func to be deleted
+	t_token	*token;
+	char	*number;
+
+	token = data->tokens;
+	while (token != NULL)
+	{
+		if (*token->value == '\0')
+			printf("token value = NULL\n");
+		else
+			printf("token value = %s\n", token->value);
+		number = ft_itoa(token->type);
+		printf("token type = %s\n", number);
+		printf("*******\n");
+		token = token->next;
+		if (number)
+			free(number);
+	}
+}
+
 void	rl_loop(t_data *data)
 {
 	char	*input;
@@ -33,20 +56,29 @@ void	rl_loop(t_data *data)
 		if (input && *input)
 		{
 			add_history(input);
-			tokenise(data, input);
-			validate_tokens(data);
+			if (tokenise(data, input) == -1)
+			{
+				cleanup_tokens(data);
+				continue ;
+			}
+			if (validate_tokens(data) == -1)
+			{
+				cleanup_tokens(data);
+				continue ;
+			}
 			expand(data);
 			create_processes(data);
 			if (count_processes(data) > 1)
 				execute_all_processes(data, count_processes(data));
 			else
 				single_cmd(data, data->processes[0]);
+			print_tokens(data);
+			cleanup_tokens(data);
+			cleanup_processes(data);
 		}
-		cleanup_tokens(data);
-		cleanup_processes(data);
 	}
 	// free_tokens(data->tokens);
-	free_env(data->env);
+	// free_env(data->env);
 	// free(input);
 	return ;
 }

@@ -16,19 +16,12 @@
 
 void	free_exp_value(t_expand *exp)
 {
-	if (!exp->expand)
+	if (exp->expand)
 		(free(exp->expand), exp->l_expand = 0);
-	if (!exp->after)
+	if (exp->after)
 		(free(exp->after), exp->l_after = 0);
-	if (!exp->before)
+	if (exp->before)
 		(free(exp->before), exp->l_before = 0);
-}
-
-void	free_exp(t_data *data, t_expand *exp)
-{
-	if (exp)
-		free_exp_value(exp);
-	free(exp);
 }
 
 void	split_expand(char *input, t_expand *exp)
@@ -46,7 +39,12 @@ void	split_expand(char *input, t_expand *exp)
 		exp->pos++;
 	if (input[exp->start] == '\'' || input[exp->start] == '"')
 		exp->pos++;
-	free_exp_value(data, exp);
+	if (!exp->expand)
+		(free(exp->expand), exp->l_expand = 0);
+	if (!exp->after)
+		(free(exp->after), exp->l_after = 0);
+	if (!exp->before)
+		(free(exp->before), exp->l_before = 0);
 	exp->l_expand = exp->pos - exp->start;
 	exp->expand = &input[exp->start];
 	exp->l_after = ft_strlen(&input[exp->pos]);
@@ -71,17 +69,17 @@ void	find_expansions(t_data *data, t_token *token)
 		else if (token->value[exp->pos] == '\'')
 		{
 			split_expand(token->value, exp);
-			token->value = expand_s_quote(token->value, exp);
+			token->value = expand_s_quote(exp);
 		}
 		else if (token->value[exp->pos] == '"')
 		{
 			split_expand(token->value, exp);
-			token->value = expand_d_quote(token->value, exp);
+			token->value = expand_d_quote(exp);
 		}
 		else
 			exp->pos++;
 	}
-	free_exp(data, exp);
+	free(exp);
 }
 
 void	expand(t_data *data)

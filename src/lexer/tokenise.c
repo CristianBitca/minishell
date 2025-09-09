@@ -13,7 +13,7 @@
 #include "minishell.h"
 #include "lexer.h"
 
-void free_tokens(t_token *token)
+void	free_tokens(t_token *token)
 {
 	t_token *temp;
 
@@ -27,7 +27,7 @@ void free_tokens(t_token *token)
 	}
 }
 
-void tokenise(t_data *data, char *input)
+int	tokenise(t_data *data, char *input)
 {
 	t_lexer *lexer;
 
@@ -42,9 +42,13 @@ void tokenise(t_data *data, char *input)
 		if (is_operator(lexer->line[lexer->pos]) == 1)
 			add_operator_token(data, lexer);
 		else if (lexer->line[lexer->pos] != '\0')
-			add_word_token(data, lexer);
+		{
+			if (add_word_token(data, lexer) == -1)
+				return (-1);
+		}
 	}
 	if (lexer->line)
 		free(lexer->line);
 	free(lexer);
+	return (0);
 }

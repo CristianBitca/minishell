@@ -45,5 +45,4 @@ void	split_word(t_data *data, t_token *token, char *input)
 		split_tokens++;
 	}
 	insert_tokens(data, token, buffer->next);
-	expand(data);
 }

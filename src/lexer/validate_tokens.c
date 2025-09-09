@@ -17,7 +17,7 @@ int	syntax_error(char *invalid_val)
 	write (STDERR_FILENO, "syntax error near unexpected token '", 36);
 	write (STDERR_FILENO, invalid_val, ft_strlen(invalid_val));
 	write (STDERR_FILENO, "'\n", 2);
-	return (0);
+	return (-1);
 }
 
 // The only valid token after a redirection is a word. Following a pipe
@@ -50,5 +50,5 @@ int	validate_tokens(t_data *data)
 		|| token->type == REDIR_IN || token->type == REDIR_HEREDOC
 		|| token->type == REDIR_OUT)
 		return (syntax_error("newline"));
-	return (1);
+	return (0);
 }

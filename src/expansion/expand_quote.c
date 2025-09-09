@@ -13,30 +13,36 @@
 #include "minishell.h"
 #include "expansion.h"
 
-char	*expand_s_quote(char *input, t_expand *exp)
+char	*expand_s_quote(t_expand *exp)
 {
 	char	*new_word;
+	char	*temp;
 
 	exp->expand = ft_substr(exp->expand, 1, exp->l_expand - 2);
 	exp->l_expand = ft_strlen(exp->expand);
 	new_word = ft_strjoin(exp->before, exp->expand);
+	temp = new_word;
 	new_word = ft_strjoin(new_word, exp->after);
+	free(temp);
 	exp->pos = exp->l_before + exp->l_expand;
 	exp->size = ft_strlen(new_word);
+	free_exp_value(exp);
 	return (new_word);
-	(void)input;
 }
 
-char	*expand_d_quote(char *input, t_expand *exp)
+char	*expand_d_quote(t_expand *exp)
 {
 	char	*new_word;
+	char	*temp;
 
 	exp->expand = ft_substr(exp->expand, 1, exp->l_expand - 2);
 	exp->l_expand = ft_strlen(exp->expand);
 	new_word = ft_strjoin(exp->before, exp->expand);
+	temp = new_word;
 	new_word = ft_strjoin(new_word, exp->after);
+	free(temp);
 	exp->pos = exp->l_before;
 	exp->size = ft_strlen(new_word);
+	free_exp_value(exp);
 	return (new_word);
-	(void)input;
 }

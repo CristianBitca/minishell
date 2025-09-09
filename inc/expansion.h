@@ -16,18 +16,17 @@
 # include "minishell.h"
 
 // expand.c
-void	free_exp(t_data *data, t_expand *exp);
 void	split_expand(char *input, t_expand *exp);
 void	find_expansions(t_data *data, t_token *token);
 void	expand(t_data *data);
-char	*ft_exp_strjoin(char *dest, char *src);
+void	free_exp_value(t_expand *exp);
 
 // expand_env.c
 char	*expand_exit_code(t_data *data, t_expand *exp);
 char	*invalid_env_expansion(t_expand *exp);
 char	*expand_env(t_data *data, t_token *token, t_expand *exp);
-char	*expand_s_quote(char *input, t_expand *exp);
-char	*expand_d_quote(char *input, t_expand *exp);
+char	*expand_s_quote(t_expand *exp);
+char	*expand_d_quote(t_expand *exp);
 
 //word_splitting.c
 void	insert_tokens(t_data *data, t_token *node, t_token *tokens);

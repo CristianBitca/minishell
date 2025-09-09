@@ -51,11 +51,10 @@ char	*expand_input(t_data *data, char *input, int *exp_flag)
 		if (input[exp->pos] == '$' && input[exp->pos + 1] && exp_flag)
 		{
 			(exp->exp_heredoc = 1, split_expand(input, exp));
-			input = expand_env(data, 0, input, exp);
+			input = expand_env(data, 0, exp);
 		}
 		else
 			exp->pos++;
 	}
-	free_exp(data, exp);
 	return (input);
 }
