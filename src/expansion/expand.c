@@ -14,34 +14,20 @@
 #include "expansion.h"
 #include "env.h"
 
-// static char	*ft_exp_strjoin(char *dest, char *src)
-// {
-// 	int		s_len;
-// 	int		d_len;
-// 	char	*buffer;
-
-// 	s_len = ft_strlen(src);
-// 	d_len = ft_strlen(dest);
-// 	buffer = ft_calloc(s_len + d_len + 1, sizeof(char));
-// 	if (!buffer)
-// 		return (NULL);
-// 	ft_strcpy(buffer, dest);
-// 	ft_strcpy(&buffer[d_len], src);
-// 	free(dest);
-// 	return (buffer);
-// }
+void	free_exp_value(t_expand *exp)
+{
+	if (!exp->expand)
+		(free(exp->expand), exp->l_expand = 0);
+	if (!exp->after)
+		(free(exp->after), exp->l_after = 0);
+	if (!exp->before)
+		(free(exp->before), exp->l_before = 0);
+}
 
 void	free_exp(t_data *data, t_expand *exp)
 {
 	if (exp)
-	{
-		if (exp->after)
-			free(exp->after);
-		if (exp->before)
-			free(exp->before);
-		if (exp->expand && find_env(data->env, exp->expand))
-			free(exp->expand);
-	}
+		free_exp_value(exp);
 	free(exp);
 }
 
@@ -60,23 +46,13 @@ void	split_expand(char *input, t_expand *exp)
 		exp->pos++;
 	if (input[exp->start] == '\'' || input[exp->start] == '"')
 		exp->pos++;
-	if (!exp->expand)
-		(free(exp->expand), exp->l_expand = 0);
+	free_exp_value(data, exp);
 	exp->l_expand = exp->pos - exp->start;
 	exp->expand = &input[exp->start];
-	if (!exp->after)
-		(free(exp->after), exp->l_after = 0);
 	exp->l_after = ft_strlen(&input[exp->pos]);
 	exp->after = ft_substr(input, exp->pos, exp->l_after);
-	if (!exp->before)
-		(free(exp->before), exp->l_before = 0);
 	exp->l_before = exp->size - exp->l_after - exp->l_expand;
 	exp->before = ft_substr(input, 0, exp->l_before);
-	printf("-------------------------------\n");
-	printf("%s\n", exp->before);
-	printf("%s\n", exp->expand);
-	printf("%s\n", exp->after);
-	printf("-------------------------------\n");
 }
 
 void	find_expansions(t_data *data, t_token *token)
@@ -90,7 +66,7 @@ void	find_expansions(t_data *data, t_token *token)
 		if (token->value[exp->pos] == '$' && token->value[exp->pos + 1])
 		{
 			(exp->exp_heredoc = 0, split_expand(token->value, exp));
-			token->value = expand_env(data, token, token->value, exp);
+			token->value = expand_env(data, token, exp);
 		}
 		else if (token->value[exp->pos] == '\'')
 		{

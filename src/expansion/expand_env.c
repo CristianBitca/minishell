@@ -21,7 +21,7 @@
 // before the invalid variable through substr, then moving the pointer to the
 // invalid variable beyond the expansion, and joining whatever is subsequent
 // to the string before the invalid variable.
-char	*invalid_env_expansion(char *input, t_expand *exp)
+char	*invalid_env_expansion(t_expand *exp)
 {
 	char	*new_word;
 
@@ -32,34 +32,35 @@ char	*invalid_env_expansion(char *input, t_expand *exp)
 	exp->pos = exp->l_before + exp->l_expand;
 	exp->size = ft_strlen(new_word);
 	return (new_word);
-	(void)input;
 }
 
-char	*expand_exit_code(t_data *data, char *input, t_expand *exp)
+char	*expand_exit_code(t_data *data, t_expand *exp)
 {
 	char	*new_word;
+	char	*temp;
 
 	exp->expand = ft_itoa(data->exit_status);
 	exp->l_expand = ft_strlen(exp->expand);
 	new_word = ft_strjoin(exp->before, exp->expand);
+	temp = new_word;
 	new_word = ft_strjoin(new_word, exp->after);
+	free(temp);
 	exp->pos = exp->l_before + exp->l_expand;
 	exp->size = ft_strlen(new_word);
 	return (new_word);
-	(void)input;
 }
 
 // Checks
-char	*expand_env(t_data *data, t_token *token, char *input, t_expand *exp)
+char	*expand_env(t_data *data, t_token *token, t_expand *exp)
 {
 	int		i;
 	char	*new_word;
 
 	i = 1;
 	if (exp->expand[i] == '?')
-		return (expand_exit_code(data, input, exp));
+		return (expand_exit_code(data, exp));
 	if (!find_env(data->env, &exp->expand[1]))
-		return (invalid_env_expansion(input, exp));
+		return (invalid_env_expansion(exp));
 	exp->expand = find_env(data->env, &exp->expand[1]);
 	exp->l_expand = ft_strlen(exp->expand);
 	new_word = ft_strjoin(exp->before, exp->expand);

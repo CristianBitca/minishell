@@ -13,9 +13,9 @@
 #include "minishell.h"
 #include "lexer.h"
 
-void	free_tokens(t_token *token)
+void free_tokens(t_token *token)
 {
-	t_token	*temp;
+	t_token *temp;
 
 	while (token)
 	{
@@ -27,9 +27,9 @@ void	free_tokens(t_token *token)
 	}
 }
 
-void	tokenise(t_data *data, char *input)
+void tokenise(t_data *data, char *input)
 {
-	t_lexer	*lexer;
+	t_lexer *lexer;
 
 	lexer = malloc(sizeof(*lexer));
 	lexer->pos = 0;
@@ -44,5 +44,7 @@ void	tokenise(t_data *data, char *input)
 		else if (lexer->line[lexer->pos] != '\0')
 			add_word_token(data, lexer);
 	}
+	if (lexer->line)
+		free(lexer->line);
 	free(lexer);
 }
