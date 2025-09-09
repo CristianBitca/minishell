@@ -30,7 +30,7 @@ int		handle_quotes(t_lexer *lex, char end_quote);
 int		add_word_token(t_data *data, t_lexer *lexer);
 
 // tonkenise.c
-void	tokenise(t_data *data, char *input);
+int	tokenise(t_data *data, char *input);
 
 // validate_tokens.c
 int	syntax_error(char *invalid_val);

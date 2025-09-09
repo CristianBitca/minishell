@@ -6,13 +6,11 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 16:21:51 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/08 16:44:19 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/08 16:54:44 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
-#include <stdlib.h>
-#include <unistd.h>
 
 // If we only have one cmd to execute, a built-in command does not fork.
 // We get the exit status from passing the &wstatus pointer to waitpid

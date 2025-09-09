@@ -93,15 +93,13 @@ char	**make_process_argv(t_data *data, t_token *trvrsr, int tokens)
 {
 	char	**argv;
 	char	*cmd;
-	char	*temp;
 	int		arg_count;
 
 	arg_count = count_arguments(trvrsr, tokens);
 	if (arg_count == 0)
 		return (NULL);
 	argv = ft_calloc(arg_count + 1, sizeof(*argv));
-	temp = create_command(data, find_first_word(trvrsr, tokens));
-	if (temp == NULL)
+	if (check_valid_file(find_first_word(trvrsr, tokens)) == -1)
 		cmd = NULL;
 	else
 		cmd = ft_strdup(create_command(data, find_first_word(trvrsr, tokens)));

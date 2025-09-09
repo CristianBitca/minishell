@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "built_in.h"
 #include "execution.h"
 
 // After all the child processes are created, then we wait on each one with
@@ -72,7 +73,6 @@ int	execute_all_processes(t_data *data, int prcs_count)
 			close(data->processes[prcs]->infilefd);
 		if (data->processes[prcs]->outfilefd != STDOUT_FILENO)
 			close(data->processes[prcs]->outfilefd);
-		free(data->processes[prcs]->argv);
 		prcs++;
 	}
 	(wait_on_processes(data, cpids, prcs_count), free(cpids));

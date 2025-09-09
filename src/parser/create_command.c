@@ -14,7 +14,6 @@
 #include "execution.h"
 #include "minishell.h"
 #include "parser.h"
-#include <stdlib.h>
 
 int	check_valid_file(char *cmd)
 {
@@ -62,14 +61,27 @@ char	*search_exe_in_path(char **paths, char *cmd)
 	return (cmd);
 }
 
+void	free_paths(char ***paths_adr)
+{
+	char	**paths;
+	int	i;
+
+	paths = *paths_adr;
+	i = 0;
+	while (paths[i])
+	{
+		free(paths[i]);
+		i++;
+	}
+	free(paths);
+}
+
 char	*create_command(t_data *data, char *cmd)
 {
 	char	**paths;
 	char	*path;
 	char	*exe;
 
-	if (check_valid_file(cmd) == -1)
-		return (NULL);
 	if (access(cmd, F_OK | X_OK) == 0 || is_built_in(cmd) == 1)
 		return (cmd);
 	path = find_env(data->env, "PATH");
@@ -79,9 +91,9 @@ char	*create_command(t_data *data, char *cmd)
 	exe = search_exe_in_path(paths, cmd);
 	if (ft_strncmp(exe, cmd, ft_strlen(exe) == 0))
 	{
-		(free(exe), free(paths));
+		(free(exe), free_paths(&paths));
 		return (cmd);
 	}
-	free(paths);
+	free_paths(&paths);
 	return (exe);
 }
