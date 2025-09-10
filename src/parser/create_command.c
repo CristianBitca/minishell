@@ -94,7 +94,8 @@ int	check_exe_creation(t_data *data, char *cmd)
 		(free(temp), free_paths(&paths));
 		return (0);
 	}
-	// (free(temp), free_paths(&paths));
+	// (free(temp), 
+	free_paths(&paths);
 	return (1);
 }
 

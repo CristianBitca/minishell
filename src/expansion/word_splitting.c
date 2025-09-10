@@ -51,6 +51,7 @@ char	*split_word(t_data *data, t_token *token, char *input)
 	new_word = buffer->value;
 	token->type = DELETE;
 	insert_tokens(data, token, buffer);
+	free(split_tokens);
 	free(input);
 	return(new_word);
 }
