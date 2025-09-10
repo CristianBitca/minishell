@@ -13,6 +13,7 @@
 #include "libft.h"
 #include "minishell.h"
 #include "built_in.h"
+#include <unistd.h>
 
 // counts all the nodes in the env list, if there is a node with no value
 // (becuase it has been exported without an '='), it is not counted
@@ -50,8 +51,7 @@ char	**join_key_val(char	**envp, t_env_var *env)
 		env_var_size -= i;
 		ft_strlcpy(&envp[env_var][i], env->value, env_var_size);
 		i += ft_strlen(env->value);
-		envp[env_var][i] = '\n';
-		envp[env_var][i + 1] = '\0';
+		envp[env_var][i] = '\0';
 		env_var++;
 		env = env->next;
 	}
@@ -77,7 +77,7 @@ char	**make_envp(t_data *data)
 			env = env->next;
 			continue ;
 		}
-		env_var_size = ft_strlen(env->key) + ft_strlen(env->value) + 3;
+		env_var_size = ft_strlen(env->key) + ft_strlen(env->value) + 2;
 		envp[i] = malloc(sizeof(*envp[i]) * env_var_size);
 		i++;
 		env = env->next;
@@ -117,6 +117,7 @@ void	print_envp(t_data *data, int out_fd)
 	while (envp[i] != NULL)
 	{
 		write (out_fd, envp[i], ft_strlen(envp[i]));
+		write(out_fd, "\n", 1);
 		i++;
 	}
 	free_envp(envp);
