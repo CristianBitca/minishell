@@ -74,15 +74,15 @@ char	*expand_env(t_data *data, t_token *token, t_expand *exp)
 	new_word = ft_strjoin(exp->before, exp->expand);
 	temp = new_word;
 	new_word = ft_strjoin(new_word, exp->after);
-	free(temp);
-	free(token->value);
 	exp->pos = exp->l_before + exp->l_expand;
 	exp->size = ft_strlen(new_word);
+	free(temp);
+	free(token->value);
+	free_exp_value(exp);
 	if (ft_strchr(new_word, ' ') && !exp->exp_heredoc)
 	{
-		(free_exp_value(exp), exp->pos = 0);
+		exp->pos = 0;
 		return(split_word(data, token, new_word));
 	}
-	free_exp_value(exp);
 	return (new_word);
 }

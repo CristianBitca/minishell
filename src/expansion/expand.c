@@ -85,6 +85,7 @@ void	find_expansions(t_data *data, t_token *token)
 void	expand(t_data *data)
 {
 	t_token	*token;
+	t_token	*temp;
 
 	token = data->tokens;
 	while (token)
@@ -92,6 +93,14 @@ void	expand(t_data *data)
 		if (token->type == WORD
 			&& (token->prev == NULL || token->prev->type != REDIR_HEREDOC))
 			find_expansions(data, token);
+		if (token->type == DELETE)
+		{
+			temp = token;
+			token = data->tokens;
+			if (!temp->value)
+				free(temp->value);
+			free(temp);
+		}
 		token = token->next;
 	}
 }

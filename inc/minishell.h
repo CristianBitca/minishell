@@ -30,6 +30,7 @@ typedef enum e_tokentype
 	REDIR_OUT,
 	REDIR_APPEND,
 	REDIR_HEREDOC,
+	DELETE,
 }	t_tokentype;
 
 typedef struct s_token

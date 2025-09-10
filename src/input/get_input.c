@@ -60,12 +60,16 @@ void	rl_loop(t_data *data)
 				cleanup_tokens(data);
 				continue ;
 			}
+			printf("BEFOR EXPANSION\n");
+			print_tokens(data);
 			if (validate_tokens(data) == -1)
 			{
 				cleanup_tokens(data);
 				continue ;
 			}
 			expand(data);
+			printf("AFTER EXPANSION\n");
+			print_tokens(data);
 			if (create_processes(data) == -1)
 				continue ;
 			if (count_processes(data) > 1)
