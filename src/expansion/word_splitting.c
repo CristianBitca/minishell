@@ -32,10 +32,11 @@ void	insert_tokens(t_data *data, t_token *node, t_token *tokens)
 	}
 }
 
-void	split_word(t_data *data, t_token *token, char *input)
+char	*split_word(t_data *data, t_token *token, char *input)
 {
 	t_token	*buffer;
 	char	**split_tokens;
+	char	*new_word;
 
 	buffer = ft_calloc(sizeof(*buffer), 1);
 	split_tokens = ft_split(input, ' ');
@@ -44,5 +45,9 @@ void	split_word(t_data *data, t_token *token, char *input)
 		add_token_back(&buffer, create_token(*split_tokens, WORD));
 		split_tokens++;
 	}
+	buffer = buffer->next;
+	new_word = buffer->value;
+	printf("%s\n", new_word);
 	insert_tokens(data, token, buffer->next);
+	return(new_word);
 }

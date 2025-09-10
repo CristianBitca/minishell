@@ -35,7 +35,7 @@ char	*expand_delimiter(char *delimiter, int *exp_flag)
 	if (delimiter[exp->pos] == '\'' || delimiter[exp->pos] == '"')
 	{
 		split_expand(delimiter, exp);
-		delimiter = expand_s_quote(exp);
+		delimiter = expand_s_quote(0, exp);
 	}
 	return (delimiter);
 }

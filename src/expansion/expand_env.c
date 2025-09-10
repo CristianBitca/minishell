@@ -79,7 +79,10 @@ char	*expand_env(t_data *data, t_token *token, t_expand *exp)
 	exp->pos = exp->l_before + exp->l_expand;
 	exp->size = ft_strlen(new_word);
 	if (ft_strchr(new_word, ' ') && !exp->exp_heredoc)
-		split_word(data, token, new_word);
+	{
+		(free_exp_value(exp), exp->pos = 0);
+		return(split_word(data, token, new_word));
+	}
 	free_exp_value(exp);
 	return (new_word);
 }
