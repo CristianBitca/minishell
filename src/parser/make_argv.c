@@ -89,21 +89,25 @@ void	add_arguments(char **argv, t_token *traverser, int token_count)
 	}
 }
 
-char	**make_process_argv(t_data *data, t_token *trvrsr, int tokens)
+char	**make_process_argv(t_data *data, t_token *traverser, int tokens)
 {
 	char	**argv;
+	char	*first_word;
 	char	*cmd;
 	int		arg_count;
 
-	arg_count = count_arguments(trvrsr, tokens);
+	arg_count = count_arguments(traverser, tokens);
 	if (arg_count == 0)
 		return (NULL);
 	argv = ft_calloc(arg_count + 1, sizeof(*argv));
-	if (check_valid_file(find_first_word(trvrsr, tokens)) == -1)
+	first_word = find_first_word(traverser, tokens);
+	if (check_valid_file(first_word) == -1)
 		cmd = NULL;
+	else if (check_exe_creation(data, first_word) == 0)
+		cmd = ft_strdup(first_word);
 	else
-		cmd = ft_strdup(create_command(data, find_first_word(trvrsr, tokens)));
+		cmd = create_command(data, first_word);
 	argv[0] = cmd;
-	add_arguments(argv, trvrsr, tokens);
+	add_arguments(argv, traverser, tokens);
 	return (argv);
 }

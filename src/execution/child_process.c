@@ -20,8 +20,8 @@ void	child_prcs_file_handling(t_data *data, t_prcs *process)
 		|| dup2(process->outfilefd, STDOUT_FILENO) < 0)
 	{
 		perror(NULL);
-		// free all mallocs, close all fds and exit
-		exit(EXIT_FAILURE);
+		data->exit_status = 1;
+		full_exit(data);
 	}
 	if (process->infilefd != STDIN_FILENO)
 		close(process->infilefd);
@@ -67,14 +67,15 @@ int	execute_in_child(t_data *data, t_prcs *process)
 	char	**envp;
 
 	if (process->argv[0] == NULL)
-		// free all mallocs, close all fds and exit
-		exit (126);
+	{
+		data->exit_status = 126;
+		full_exit(data);
+	}
 	child_prcs_file_handling(data, process);
 	if (is_built_in(process->argv[0]) == 1)
 	{
 		execute_built_in(data, process);
-		// free all mallocs, close all fds and exit
-		exit(data->exit_status);
+		full_exit(data);
 	}
 	child_prcs_check_exe(data, process);
 	envp = make_envp(data);
@@ -82,7 +83,8 @@ int	execute_in_child(t_data *data, t_prcs *process)
 	if (execve_status < 0)
 	{
 		free_envp(envp);
-		// free all mallocs, close all fds and exit;
+		data->exit_status = 1;
+		full_exit(data);
 	}
 	exit (EXIT_FAILURE);
 }

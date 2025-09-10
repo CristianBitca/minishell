@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 12:46:36 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/03 13:39:01 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/10 12:04:57 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ int	execute_built_in(t_data *data, t_prcs *process)
 	if (ft_strncmp(process->argv[0], "env\0", 4) == 0)
 		print_envp(data, process->outfilefd);
 	if (ft_strncmp(process->argv[0], "exit\0", 5) == 0)
-		print_envp(data, process->outfilefd); // should be exit
+		full_exit(data);
 	return (0);
 }

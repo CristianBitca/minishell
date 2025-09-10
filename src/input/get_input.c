@@ -18,7 +18,6 @@
 #include "env.h"
 #include "parser.h"
 #include "built_in.h"
-#include <stdlib.h>
 
 void	print_tokens(t_data *data)
 {
@@ -67,18 +66,16 @@ void	rl_loop(t_data *data)
 				continue ;
 			}
 			expand(data);
-			create_processes(data);
+			if (create_processes(data) == -1)
+				continue ;
 			if (count_processes(data) > 1)
 				execute_all_processes(data, count_processes(data));
 			else
 				single_cmd(data, data->processes[0]);
-			// cleanup_tokens(data);
-			// cleanup_processes(data);
+			cleanup_tokens(data);
+			cleanup_processes(data);
 		}
 	}
-	// free_tokens(data->tokens);
-	// free_env(data->env);
-	// free(input);
 	return ;
 }
 

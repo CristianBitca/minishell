@@ -6,11 +6,11 @@
 /*   By: cbitca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 18:45:30 by cbitca            #+#    #+#             */
-/*   Updated: 2025/08/04 12:19:51 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/10 12:05:12 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "built_in.h"
 #include "minishell.h"
 #include "env.h"
 #include "input.h"
@@ -33,10 +33,12 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
 
-	data = ft_calloc(sizeof(t_data), 1);
+	if (isatty(STDIN_FILENO) == 0)
+		return (0);
+	data = ft_calloc(sizeof(t_data), sizeof(t_data));
 	parse_env(data, envp);
 	rl_loop(data);
-	free(data);
+	full_exit(data);
 	return (0);
 	(void)argc;
 	(void)argv;

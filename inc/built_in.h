@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:54:55 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/08 16:29:47 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/10 12:03:44 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,14 @@ void	pwd(t_data *data, int out_fd);
 int		check_n(char *str);
 void	echo(t_data *data, char **args, int out_fd);
 
-//exit.c
+//cleanup.c
 void	cleanup_tokens(t_data *data);
+void	cleanup_heredoc(t_data *data, int prcs_index);
+void	cleanup_argv(t_prcs *process);
 void	cleanup_processes(t_data *data);
+void	cleanup_env(t_data *data);
+
+//exit.c
+void	full_exit(t_data *data);
 
 #endif
