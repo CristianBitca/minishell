@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 11:27:29 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/03 10:22:10 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/10 12:21:59 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int		read_here_doc(char *delimiter, char *here_doc_path);
 // create_processes.c
 int		count_processes(t_data *data);
 int		allocate_processes(t_data *data);
-void	create_processes(t_data *data);
+int		create_processes(t_data *data);
 
 // parse_process.c
-void	assign_prcs(t_data *data, t_token *first, int token_count, int prcs_index);
+int		assign_prcs(t_data *data, t_token *first, int token_count, int prcs_index);
 
 // open_infiles.c
 int		check_infile_permissions(char *file_path);
@@ -47,6 +47,9 @@ char	**make_process_argv(t_data *data, t_token *traverser, int token_count);
 
 // create_command.c
 int		check_valid_file(char *cmd);
+char	*search_exe_in_path(char **paths, char *cmd);
+void	free_paths(char ***paths_adr);
+int		check_exe_creation(t_data *data, char *cmd);
 char	*create_command(t_data *data, char *cmd);
 
 #endif

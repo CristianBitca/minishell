@@ -76,24 +76,37 @@ void	free_paths(char ***paths_adr)
 	free(paths);
 }
 
+int	check_exe_creation(t_data *data, char *cmd)
+{
+	char	**paths;
+	char	*path;
+	char	*temp;
+
+	if (access(cmd, F_OK | X_OK) == 0 || is_built_in(cmd) == 1)
+		return (0);
+	path = find_env(data->env, "PATH");
+	if (path == NULL)
+		return (0);
+	paths = ft_split(path, ':');
+	temp = search_exe_in_path(paths, cmd);
+	if (ft_strncmp(temp, cmd, ft_strlen(temp) == 0))
+	{
+		(free(temp), free_paths(&paths));
+		return (0);
+	}
+	(free(temp), free_paths(&paths));
+	return (1);
+}
+
 char	*create_command(t_data *data, char *cmd)
 {
 	char	**paths;
 	char	*path;
 	char	*exe;
 
-	if (access(cmd, F_OK | X_OK) == 0 || is_built_in(cmd) == 1)
-		return (cmd);
 	path = find_env(data->env, "PATH");
-	if (path == NULL)
-		return (cmd);
 	paths = ft_split(path, ':');
 	exe = search_exe_in_path(paths, cmd);
-	if (ft_strncmp(exe, cmd, ft_strlen(exe) == 0))
-	{
-		(free(exe), free_paths(&paths));
-		return (cmd);
-	}
 	free_paths(&paths);
 	return (exe);
 }

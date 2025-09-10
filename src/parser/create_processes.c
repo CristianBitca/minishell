@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 10:44:19 by skirwan           #+#    #+#             */
-/*   Updated: 2025/08/28 13:53:34 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/10 12:18:38 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	count_processes(t_data *data)
 	return (prcs_count);
 }
 
-void	create_processes(t_data *data)
+int	create_processes(t_data *data)
 {
 	t_token	*first_process_token;
 	t_token	*traverser;
@@ -68,7 +68,9 @@ void	create_processes(t_data *data)
 			token_count++;
 			traverser = traverser->next;
 		}
-		assign_prcs(data, first_process_token, token_count, i);
+		if (assign_prcs(data, first_process_token, token_count, i) == -1)
+			return (-1);
 		i++;
 	}
+	return (0);
 }

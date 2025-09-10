@@ -42,7 +42,8 @@ void	rl_loop(t_data *data)
 				continue ;
 			}
 			expand(data);
-			create_processes(data);
+			if (create_processes(data) == -1)
+				continue ;
 			if (count_processes(data) > 1)
 				execute_all_processes(data, count_processes(data));
 			else
