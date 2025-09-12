@@ -95,7 +95,8 @@ void	cd_oldpwd(t_data *data, int out_fd)
 	write(out_fd, "\n", 1);
 }
 
-// chdir called on path to cd
+// cd can only have one argument, if we dont have a special case
+// ("cd -" or just "cd"), chdir called on path given.
 void	cd(t_data *data, char **argv, int out_fd)
 {
 	char	*path;
