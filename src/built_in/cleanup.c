@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
 #include "minishell.h"
 #include "built_in.h"
 

@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 12:23:42 by skirwan           #+#    #+#             */
-/*   Updated: 2025/08/11 13:34:05 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/12 12:21:11 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,15 +119,16 @@ void	export(t_data *data, char **args, int out_fd)
 		data->exit_status = EXIT_SUCCESS;
 		return ;
 	}
+	data->exit_status = EXIT_SUCCESS;
+	args++;
 	while (*args)
 	{
 		if (check_valid_export(data, *args) == 0)
-			return ;
-		if (ft_strchr(*args, '=') == 0)
+			data->exit_status = EXIT_FAILURE;
+		else if (ft_strchr(*args, '=') == 0)
 			export_without_value(data, *args);
 		else
 			export_with_value(data, *args);
 		args++;
 	}
-	data->exit_status = EXIT_SUCCESS;
 }
