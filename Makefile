@@ -40,6 +40,7 @@ SRC    = main.c \
 		  lexer/tokenise.c \
 		  lexer/token_list_utils.c \
 		  lexer/validate_tokens.c \
+		  parser/create_exe.c \
 		  parser/create_processes.c \
 		  parser/here_doc.c \
 		  parser/make_argv.c \

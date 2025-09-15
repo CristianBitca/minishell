@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 11:27:29 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/10 12:21:59 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/12 11:54:18 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,10 @@ char	*search_exe_in_path(char **paths, char *cmd);
 void	free_paths(char ***paths_adr);
 int		check_exe_creation(t_data *data, char *cmd);
 char	*create_command(t_data *data, char *cmd);
+
+// create_exe.c
+int		is_cmd_in_path(char **paths, char *cmd);
+void	free_paths(char ***paths_adr);
+char	*create_exe_in_path(char **paths, char *cmd);
 
 #endif

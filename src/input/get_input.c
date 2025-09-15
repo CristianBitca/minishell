@@ -19,29 +19,30 @@
 #include "parser.h"
 #include "built_in.h"
 
-void	print_tokens(t_data *data)
+void	test_env(t_data *data)
 {
+	t_env_var	*node;
 
-	//test func to be deleted
-	t_token	*token;
-	char	*number;
-
-	token = data->tokens;
-	while (token != NULL)
+	node = data->env;
+	while (node != NULL)
 	{
-		if (*token->value == '\0')
-			printf("token value = NULL\n");
-		else
-			printf("token value = %s\n", token->value);
-		number = ft_itoa(token->type);
-		printf("token type = %s\n", number);
-		printf("*******\n");
-		token = token->next;
-		if (number)
-			free(number);
+		printf("key = %s\n", node->key);
+		printf("value = %s\n", node->value);
+		printf("\n");
+		node = node->next;
 	}
 }
 
+// Runs in an infinite loop, prompt is created new on each iteration
+// so it can update the exit status and cwd. Readline will display
+// prompt and return string taken from stdin. If we are given input
+// we enter the next stage, tokenising the input and checking for
+// invalid syntax. Then we expand variables through the token chain,
+// splitting the words and inserting new tokens if necessary. After
+// we take our token chain and convert it into an array of our prcs
+// structure, which only requires an infile, outfile and argv. Then
+// we execute our processes, cleanup memory in token chain and processes
+// array, and return to the prompt to start again.
 void	rl_loop(t_data *data)
 {
 	char	*input;
@@ -60,16 +61,12 @@ void	rl_loop(t_data *data)
 				cleanup_tokens(data);
 				continue ;
 			}
-			printf("BEFOR EXPANSION\n");
-			print_tokens(data);
 			if (validate_tokens(data) == -1)
 			{
 				cleanup_tokens(data);
 				continue ;
 			}
 			expand(data);
-			printf("AFTER EXPANSION\n");
-			print_tokens(data);
 			if (create_processes(data) == -1)
 				continue ;
 			if (count_processes(data) > 1)
@@ -83,6 +80,8 @@ void	rl_loop(t_data *data)
 	return ;
 }
 
+// Creates a prompt as a malloced string (must be malloced to concatenate
+// the string), displaying exit status and cwd.
 char	*create_prompt(t_data *data)
 {
 	char	*ex_status;

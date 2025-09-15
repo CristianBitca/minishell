@@ -10,10 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
 #include "minishell.h"
 #include "built_in.h"
 
+// Frees the token list. Token->value is only memory allocated if the type
+// is WORD, otherwise we use a string literal (e.g ">") which would cause
+// a segfault if we attempted to free it.
 void	cleanup_tokens(t_data *data)
 {
 	t_token	*traverser;
@@ -33,6 +35,11 @@ void	cleanup_tokens(t_data *data)
 	data->tokens = NULL;
 }
 
+// Every process will only ever have one here_doc temporary file because
+// each successive here_doc overwrites the previous one. First we check
+// if we have created the file (the process had a here_doc), then unlink
+// it. Unlink will remove the file if there no other links or fds referring
+// to the file.
 void	cleanup_heredoc(t_data *data, int prcs_index)
 {
 	char	*here_doc_path;
@@ -51,6 +58,8 @@ void	cleanup_heredoc(t_data *data, int prcs_index)
 	(free(here_doc_path), free(prcs_index_number));
 }
 
+// Every string in a processes argv is memory allocated, as well as the argv
+// pointer itself.
 void	cleanup_argv(t_prcs *process)
 {
 	int	i;
@@ -67,6 +76,9 @@ void	cleanup_argv(t_prcs *process)
 	process->argv = NULL;
 }
 
+// Frees the process array stored after an iteration, as well as
+// freeing the argv created for the process and removing the temporary
+// here_doc file if it was created.
 void	cleanup_processes(t_data *data)
 {
 	int	i;
@@ -85,6 +97,9 @@ void	cleanup_processes(t_data *data)
 	data->processes = NULL;
 }
 
+// frees all nodes in the env list, and their memory allocated key, value
+// strings. Value can be NULL when export is called with no '=', but calling
+// free on NULL takes no action and is therefore safe to do.
 void	cleanup_env(t_data *data)
 {
 	t_env_var	*traverser;

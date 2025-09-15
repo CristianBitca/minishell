@@ -36,7 +36,7 @@ void	unset_search(t_env_var *node, char *find)
 	return ;
 }
 
-// if the argument passed to unset is the very first key in our env list,
+// If the argument passed to unset is the very first key in our env list,
 // change the head of the list to the next node, and free the node unset
 void	unset(t_data *data, char **args)
 {

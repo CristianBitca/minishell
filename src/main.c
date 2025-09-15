@@ -15,20 +15,6 @@
 #include "env.h"
 #include "input.h"
 
-void	test_env(t_data *data)
-{
-	t_env_var	*node;
-
-	node = data->env;
-	while (node != NULL)
-	{
-		printf("key = %s\n", node->key);
-		printf("value = %s\n", node->value);
-		printf("\n");
-		node = node->next;
-	}
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;

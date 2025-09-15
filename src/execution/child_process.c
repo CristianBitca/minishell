@@ -42,8 +42,8 @@ void	child_prcs_check_exe(t_data *data, t_prcs *process)
 			write(STDERR_FILENO, ": command not found\n", 21);
 		else
 			write(STDERR_FILENO, ": No such file or directory\n", 29);
-		// free all mallocs, close all fds and exit
-		exit (127);
+		data->exit_status = 127;
+		full_exit(data);
 	}
 }
 

@@ -34,12 +34,12 @@ int	check_n(char *str)
 	return (0);
 }
 
-// receives arguments char ** created by ft_split(' ').
+// Each argument is a separate word token made into argv during parsing.
 // Checks -n option whether to print print_newline
 // If first arg is valid -n, checks all successive args that are valid
-// and doesnt write them to stdout.
-// After -n checks, writes each arg to stdout and adds space between
-// to bring back the space lost from ft_split
+// -n flags and doesnt write them to stdout.
+// After -n checks, writes each arg to stdout and adds a single space
+// no matter how much whitespace was between each argument in input.
 void	echo(t_data *data, char **args, int out_fd)
 {
 	int	print_newline;

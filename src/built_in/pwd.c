@@ -12,6 +12,9 @@
 
 #include "built_in.h"
 
+// If getcwd is passed (NULL, 0) it automatically allocates the correct size
+// string and populates it with the current working directory. We can then 
+// free this string.
 void	pwd(t_data *data, int out_fd)
 {
 	char	*cwd;
