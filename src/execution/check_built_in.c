@@ -13,6 +13,7 @@
 #include "minishell.h"
 #include "built_in.h"
 #include "execution.h"
+#include <unistd.h>
 
 int	is_built_in(char *cmd)
 {
@@ -49,6 +50,10 @@ int	execute_built_in(t_data *data, t_prcs *process)
 		unset(data, process->argv);
 	if (ft_strncmp(process->argv[0], "env\0", 4) == 0)
 		print_envp(data, process->outfilefd);
+	if (process->infilefd != STDIN_FILENO)
+		close(process->infilefd);
+	if (process->outfilefd != STDOUT_FILENO)
+		close(process->outfilefd);
 	if (ft_strncmp(process->argv[0], "exit\0", 5) == 0)
 		full_exit(data);
 	return (0);
