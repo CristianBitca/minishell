@@ -19,7 +19,8 @@ char	*find_env(t_env_var *env_list, char *key_to_find)
 	env_node = env_list;
 	while (env_node)
 	{
-		if (!ft_strncmp(env_node->key, key_to_find, ft_strlen(env_node->key) + 1))
+		if (!ft_strncmp(env_node->key,
+				key_to_find, ft_strlen(env_node->key) + 1))
 			return (env_node->value);
 		env_node = env_node->next;
 	}
@@ -33,7 +34,8 @@ t_env_var	*find_env_node(t_env_var *env_list, char *key_to_find)
 	env_node = env_list;
 	while (env_node)
 	{
-		if (!ft_strncmp(env_node->key, key_to_find, ft_strlen(env_node->key) + 1))
+		if (!ft_strncmp(env_node->key,
+				key_to_find, ft_strlen(env_node->key) + 1))
 			return (env_node);
 		env_node = env_node->next;
 	}

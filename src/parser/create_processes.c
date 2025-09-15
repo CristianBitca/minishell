@@ -64,10 +64,7 @@ int	create_processes(t_data *data)
 			traverser = traverser->next;
 		}
 		if (traverser != NULL && traverser->type == PIPE)
-		{
-			token_count++;
 			traverser = traverser->next;
-		}
 		if (assign_prcs(data, first_process_token, token_count, i) == -1)
 			return (-1);
 		i++;

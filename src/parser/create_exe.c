@@ -38,7 +38,7 @@ int	is_cmd_in_path(char **paths, char *cmd)
 void	free_paths(char ***paths_adr)
 {
 	char	**paths;
-	int	i;
+	int		i;
 
 	paths = *paths_adr;
 	i = 0;

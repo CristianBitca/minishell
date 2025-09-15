@@ -17,7 +17,7 @@
 int	check_n(char *str)
 {
 	if (str == NULL || *str == '\0')
-		return (-1);
+		return (1);
 	if (*str == '-')
 		str++;
 	else
