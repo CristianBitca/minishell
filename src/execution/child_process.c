@@ -20,8 +20,7 @@ void	child_prcs_file_handling(t_data *data, t_prcs *process)
 		|| dup2(process->outfilefd, STDOUT_FILENO) < 0)
 	{
 		perror(NULL);
-		data->exit_status = 1;
-		full_exit(data);
+		full_exit(data, 1);
 	}
 	if (process->infilefd != STDIN_FILENO)
 		close(process->infilefd);
@@ -42,8 +41,7 @@ void	child_prcs_check_exe(t_data *data, t_prcs *process)
 			write(STDERR_FILENO, ": command not found\n", 21);
 		else
 			write(STDERR_FILENO, ": No such file or directory\n", 29);
-		data->exit_status = 127;
-		full_exit(data);
+		full_exit(data, 127);
 	}
 }
 
@@ -66,25 +64,20 @@ int	execute_in_child(t_data *data, t_prcs *process)
 	int		execve_status;
 	char	**envp;
 
+	if (process->argv == NULL)
+		full_exit(data, 1);
 	if (process->argv[0] == NULL)
-	{
-		data->exit_status = 126;
-		full_exit(data);
-	}
+		full_exit(data, 126);
 	child_prcs_file_handling(data, process);
 	if (is_built_in(process->argv[0]) == 1)
 	{
 		execute_built_in(data, process);
-		full_exit(data);
+		full_exit(data, -1);
 	}
 	child_prcs_check_exe(data, process);
 	envp = make_envp(data);
 	execve_status = execve(process->argv[0], process->argv, envp);
 	if (execve_status < 0)
-	{
-		free_envp(envp);
-		data->exit_status = 1;
-		full_exit(data);
-	}
+		(free_envp(envp), full_exit(data, 1));
 	exit (EXIT_FAILURE);
 }

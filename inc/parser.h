@@ -23,10 +23,11 @@ int		read_here_doc(char *delimiter, char *here_doc_path);
 // create_processes.c
 int		count_processes(t_data *data);
 int		allocate_processes(t_data *data);
-int		create_processes(t_data *data);
+void	create_processes(t_data *data);
 
 // parse_process.c
-int		assign_prcs(t_data *data, t_token *first, int token_count, int prcs_index);
+void	assign_prcs_error(t_data *data, t_prcs *process);
+void	assign_prcs(t_data *data, t_token *first, int token_count, int prcs_index);
 
 // open_infiles.c
 int		check_infile_permissions(char *file_path);

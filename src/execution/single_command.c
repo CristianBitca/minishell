@@ -21,6 +21,8 @@ int	single_cmd(t_data *data, t_prcs *process)
 	int	cpid;
 	int	wstatus;
 
+	if (process->argv == NULL)
+		return (0);
 	if (is_built_in(process->argv[0]) == 1)
 		return (execute_built_in(data, process));
 	else
