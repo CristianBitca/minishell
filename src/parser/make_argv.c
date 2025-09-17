@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "execution.h"
 #include "libft.h"
 #include "minishell.h"
 #include "parser.h"
@@ -101,7 +102,9 @@ char	**make_process_argv(t_data *data, t_token *traverser, int tokens)
 		return (NULL);
 	argv = ft_calloc(arg_count + 1, sizeof(*argv));
 	first_word = find_first_word(traverser, tokens);
-	if (check_valid_file(first_word) == -1)
+	if (is_built_in(first_word) == 1)
+		cmd = ft_strdup(first_word);
+	else if (check_valid_file(first_word) == -1)
 		cmd = NULL;
 	else if (check_exe_creation(data, first_word) == 0)
 		cmd = ft_strdup(first_word);

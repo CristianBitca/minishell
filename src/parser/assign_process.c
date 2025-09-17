@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 11:23:23 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/10 12:20:57 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/17 14:15:52 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	assign_prcs_error(t_data *data, t_prcs *process)
 	return ;
 }
 
-void	assign_prcs(t_data *data, t_token *first, int token_count, int i)
+int	assign_prcs(t_data *data, t_token *first, int token_count, int i)
 {
 	t_prcs	*process;
 
@@ -37,21 +37,23 @@ void	assign_prcs(t_data *data, t_token *first, int token_count, int i)
 	process = data->processes[i];
 	if (convert_here_docs(first, token_count, i) == -1)
 	{
+		//heredoc will return -1 when interrupted by signal
+		//return out of loop completely 
 		assign_prcs_error(data, process);
-		return ;
+		return (-1);
 	}
 	process->infilefd = handle_infiles(first, token_count);
 	if (process->infilefd == -1)
 	{
 		assign_prcs_error(data, process);
-		return ;
+		return (0);
 	}
 	process->outfilefd = handle_outfiles(first, token_count);
 	if (process->outfilefd == -1)
 	{
 		assign_prcs_error(data, process);
-		return ;
+		return (0);
 	}
 	process->argv = make_process_argv(data, first, token_count);
-	return ;
+	return (0);
 }

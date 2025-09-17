@@ -13,6 +13,7 @@
 #include "env.h"
 #include "execution.h"
 #include "built_in.h"
+#include "ms_signals.h"
 
 void	child_prcs_file_handling(t_data *data, t_prcs *process)
 {
@@ -29,7 +30,6 @@ void	child_prcs_file_handling(t_data *data, t_prcs *process)
 		close(process->outfilefd);
 	process->outfilefd = STDOUT_FILENO;
 	return ;
-	(void)data;
 }
 
 void	child_prcs_check_exe(t_data *data, t_prcs *process)
@@ -64,6 +64,7 @@ int	execute_in_child(t_data *data, t_prcs *process)
 	int		execve_status;
 	char	**envp;
 
+	sig_actions_default();
 	if (process->argv == NULL)
 		full_exit(data, 1);
 	if (process->argv[0] == NULL)

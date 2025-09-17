@@ -6,12 +6,13 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 09:56:04 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/08 16:42:15 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/17 14:15:55 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 #include "minishell.h"
+#include "ms_signals.h"
 
 // After all the child processes are created, then we wait on each one with
 // waitpid (not waiting for each one to die and then forking the 
@@ -98,6 +99,7 @@ int	execute_all_processes(t_data *data, int prcs_count)
 		if (prcs + 1 < prcs_count
 			&& create_pipe(data->processes[prcs], pipedes) == -1)
 			return (-1);
+		block_signals_pre_fork();
 		cpids[prcs] = fork();
 		if (cpids[prcs] == 0)
 		{

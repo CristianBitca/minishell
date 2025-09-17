@@ -6,7 +6,7 @@
 /*   By: cbitca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 18:48:25 by cbitca            #+#    #+#             */
-/*   Updated: 2025/08/07 15:36:35 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/17 12:47:23 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <termios.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <bits/types/sigset_t.h>
+# include <signal.h>
 # include "libft.h"
 
 typedef enum e_tokentype
