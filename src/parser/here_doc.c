@@ -28,7 +28,7 @@ char	*create_here_doc_temp_file_path(int prcs_index)
 char	*here_doc_readline(t_data *data, int here_doc_fd, char *delimiter, int	*exp_flag)
 {
 	char	*input;
-
+	
 	input = readline("> ");
 	while (!(input && *input))
 		input = readline("> ");
@@ -41,6 +41,7 @@ char	*here_doc_readline(t_data *data, int here_doc_fd, char *delimiter, int	*exp
 		write(here_doc_fd, input, ft_strlen(input));
 		write(here_doc_fd, "\n", 1);
 	}
+	free(input);
 	return (input);
 }
 
@@ -54,9 +55,10 @@ int	read_here_doc(t_data *data, char *delimiter, char *here_doc_path)
 	if (here_doc_fd == -1)
 		return (-1);
 	delimiter = expand_delimiter(delimiter, &exp_flag);
-	input = here_doc_readline(data, here_doc_fd, delimiter, &exp_flag);
 	while (input != delimiter)
 		input = here_doc_readline(data, here_doc_fd, delimiter, &exp_flag);
+	if (exp_flag == 1)
+		free(delimiter);
 	if (close(here_doc_fd) == -1)
 		return (-1);
 	return (0);

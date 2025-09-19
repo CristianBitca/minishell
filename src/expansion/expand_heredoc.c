@@ -37,6 +37,7 @@ char	*expand_delimiter(char *delimiter, int *exp_flag)
 		split_expand(delimiter, exp);
 		delimiter = expand_s_quote(0, exp);
 	}
+	free(exp);
 	return (delimiter);
 }
 
@@ -48,13 +49,14 @@ char	*expand_input(t_data *data, char *input, int *exp_flag)
 	exp->size = ft_strlen(input);
 	while (input[exp->pos])
 	{
-		if (input[exp->pos] == '$' && input[exp->pos + 1] && exp_flag)
+		if (input[exp->pos] == '$' && input[exp->pos + 1] && !*exp_flag)
 		{
-			(exp->exp_heredoc = 1, split_expand(input, exp));
-			input = expand_env(data, 0, exp);
+			(exp->exp_heredoc = *exp_flag, split_expand(input, exp));
+			input = expand_env(data, (t_token *)NULL, exp);
 		}
 		else
 			exp->pos++;
 	}
+	free(exp);
 	return (input);
 }

@@ -26,7 +26,8 @@ char	*expand_s_quote(t_token *token, t_expand *exp)
 	free(temp);
 	exp->pos = exp->l_before + exp->l_expand;
 	exp->size = ft_strlen(new_word);
-	free(token->value);
+	if (token)
+		free(token->value);
 	free_exp_value(exp);
 	return (new_word);
 }

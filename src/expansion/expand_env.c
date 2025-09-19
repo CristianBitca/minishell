@@ -26,13 +26,16 @@ char	*invalid_env_expansion(t_token *token, t_expand *exp)
 	char	*new_word;
 	char	*temp;
 
+	temp = exp->expand;
 	exp->expand = ft_strdup("");
+	free(temp);
 	exp->l_expand = ft_strlen(exp->expand);
 	new_word = ft_strjoin(exp->before, exp->expand);
 	temp = new_word;
 	new_word = ft_strjoin(new_word, exp->after);
 	free(temp);
-	free(token->value);
+	if (token != NULL)
+		free(token->value);
 	exp->pos = exp->l_before + exp->l_expand;
 	exp->size = ft_strlen(new_word);
 	free_exp_value(exp);
@@ -50,7 +53,8 @@ char	*expand_exit_code(t_data *data, t_token *token, t_expand *exp)
 	temp = new_word;
 	new_word = ft_strjoin(new_word, exp->after);
 	free(temp);
-	free(token->value);
+	if (token != NULL)
+		free(token->value);
 	exp->pos = exp->l_before + exp->l_expand;
 	exp->size = ft_strlen(new_word);
 	free_exp_value(exp);
@@ -69,7 +73,9 @@ char	*expand_env(t_data *data, t_token *token, t_expand *exp)
 		return (expand_exit_code(data, token, exp));
 	if (!find_env(data->env, &exp->expand[1]))
 		return (invalid_env_expansion(token, exp));
+	temp = exp->expand;
 	exp->expand = ft_strdup(find_env(data->env, &exp->expand[1]));
+	free(temp);
 	exp->l_expand = ft_strlen(exp->expand);
 	new_word = ft_strjoin(exp->before, exp->expand);
 	temp = new_word;
@@ -77,12 +83,10 @@ char	*expand_env(t_data *data, t_token *token, t_expand *exp)
 	exp->pos = exp->l_before + exp->l_expand;
 	exp->size = ft_strlen(new_word);
 	free(temp);
-	free(token->value);
 	free_exp_value(exp);
-	if (ft_strchr(new_word, ' ') && !exp->exp_heredoc)
-	{
-		exp->pos = 0;
-		return(split_word(data, token, new_word));
-	}
+	if (token != NULL)
+		free(token->value);
+	if (ft_strchr(new_word, ' ') && exp->exp_heredoc)
+		return(split_word(data, token, exp, new_word));
 	return (new_word);
 }

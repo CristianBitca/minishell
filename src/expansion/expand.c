@@ -46,7 +46,7 @@ void	split_expand(char *input, t_expand *exp)
 	if (!exp->before)
 		(free(exp->before), exp->l_before = 0);
 	exp->l_expand = exp->pos - exp->start;
-	exp->expand = &input[exp->start];
+	exp->expand = ft_substr(&input[exp->start], 0, exp->l_expand);
 	exp->l_after = ft_strlen(&input[exp->pos]);
 	exp->after = ft_substr(input, exp->pos, exp->l_after);
 	exp->l_before = exp->size - exp->l_after - exp->l_expand;

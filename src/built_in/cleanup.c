@@ -89,7 +89,7 @@ void	cleanup_processes(t_data *data)
 	while (data->processes[i] != NULL)
 	{
 		cleanup_heredoc(data, i);
-		// cleanup_argv(data->processes[i]);
+		cleanup_argv(data->processes[i]);
 		free(data->processes[i]);
 		i++;
 	}

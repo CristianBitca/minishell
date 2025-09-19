@@ -19,36 +19,36 @@ void	insert_tokens(t_data *data, t_token *node, t_token *tokens)
 {
 	if (node->prev)
 	{
-		tokens->prev = node;
-		node->next = tokens;
+		tokens->prev = node->prev;
+		node->prev->next = tokens;
 	}
 	else
 		data->tokens = tokens;
 	if (node->next)
 	{
 		tokens = last_token(tokens);
-		node->prev = tokens;
-		tokens->next = node;
+		node->next->prev = tokens;
+		tokens->next = node->next;
 	}
 }
 
-char	*split_word(t_data *data, t_token *token, char *input)
+char	*split_word(t_data *data, t_token *token, t_expand *exp, char *input)
 {
 	t_token	*buffer;
 	char	**split_tokens;
 	char	*new_word;
 	int	i;
 
-	buffer = ft_calloc(sizeof(*buffer), 1);
 	split_tokens = ft_split(input, ' ');
+	buffer = NULL;
 	i = 0;
 	while (split_tokens[i])
 	{
 		add_token_back(&buffer, create_token(split_tokens[i], WORD));
 		i++;
 	}
-	buffer = buffer->next;
 	new_word = buffer->value;
+	exp->pos = 0;
 	token->type = DELETE;
 	insert_tokens(data, token, buffer);
 	free(split_tokens);
