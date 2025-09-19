@@ -18,7 +18,9 @@ char	*expand_s_quote(t_token *token, t_expand *exp)
 	char	*new_word;
 	char	*temp;
 
+	temp = exp->expand;
 	exp->expand = ft_substr(exp->expand, 1, exp->l_expand - 2);
+	free(temp);
 	exp->l_expand = ft_strlen(exp->expand);
 	new_word = ft_strjoin(exp->before, exp->expand);
 	temp = new_word;
@@ -37,7 +39,9 @@ char	*expand_d_quote(t_token *token, t_expand *exp)
 	char	*new_word;
 	char	*temp;
 
+	temp = exp->expand;
 	exp->expand = ft_substr(exp->expand, 1, exp->l_expand - 2);
+	free(temp);
 	exp->l_expand = ft_strlen(exp->expand);
 	new_word = ft_strjoin(exp->before, exp->expand);
 	temp = new_word;
