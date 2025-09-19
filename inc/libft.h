@@ -96,7 +96,7 @@ int					ft_putnbr(int num);
 int					run_format(const char *format, va_list valist);
 int					put_format(char c, va_list valist);
 
-char				*get_next_line(int fd);
+char				*ft_get_next_line(int fd);
 char				*read_loop(int fd, char *buffer, char *str, ssize_t bytes_read);
 void				clean_buffer(char *buffer);
 char				*gnl_join(char *s1, char *s2);

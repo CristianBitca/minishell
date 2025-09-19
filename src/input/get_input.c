@@ -52,7 +52,15 @@ void	rl_loop(t_data *data)
 	{
 		sig_actions_interactive();
 		prompt = create_prompt(data->exit_status);
-		input = readline(prompt);
+		if (isatty(fileno(stdin)))
+			input = readline(prompt);
+		else
+		{
+			char *line;
+			line = ft_get_next_line(fileno(stdin));
+			input = ft_strtrim(line, "\n");
+			free(line);
+		}
 		free(prompt);
 		if (input == NULL)
 			full_exit(data, -1);

@@ -35,18 +35,13 @@ int	assign_prcs(t_data *data, t_token *first, int token_count, int i)
 
 	data->processes[i] = malloc(sizeof(*(data->processes[i])));
 	process = data->processes[i];
-<<<<<<< HEAD
 	if (convert_here_docs(data, token_count, i) == -1)
-		return (assign_prcs_error(data));
-=======
-	if (convert_here_docs(first, token_count, i) == -1)
 	{
 		//heredoc will return -1 when interrupted by signal
 		//return out of loop completely 
 		assign_prcs_error(data, process);
 		return (-1);
 	}
->>>>>>> skirwan
 	process->infilefd = handle_infiles(first, token_count);
 	if (process->infilefd == -1)
 	{
