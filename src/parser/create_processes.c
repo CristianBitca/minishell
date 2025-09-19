@@ -44,7 +44,7 @@ int	count_processes(t_data *data)
 	return (prcs_count);
 }
 
-int	create_processes(t_data *data)
+void	create_processes(t_data *data)
 {
 	t_token	*first_process_token;
 	t_token	*traverser;
@@ -65,9 +65,8 @@ int	create_processes(t_data *data)
 		}
 		if (traverser != NULL && traverser->type == PIPE)
 			traverser = traverser->next;
-		if (assign_prcs(data, first_process_token, token_count, i) == -1)
-			return (-1);
+		assign_prcs(data, first_process_token, token_count, i);
 		i++;
 	}
-	return (0);
+	return ;
 }

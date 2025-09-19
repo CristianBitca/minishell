@@ -58,6 +58,6 @@ void	cleanup_processes(t_data *data);
 void	cleanup_env(t_data *data);
 
 //exit.c
-void	full_exit(t_data *data);
+void	full_exit(t_data *data, int exit_status);
 
 #endif

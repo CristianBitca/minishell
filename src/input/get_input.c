@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:35:27 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/08 16:29:41 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/17 13:17:44 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "env.h"
 #include "parser.h"
 #include "built_in.h"
+#include "ms_signals.h"
 
 void	print_tokens(t_data *data)
 {
@@ -49,9 +50,12 @@ void	rl_loop(t_data *data)
 
 	while (1)
 	{
-		prompt = create_prompt(data);
+		sig_actions_interactive();
+		prompt = create_prompt(data->exit_status);
 		input = readline(prompt);
 		free(prompt);
+		if (input == NULL)
+			full_exit(data, -1);
 		if (input && *input)
 		{
 			add_history(input);
@@ -66,8 +70,7 @@ void	rl_loop(t_data *data)
 				continue ;
 			}
 			expand(data);
-			if (create_processes(data) == -1)
-				continue ;
+			create_processes(data);
 			if (count_processes(data) > 1)
 				execute_all_processes(data, count_processes(data));
 			else
@@ -79,7 +82,9 @@ void	rl_loop(t_data *data)
 	return ;
 }
 
-char	*create_prompt(t_data *data)
+// Creates a prompt as a malloced string (must be malloced to concatenate
+// the string), displaying exit status and cwd.
+char	*create_prompt(int exit_status)
 {
 	char	*ex_status;
 	char	*prompt;
@@ -88,7 +93,7 @@ char	*create_prompt(t_data *data)
 	int		i;
 
 	cwd = getcwd(NULL, 0);
-	ex_status = ft_itoa(data->exit_status);
+	ex_status = ft_itoa(exit_status);
 	p_size = ft_strlen(cwd) + ft_strlen(ex_status) + 5;
 	prompt = malloc (p_size * sizeof(*prompt));
 	prompt[0] = '[';

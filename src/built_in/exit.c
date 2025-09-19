@@ -16,11 +16,14 @@
 // Completely exits the shell, freeing all allocated memory. We save
 // the exit status in an int on the stack because we need to free
 // the data structure itself before we can exit.
-void	full_exit(t_data *data)
+// We pass an exit status as a parameter to save lines of code in other
+// functions (for norm), but if we want to exit with the exit_status saved
+// in our data structure already, we just pass -1 as the exit_status.
+void	full_exit(t_data *data, int exit_status)
 {
-	int	exit_status;
 
-	exit_status = data->exit_status;
+	if (exit_status == -1)
+		exit_status = data->exit_status;
 	cleanup_tokens(data);
 	cleanup_processes(data);
 	cleanup_env(data);

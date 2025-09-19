@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.h                                            :+:      :+:    :+:   */
+/*   ms_signals.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/18 11:56:30 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/17 13:17:53 by skirwan          ###   ########.fr       */
+/*   Created: 2025/09/17 11:47:29 by skirwan           #+#    #+#             */
+/*   Updated: 2025/09/17 12:56:57 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INPUT_H
-# define INPUT_H
+#ifndef MS_SIGNALS_H
+# define MS_SIGNALS_H
 
-# include "minishell.h"
-
-void	rl_loop(t_data *data);
-char	*create_prompt(int exit_status);
+// signal_handlers.c
+void	sig_handlers_interactive(int signal);
+void	sig_actions_interactive(void);
+void	block_signals_pre_fork(void);
+void	sig_actions_default(void);
 
 #endif

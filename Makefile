@@ -48,6 +48,7 @@ SRC    = main.c \
 		  parser/open_outfiles.c \
 		  parser/assign_process.c \
 		  parser/create_command.c \
+		  signals/signal_handlers.c \
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 

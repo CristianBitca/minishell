@@ -55,6 +55,6 @@ int	execute_built_in(t_data *data, t_prcs *process)
 	if (process->outfilefd != STDOUT_FILENO)
 		close(process->outfilefd);
 	if (ft_strncmp(process->argv[0], "exit\0", 5) == 0)
-		full_exit(data);
+		full_exit(data, -1);
 	return (0);
 }

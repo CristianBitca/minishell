@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "ms_signals.h"
 
 // If we only have one cmd to execute, a built-in command does not fork.
 // We get the exit status from passing the &wstatus pointer to waitpid
@@ -21,10 +22,13 @@ int	single_cmd(t_data *data, t_prcs *process)
 	int	cpid;
 	int	wstatus;
 
+	if (process->argv == NULL)
+		return (0);
 	if (is_built_in(process->argv[0]) == 1)
 		return (execute_built_in(data, process));
 	else
 	{
+		block_signals_pre_fork();
 		cpid = fork();
 		if (cpid == 0)
 			execute_in_child(data, process);
