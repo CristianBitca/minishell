@@ -47,7 +47,9 @@ char	*expand_exit_code(t_data *data, t_token *token, t_expand *exp)
 	char	*new_word;
 	char	*temp;
 
+	temp = exp->expand;
 	exp->expand = ft_itoa(data->exit_status);
+	free(temp);
 	exp->l_expand = ft_strlen(exp->expand);
 	new_word = ft_strjoin(exp->before, exp->expand);
 	temp = new_word;
