@@ -59,7 +59,7 @@ void	find_expansions(t_data *data, t_token *token)
 
 	exp = ft_calloc(sizeof(t_expand), 1);
 	exp->size = ft_strlen(token->value);
-	while (token->value[exp->pos] && strchr(token->value, '='))
+	while (token->value[exp->pos])
 	{
 		if (token->value[exp->pos] == '$' && token->value[exp->pos + 1])
 		{
