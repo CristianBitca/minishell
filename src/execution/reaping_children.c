@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 15:14:12 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/25 15:56:20 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/25 16:22:24 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ void	wait_on_processes(t_data *data, int *cpids, int prcs_count)
 	retrieve_child_status(data, wstatus);
 }
 
+// Sets our exit status to the correct value of the last child's. If the
+// child exited normally WIFEXITED will return true, so we can get the
+// status from the WEXITSTATUS macro. Else, the child may have exited
+// from a signal,
 void	retrieve_child_status(t_data *data, int wstatus)
 {
 	int	terminating_signal;

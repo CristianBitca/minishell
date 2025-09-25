@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 11:47:04 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/25 15:55:11 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/25 16:13:16 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ void	sigactions_interactive(void)
 	sigaction(SIGQUIT, &act, NULL);
 }
 
+// Before forking, in the parent process we want to ignore all signals
+// so that signals intented for the child are not intercepted, or so that
+// signal handlers are not duplicated.
 void	parent_sigactions_pre_fork(void)
 {
 	struct sigaction	act;
@@ -60,6 +63,9 @@ void	parent_sigactions_pre_fork(void)
 	sigaction(SIGQUIT, &act, NULL);
 }
 
+// Resets signal handlers to default handlers, called in the child process
+// so that signals sent to children after execve are handled however they
+// are predefined in the command called by execve.
 void	sig_actions_default(void)
 {
 	struct sigaction	act;
