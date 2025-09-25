@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 16:20:51 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/03 11:22:49 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/25 15:17:00 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	child_prcs_check_exe(t_data *data, t_prcs *process)
 // If successful execve will commandeer the whole process with the command
 // passed to execute, and will exit with the status of that command. If execve
 // returns it has failed, so we will free and exit again with EXIT_FAILURE
-int	execute_in_child(t_data *data, t_prcs *process)
+void	execute_in_child(t_data *data, t_prcs *process)
 {
 	int		execve_status;
 	char	**envp;
@@ -80,5 +80,4 @@ int	execute_in_child(t_data *data, t_prcs *process)
 	execve_status = execve(process->argv[0], process->argv, envp);
 	if (execve_status < 0)
 		(free_envp(envp), full_exit(data, 1));
-	exit (EXIT_FAILURE);
 }

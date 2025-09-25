@@ -12,6 +12,7 @@
 
 #include "built_in.h"
 #include "minishell.h"
+#include <readline/readline.h>
 
 // Completely exits the shell, freeing all allocated memory. We save
 // the exit status in an int on the stack because we need to free
@@ -28,5 +29,6 @@ void	full_exit(t_data *data, int exit_status)
 	cleanup_processes(data);
 	cleanup_env(data);
 	free(data);
+	rl_clear_history();
 	exit(exit_status);
 }

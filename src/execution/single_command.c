@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 16:21:51 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/08 16:54:44 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/25 15:46:37 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int	single_cmd(t_data *data, t_prcs *process)
 	int	cpid;
 	int	wstatus;
 
-	if (process->argv == NULL)
+	if (process->argv == NULL || process->argv[0] == NULL)
 		return (0);
 	if (is_built_in(process->argv[0]) == 1)
 		return (execute_built_in(data, process));
 	else
 	{
-		block_signals_pre_fork();
+		parent_sigactions_pre_fork();
 		cpid = fork();
 		if (cpid == 0)
 			execute_in_child(data, process);
@@ -39,7 +39,6 @@ int	single_cmd(t_data *data, t_prcs *process)
 		close(process->infilefd);
 	if (process->outfilefd != STDOUT_FILENO)
 		close(process->outfilefd);
-	if (WIFEXITED(wstatus) == 1)
-		data->exit_status = WEXITSTATUS(wstatus);
+	retrieve_child_status(data, wstatus);
 	return (0);
 }

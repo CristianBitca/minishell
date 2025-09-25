@@ -28,6 +28,7 @@ SRC    = main.c \
 		  execution/child_process.c \
 		  execution/multiple_commands.c \
 		  execution/single_command.c \
+		  execution/reaping_children.c \
 		  expansion/expand.c \
 		  expansion/expand_env.c \
 		  expansion/word_splitting.c \

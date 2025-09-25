@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 09:56:04 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/17 14:15:55 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/25 15:14:56 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,6 @@
 #include "minishell.h"
 #include "ms_signals.h"
 
-// After all the child processes are created, then we wait on each one with
-// waitpid (not waiting for each one to die and then forking the 
-// following process). We hold the exit status of each successive child
-// process in wstatus, which is changed by waitpid but we only save the final
-// exit status in our struct.
-void	wait_on_processes(t_data *data, int *cpids, int prcs_count)
-{
-	int	wstatus;
-	int	i;
-
-	i = 0;
-	while (i < prcs_count)
-	{
-		waitpid(cpids[i], &wstatus, 0);
-		i++;
-	}
-	if (WIFEXITED(wstatus) == 1)
-		data->exit_status = WEXITSTATUS(wstatus);
-}
 
 // If we have multiple processes we use a pipe to transfer data between
 // them. If we already have a file redirection input/output does not
@@ -99,7 +80,7 @@ int	execute_all_processes(t_data *data, int prcs_count)
 		if (prcs + 1 < prcs_count
 			&& create_pipe(data->processes[prcs], pipedes) == -1)
 			return (-1);
-		block_signals_pre_fork();
+		parent_sigactions_pre_fork();
 		cpids[prcs] = fork();
 		if (cpids[prcs] == 0)
 		{

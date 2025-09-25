@@ -19,43 +19,69 @@
 #include "built_in.h"
 #include "ms_signals.h"
 
-void	test_env(t_data *data)
-{
-	t_env_var	*node;
+extern volatile int g_signal;
 
-	node = data->env;
-	while (node != NULL)
-	{
-		printf("key = %s\n", node->key);
-		printf("value = %s\n", node->value);
-		printf("\n");
-		node = node->next;
-	}
+int	ms_rl_event(void)
+{
+	return (0);
 }
 
-// Runs in an infinite loop, prompt is created new on each iteration
-// so it can update the exit status and cwd. Readline will display
-// prompt and return string taken from stdin. If we are given input
-// we enter the next stage, tokenising the input and checking for
-// invalid syntax. Then we expand variables through the token chain,
-// splitting the words and inserting new tokens if necessary. After
-// we take our token chain and convert it into an array of our prcs
+// Readline will display the prompt created and return string taken from
+// stdin stream. First we set the rl_event_hook function pointer to our own
+// function ms_rl_event, which just returns 0. This event hook runs ten
+// times every second while there are no keystrokes and is set by default to
+// NULL (no function). Therefore we point the event hook to our function that
+// does nothing so that the loop in the readline function is interrupted,
+// therefore we can execute code that follows after the call to readline,
+// which is our signal handler.
+// We run this in an infinite loop to handle signals. If we
+// receive SIGINT, we empty the current line buffer with rl_replace_line,
+// giving an empty string. Then we reset the g_signal, set our exit_status
+// to the correct exit code for SIGINT (130), and restart the loop to display
+// the prompt again and wait for input. We have to reallocate the prompt each
+// time because the exit_status can change from what it was previously to 130.
+char	*get_input(t_data *data)
+{
+	char	*input;
+	char	*prompt;
+
+	rl_event_hook = &ms_rl_event;
+	while (1)
+	{
+		prompt = create_prompt(data->exit_status);
+		input = readline(prompt);
+		free(prompt);
+		if (g_signal == SIGINT)
+		{
+			rl_replace_line("", 1);
+			g_signal = 0;
+			data->exit_status = 130;
+			continue ;
+		}
+		if (input == NULL)
+			full_exit(data, -1);
+		else
+			break;
+	}
+	return (input);
+}
+
+// After input from readline (get_input function),
+// If we are given input we enter the next stage, tokenising the input
+// and checking for invalid syntax. Then we expand variables through
+// the token chain, splitting the words and inserting new tokens if necessary.
+// After we take our token chain and convert it into an array of our prcs
 // structure, which only requires an infile, outfile and argv. Then
 // we execute our processes, cleanup memory in token chain and processes
 // array, and return to the prompt to start again.
 void	rl_loop(t_data *data)
 {
 	char	*input;
-	char	*prompt;
 
 	while (1)
 	{
-		sig_actions_interactive();
-		prompt = create_prompt(data->exit_status);
-		input = readline(prompt);
-		free(prompt);
-		if (input == NULL)
-			full_exit(data, -1);
+		sigactions_interactive();
+		input = get_input(data);
 		if (input && *input)
 		{
 			add_history(input);
@@ -77,9 +103,9 @@ void	rl_loop(t_data *data)
 				single_cmd(data, data->processes[0]);
 			cleanup_tokens(data);
 			cleanup_processes(data);
+			free(input);
 		}
 	}
-	return ;
 }
 
 // Creates a prompt as a malloced string (must be malloced to concatenate

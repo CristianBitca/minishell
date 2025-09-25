@@ -15,8 +15,8 @@
 
 // signal_handlers.c
 void	sig_handlers_interactive(int signal);
-void	sig_actions_interactive(void);
-void	block_signals_pre_fork(void);
+void	sigactions_interactive(void);
+void	parent_sigactions_pre_fork(void);
 void	sig_actions_default(void);
 
 #endif
