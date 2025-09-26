@@ -27,6 +27,7 @@ void	sig_handlers_interactive(int signal)
 		write(1, prompt, ft_strlen(prompt));
 		free(prompt);
 	}
+	printf("%d\n", signal);
 	if (signal == SIGQUIT)
 		return ;
 }
