@@ -6,13 +6,20 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 11:13:08 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/03 12:38:50 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/26 16:08:04 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
+<<<<<<< HEAD
 #include "expansion.h"
+=======
+#include "ms_signals.h"
+#include <stdlib.h>
+
+extern volatile int g_signal;
+>>>>>>> skirwan
 
 char	*create_here_doc_temp_file_path(int prcs_index)
 {
@@ -25,6 +32,7 @@ char	*create_here_doc_temp_file_path(int prcs_index)
 	return (here_doc_path);
 }
 
+<<<<<<< HEAD
 char	*here_doc_readline(t_data *data, int here_doc_fd, char *delimiter, int	*exp_flag)
 {
 	char	*input;
@@ -43,22 +51,63 @@ char	*here_doc_readline(t_data *data, int here_doc_fd, char *delimiter, int	*exp
 	}
 	free(input);
 	return (input);
+=======
+int	here_doc_readline(int here_doc_fd, char *delimiter)
+{
+	char	*input;
+
+	rl_event_hook = &ms_rl_event;
+	while (1)
+	{
+		input = readline("> ");
+		if (g_signal == SIGINT)
+		{
+			rl_replace_line("", 1);
+			g_signal = 0;
+			return (-1);
+		}
+		if (input == NULL)
+		{
+			write(2, "warning: here_doc delimited by end-of-file (wanted `", 53);
+			write(2, delimiter, ft_strlen(delimiter));
+			write(2, "')\n", 3);
+			break ;
+		}
+		if (ft_strncmp(input, delimiter, ft_strlen(input)) == 0)
+			break ;
+		if (input && *input)
+		{
+			// input = here_doc_expand_input(input)
+			write(here_doc_fd, input, ft_strlen(input));
+			write(here_doc_fd, "\n", 1);
+			free(input);
+		}
+	}
+	return (0);
+>>>>>>> skirwan
 }
 
 int	read_here_doc(t_data *data, char *delimiter, char *here_doc_path)
 {
-	char	*input;
 	int		here_doc_fd;
 	int		exp_flag;
 
 	here_doc_fd = open(here_doc_path, O_CREAT | O_TRUNC | O_RDWR, 0644);
 	if (here_doc_fd == -1)
 		return (-1);
+<<<<<<< HEAD
 	delimiter = expand_delimiter(delimiter, &exp_flag);
 	while (input != delimiter)
 		input = here_doc_readline(data, here_doc_fd, delimiter, &exp_flag);
 	if (exp_flag == 1)
 		free(delimiter);
+=======
+	// delimiter = expand_delimiter(delimiter, &rule);
+	if (here_doc_readline(here_doc_fd, delimiter) == -1)
+	{
+		return (-2);
+	}
+>>>>>>> skirwan
 	if (close(here_doc_fd) == -1)
 		return (-1);
 	return (0);

@@ -29,6 +29,7 @@ SRC    = main.c \
 		  execution/child_process.c \
 		  execution/multiple_commands.c \
 		  execution/single_command.c \
+		  execution/reaping_children.c \
 		  expansion/expand.c \
 		  expansion/expand_env.c \
 		  expansion/expand_quote.c \
@@ -49,6 +50,7 @@ SRC    = main.c \
 		  parser/assign_process.c \
 		  parser/create_command.c \
 		  signals/signal_handlers.c \
+		  signals/ms_rl_hooks.c \
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 

@@ -15,12 +15,12 @@
 #include "env.h"
 #include "input.h"
 
+volatile int	g_signal = 0;
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
 
-	if (isatty(STDIN_FILENO) == 0)
-		return (0);
 	data = ft_calloc(sizeof(t_data), sizeof(t_data));
 	parse_env(data, envp);
 	rl_loop(data);
