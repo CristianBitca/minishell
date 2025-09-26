@@ -12,14 +12,11 @@
 
 #include "minishell.h"
 #include "parser.h"
-<<<<<<< HEAD
-#include "expansion.h"
-=======
 #include "ms_signals.h"
+#include "expansion.h"
 #include <stdlib.h>
 
 extern volatile int g_signal;
->>>>>>> skirwan
 
 char	*create_here_doc_temp_file_path(int prcs_index)
 {
@@ -32,27 +29,7 @@ char	*create_here_doc_temp_file_path(int prcs_index)
 	return (here_doc_path);
 }
 
-<<<<<<< HEAD
-char	*here_doc_readline(t_data *data, int here_doc_fd, char *delimiter, int	*exp_flag)
-{
-	char	*input;
-	
-	input = readline("> ");
-	while (!(input && *input))
-		input = readline("> ");
-	if (ft_strncmp(input, delimiter, ft_strlen(input)) == 0)
-		return (delimiter);
-	if (input && *input)
-	{
-		add_history(input);
-		input = expand_input(data, input, exp_flag);
-		write(here_doc_fd, input, ft_strlen(input));
-		write(here_doc_fd, "\n", 1);
-	}
-	free(input);
-	return (input);
-=======
-int	here_doc_readline(int here_doc_fd, char *delimiter)
+int	here_doc_readline(t_data *data, int here_doc_fd, char *delimiter, int *exp_flag)
 {
 	char	*input;
 
@@ -77,14 +54,13 @@ int	here_doc_readline(int here_doc_fd, char *delimiter)
 			break ;
 		if (input && *input)
 		{
-			// input = here_doc_expand_input(input)
+			input = expand_input(data, input, exp_flag);
 			write(here_doc_fd, input, ft_strlen(input));
 			write(here_doc_fd, "\n", 1);
 			free(input);
 		}
 	}
 	return (0);
->>>>>>> skirwan
 }
 
 int	read_here_doc(t_data *data, char *delimiter, char *here_doc_path)
@@ -95,19 +71,9 @@ int	read_here_doc(t_data *data, char *delimiter, char *here_doc_path)
 	here_doc_fd = open(here_doc_path, O_CREAT | O_TRUNC | O_RDWR, 0644);
 	if (here_doc_fd == -1)
 		return (-1);
-<<<<<<< HEAD
 	delimiter = expand_delimiter(delimiter, &exp_flag);
-	while (input != delimiter)
-		input = here_doc_readline(data, here_doc_fd, delimiter, &exp_flag);
-	if (exp_flag == 1)
-		free(delimiter);
-=======
-	// delimiter = expand_delimiter(delimiter, &rule);
-	if (here_doc_readline(here_doc_fd, delimiter) == -1)
-	{
+	if (here_doc_readline(data, here_doc_fd, delimiter, &exp_flag) == -1)
 		return (-2);
-	}
->>>>>>> skirwan
 	if (close(here_doc_fd) == -1)
 		return (-1);
 	return (0);

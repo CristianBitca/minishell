@@ -20,28 +20,6 @@
 #include "built_in.h"
 #include "ms_signals.h"
 
-<<<<<<< HEAD
-void	print_tokens(t_data *data)
-{
-
-	//test func to be deleted
-	t_token	*token;
-	char	*number;
-
-	token = data->tokens;
-	while (token != NULL)
-	{
-		if (*token->value == '\0')
-			printf("token value = NULL\n");
-		else
-			printf("token value = %s\n", token->value);
-		number = ft_itoa(token->type);
-		printf("token type = %s\n", number);
-		printf("*******\n");
-		token = token->next;
-		if (number)
-			free(number);
-=======
 extern volatile int g_signal;
 
 // Readline will display the prompt created and return string taken from
@@ -80,13 +58,10 @@ char	*get_input(t_data *data)
 			full_exit(data, -1);
 		else
 			break;
->>>>>>> skirwan
 	}
 	return (input);
 }
 
-<<<<<<< HEAD
-=======
 // After input from readline (get_input function),
 // If we are given input we enter the next stage, tokenising the input
 // and checking for invalid syntax. Then we expand variables through
@@ -95,7 +70,6 @@ char	*get_input(t_data *data)
 // structure, which only requires an infile, outfile and argv. Then
 // we execute our processes, cleanup memory in token chain and processes
 // array, and return to the prompt to start again.
->>>>>>> skirwan
 void	rl_loop(t_data *data)
 {
 	char	*input;
