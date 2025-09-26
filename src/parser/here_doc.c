@@ -6,12 +6,16 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 11:13:08 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/03 12:38:50 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/26 16:08:04 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
+#include "ms_signals.h"
+#include <stdlib.h>
+
+extern volatile int g_signal;
 
 char	*create_here_doc_temp_file_path(int prcs_index)
 {
@@ -24,30 +28,42 @@ char	*create_here_doc_temp_file_path(int prcs_index)
 	return (here_doc_path);
 }
 
-char	*here_doc_readline(int here_doc_fd, char *delimiter)
+int	here_doc_readline(int here_doc_fd, char *delimiter)
 {
 	char	*input;
 
-	input = readline("> ");
-	while (!(input && *input))
-		input = readline("> ");
-	if (ft_strncmp(input, delimiter, ft_strlen(input)) == 0)
-		return (delimiter);
-	if (input && *input)
+	rl_event_hook = &ms_rl_event;
+	while (1)
 	{
-		// input = here_doc_expand_input(input);
-		if (ft_strncmp(input, delimiter, ft_strlen(input)) != 0)
+		input = readline("> ");
+		if (g_signal == SIGINT)
 		{
+			rl_replace_line("", 1);
+			g_signal = 0;
+			return (-1);
+		}
+		if (input == NULL)
+		{
+			write(2, "warning: here_doc delimited by end-of-file (wanted `", 53);
+			write(2, delimiter, ft_strlen(delimiter));
+			write(2, "')\n", 3);
+			break ;
+		}
+		if (ft_strncmp(input, delimiter, ft_strlen(input)) == 0)
+			break ;
+		if (input && *input)
+		{
+			// input = here_doc_expand_input(input)
 			write(here_doc_fd, input, ft_strlen(input));
 			write(here_doc_fd, "\n", 1);
+			free(input);
 		}
 	}
-	return (input);
+	return (0);
 }
 
 int	read_here_doc(char *delimiter, char *here_doc_path)
 {
-	char	*input;
 	int		here_doc_fd;
 	// int		rule;
 
@@ -55,9 +71,10 @@ int	read_here_doc(char *delimiter, char *here_doc_path)
 	if (here_doc_fd == -1)
 		return (-1);
 	// delimiter = expand_delimiter(delimiter, &rule);
-	input = here_doc_readline(here_doc_fd, delimiter);
-	while (ft_strncmp(input, delimiter, ft_strlen(input)) != 0)
-		input = here_doc_readline(here_doc_fd, delimiter);
+	if (here_doc_readline(here_doc_fd, delimiter) == -1)
+	{
+		return (-2);
+	}
 	if (close(here_doc_fd) == -1)
 		return (-1);
 	return (0);

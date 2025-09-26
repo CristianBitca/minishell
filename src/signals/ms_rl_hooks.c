@@ -1,22 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.h                                            :+:      :+:    :+:   */
+/*   ms_rl_hooks.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/18 11:56:30 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/17 13:17:53 by skirwan          ###   ########.fr       */
+/*   Created: 2025/09/26 15:06:34 by skirwan           #+#    #+#             */
+/*   Updated: 2025/09/26 15:07:50 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INPUT_H
-# define INPUT_H
-
-# include "minishell.h"
-
-char	*get_input(t_data *data);
-void	rl_loop(t_data *data);
-char	*create_prompt(int exit_status);
-
-#endif
+int	ms_rl_event(void)
+{
+	return (0);
+}

@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:35:27 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/17 13:17:44 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/09/26 15:08:03 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@
 #include "ms_signals.h"
 
 extern volatile int g_signal;
-
-int	ms_rl_event(void)
-{
-	return (0);
-}
 
 // Readline will display the prompt created and return string taken from
 // stdin stream. First we set the rl_event_hook function pointer to our own
