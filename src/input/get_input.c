@@ -99,7 +99,6 @@ void	rl_loop(t_data *data)
 				single_cmd(data, data->processes[0]);
 			cleanup_tokens(data);
 			cleanup_processes(data);
-			free(input);
 		}
 	}
 }

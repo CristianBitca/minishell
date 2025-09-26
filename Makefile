@@ -1,8 +1,8 @@
 NAME    = minishell
 
 CC      = cc
-# CFLAGS  = -Wall -Wextra -Werror -fsanitize=address -g3 -O0 -Iinc
-CFLAGS  = -Wall -Wextra -Werror -g3 -O0 -Iinc
+CFLAGS  = -Wall -Wextra -Werror -fsanitize=address -g3 -O0 -Iinc
+# CFLAGS  = -Wall -Wextra -Werror -g3 -O0 -Iinc
 
 SRC_DIR     = src/
 OBJ_DIR     = obj/

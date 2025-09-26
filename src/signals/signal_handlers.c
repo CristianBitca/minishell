@@ -26,20 +26,8 @@ extern volatile int g_signal;
 void	sig_handlers_interactive(int signal)
 {
 	if (signal == SIGINT)
-<<<<<<< HEAD
-	{
-		write(1, "\n", 1);
-		prompt = create_prompt(130);
-		write(1, prompt, ft_strlen(prompt));
-		free(prompt);
-	}
-	printf("%d\n", signal);
-	if (signal == SIGQUIT)
-		return ;
-=======
 		g_signal = SIGINT;
 	rl_done = 1;
->>>>>>> skirwan
 }
 
 // sigaction struct is defined in <signals.h>, it holds variables used
