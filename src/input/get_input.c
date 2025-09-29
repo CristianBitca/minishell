@@ -18,7 +18,7 @@
 #include "parser.h"
 #include "built_in.h"
 #include "ms_signals.h"
-#include <stdlib.h>
+#include "libft.h"
 
 extern volatile int	g_signal;
 
