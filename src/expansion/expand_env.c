@@ -89,6 +89,6 @@ char	*expand_env(t_data *data, t_token *token, t_expand *exp)
 	if (token != NULL)
 		free(token->value);
 	if (ft_strchr(new_word, ' ') && exp->exp_heredoc)
-		return(split_word(data, token, exp, new_word));
+		return (split_word(data, token, exp, new_word));
 	return (new_word);
 }

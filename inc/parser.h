@@ -17,9 +17,9 @@
 
 // here_doc.c
 char	*create_here_doc_temp_file_path(int prcs_index);
-int	convert_here_docs(t_data *data, t_token *traverser, int token_count, int prcs_index);
-int	here_doc_readline(t_data *data, int here_doc_fd, char *delimiter, int *exp_flag);
-int	read_here_doc(t_data *data, char *delimiter, char *here_doc_path);
+int		convert_here_docs(t_data *data, t_token *trav, int tok_c, int prcs_i);
+int		here_doc_readline(t_data *data, int h_d_fd, char *del, int *exp_flag);
+int		read_here_doc(t_data *data, char *delimiter, char *here_doc_path);
 
 // create_processes.c
 int		count_processes(t_data *data);
@@ -28,7 +28,7 @@ int		create_processes(t_data *data);
 
 // assign_process.c
 int		assign_prcs_error(t_data *data, t_prcs *process);
-int		assign_prcs(t_data *data, t_token *first, int token_count, int prcs_index);
+int		assign_prcs(t_data *data, t_token *first, int tok_c, int prcs_index);
 
 // open_infiles.c
 int		check_infile_permissions(char *file_path);
@@ -38,10 +38,10 @@ int		close_redundant_fds(int **fds, int fds_index);
 int		handle_infiles(t_token *first, int token_count);
 
 // open_outfiles.c
-int	*create_outfilefds_array(t_token *traverser, int token_count);
-int	check_outfile_permissions(char *file_path);
-int	open_outfile(int *fds, int fd_index, char *file_path, int type);
-int	handle_outfiles(t_token *traverser, int token_count);
+int		*create_outfilefds_array(t_token *traverser, int token_count);
+int		check_outfile_permissions(char *file_path);
+int		open_outfile(int *fds, int fd_index, char *file_path, int type);
+int		handle_outfiles(t_token *traverser, int token_count);
 
 // make_argv.c
 int		count_arguments(t_token *traverser, int token_count);

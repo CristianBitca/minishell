@@ -63,7 +63,7 @@ void	find_expansions(t_data *data, t_token *token)
 	{
 		if (token->value[exp->pos] == '$' && token->value[exp->pos + 1])
 		{
-			(exp->exp_heredoc = 0, split_expand(token->value, exp));
+			split_expand(token->value, exp);
 			token->value = expand_env(data, token, exp);
 		}
 		else if (token->value[exp->pos] == '\'')

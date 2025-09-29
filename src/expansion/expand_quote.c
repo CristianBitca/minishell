@@ -47,7 +47,7 @@ char	*expand_d_quote(t_token *token, t_expand *exp)
 	temp = new_word;
 	new_word = ft_strjoin(new_word, exp->after);
 	free(temp);
-	exp->pos = exp->l_before;
+	exp->pos = exp->l_before + exp->l_expand;
 	exp->size = ft_strlen(new_word);
 	free(token->value);
 	free_exp_value(exp);

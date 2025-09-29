@@ -26,9 +26,9 @@ char	*expand_delimiter(char *delimiter, int *exp_flag)
 	while (delimiter[exp->pos])
 	{
 		if (delimiter[exp->pos] == '\'')
-			break;
+			break ;
 		else if (delimiter[exp->pos] == '"')
-			break;
+			break ;
 		else
 			exp->pos++;
 	}
@@ -51,8 +51,9 @@ char	*expand_input(t_data *data, char *input, int *exp_flag)
 	{
 		if (input[exp->pos] == '$' && input[exp->pos + 1] && !*exp_flag)
 		{
-			(exp->exp_heredoc = *exp_flag, split_expand(input, exp));
-			input = expand_env(data, (t_token *)NULL, exp);
+			exp->exp_heredoc = *exp_flag;
+			split_expand(input, exp);
+			input = expand_env(data, (t_token *) NULL, exp);
 		}
 		else
 			exp->pos++;

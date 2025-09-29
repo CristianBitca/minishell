@@ -15,7 +15,7 @@
 
 void	free_tokens(t_token *token)
 {
-	t_token *temp;
+	t_token	*temp;
 
 	while (token)
 	{
@@ -29,7 +29,7 @@ void	free_tokens(t_token *token)
 
 int	tokenise(t_data *data, char *input)
 {
-	t_lexer *lexer;
+	t_lexer	*lexer;
 
 	lexer = malloc(sizeof(*lexer));
 	lexer->pos = 0;

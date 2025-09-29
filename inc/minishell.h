@@ -65,7 +65,6 @@ typedef struct s_expand
 	int		exp_heredoc;
 }	t_expand;
 
-
 typedef struct s_prcs
 {
 	char	**argv;

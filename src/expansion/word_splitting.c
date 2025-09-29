@@ -37,7 +37,7 @@ char	*split_word(t_data *data, t_token *token, t_expand *exp, char *input)
 	t_token	*buffer;
 	char	**split_tokens;
 	char	*new_word;
-	int	i;
+	int		i;
 
 	split_tokens = ft_split(input, ' ');
 	buffer = NULL;
@@ -53,5 +53,5 @@ char	*split_word(t_data *data, t_token *token, t_expand *exp, char *input)
 	insert_tokens(data, token, buffer);
 	free(split_tokens);
 	free(input);
-	return(new_word);
+	return (new_word);
 }
