@@ -18,8 +18,9 @@
 #include "parser.h"
 #include "built_in.h"
 #include "ms_signals.h"
+#include <stdlib.h>
 
-extern volatile int g_signal;
+extern volatile int	g_signal;
 
 // Readline will display the prompt created and return string taken from
 // stdin stream. First we set the rl_event_hook function pointer to our own
@@ -56,7 +57,7 @@ char	*get_input(t_data *data)
 		if (input == NULL)
 			full_exit(data, -1);
 		else
-			break;
+			break ;
 	}
 	return (input);
 }
@@ -82,23 +83,25 @@ void	rl_loop(t_data *data)
 			add_history(input);
 			if (tokenise(data, input) == -1)
 			{
-				cleanup_tokens(data);
+				(cleanup_tokens(data), free(input));
 				continue ;
 			}
 			if (validate_tokens(data) == -1)
 			{
-				cleanup_tokens(data);
+				(cleanup_tokens(data), free(input));
 				continue ;
 			}
 			expand(data);
-			create_processes(data);
+			if (create_processes(data) == -2)
+			{
+				(cleanup_tokens(data), cleanup_processes(data), free(input));
+				continue ;
+			}
 			if (count_processes(data) > 1)
 				execute_all_processes(data, count_processes(data));
 			else
 				single_cmd(data, data->processes[0]);
-			cleanup_tokens(data);
-			cleanup_processes(data);
-			free(input);
+			(cleanup_tokens(data), cleanup_processes(data), free(input));
 		}
 	}
 }

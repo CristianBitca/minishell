@@ -14,7 +14,6 @@
 #include "minishell.h"
 #include "ms_signals.h"
 
-
 // If we have multiple processes we use a pipe to transfer data between
 // them. If we already have a file redirection input/output does not
 // go through the pipe. We know this because the prcs in/outfilefds
@@ -44,7 +43,6 @@ void	dup_to_pipe(t_prcs *process, int *pipedes, int in_or_out)
 
 int	create_pipe(t_prcs *process, int *pipedes)
 {
-
 	if (pipe(pipedes) == -1)
 	{
 		perror(NULL);
