@@ -34,5 +34,7 @@ int	tokenise(t_data *data, char *input)
 		}
 	}
 	free(lexer);
+	if (validate_tokens(data) == -1)
+		return (-1);
 	return (0);
 }

@@ -86,11 +86,6 @@ void	rl_loop(t_data *data)
 				(cleanup_tokens(data), free(input));
 				continue ;
 			}
-			if (validate_tokens(data) == -1)
-			{
-				(cleanup_tokens(data), free(input));
-				continue ;
-			}
 			expand(data);
 			if (create_processes(data) == -2)
 			{

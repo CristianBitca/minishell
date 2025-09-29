@@ -14,7 +14,7 @@
 #include "parser.h"
 #include "ms_signals.h"
 
-extern volatile int g_signal;
+extern volatile int	g_signal;
 
 char	*create_here_doc_temp_file_path(int prcs_index)
 {
