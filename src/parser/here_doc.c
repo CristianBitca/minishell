@@ -16,7 +16,7 @@
 #include "expansion.h"
 #include <stdlib.h>
 
-extern volatile int g_signal;
+extern volatile int	g_signal;
 
 char	*create_here_doc_temp_file_path(int prcs_index)
 {
@@ -48,10 +48,10 @@ int	here_doc_readline(t_data *data, int here_doc_fd, char *delimiter, int *exp_f
 			write(2, "warning: here_doc delimited by end-of-file (wanted `", 53);
 			write(2, delimiter, ft_strlen(delimiter));
 			write(2, "')\n", 3);
-			break ;
+			return (0);
 		}
 		if (ft_strncmp(input, delimiter, ft_strlen(input)) == 0)
-			break ;
+			return (0);
 		if (input && *input)
 		{
 			input = expand_input(data, input, exp_flag);
@@ -60,7 +60,6 @@ int	here_doc_readline(t_data *data, int here_doc_fd, char *delimiter, int *exp_f
 			free(input);
 		}
 	}
-	return (0);
 }
 
 int	read_here_doc(t_data *data, char *delimiter, char *here_doc_path)
@@ -79,21 +78,26 @@ int	read_here_doc(t_data *data, char *delimiter, char *here_doc_path)
 	return (0);
 }
 
-int	convert_here_docs(t_data *data, int token_count, int prcs_index)
+int	convert_here_docs(t_data *data, t_token *traverser, int token_count, int prcs_index)
 {
 	char	*here_doc_path;
-	t_token	*traverser;
-	
-	traverser = data->tokens;
+	int		read_result;
+
 	while (token_count-- > 0)
 	{
 		if (traverser->type == REDIR_HEREDOC)
 		{
 			here_doc_path = create_here_doc_temp_file_path(prcs_index);
-			if (read_here_doc(data, traverser->next->value, here_doc_path) == -1)
+			read_result = read_here_doc(data, traverser->next->value, here_doc_path);
+			if (read_result == -1)
 			{
 				(perror(here_doc_path), free(here_doc_path));
 				return (-1);
+			}
+			if (read_result == -2)
+			{
+				free(here_doc_path);
+				return (-2);
 			}
 			free(traverser->next->value);
 			traverser->next->value = here_doc_path;

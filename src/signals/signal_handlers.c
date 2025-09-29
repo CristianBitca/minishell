@@ -13,7 +13,7 @@
 #include "minishell.h"
 #include "ms_signals.h"
 
-extern volatile int g_signal;
+extern volatile int	g_signal;
 
 // Sig_handlers should be very basic, so we use the global variable g_signal
 // as a way to communicate signals have been received throughout the program,

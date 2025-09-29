@@ -50,5 +50,7 @@ int	tokenise(t_data *data, char *input)
 	if (lexer->line)
 		free(lexer->line);
 	free(lexer);
+	if (validate_tokens(data) == -1)
+		return (-1);
 	return (0);
 }
