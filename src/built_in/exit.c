@@ -13,6 +13,44 @@
 #include "built_in.h"
 #include "minishell.h"
 
+void	check_numeric_argument(t_data *data, char *argument)
+{
+	int	i;
+	
+	i = 0;
+	if (argument[i] == '+' || argument[i] == '-')
+		i++;
+	while (ft_isdigit(argument[i]))
+		i++;
+	if (argument[i] != '\0')
+	{
+		write(2, "exit: ", 6);
+		write(2, argument, ft_strlen(argument));
+		write(2, ": numeric argument required\n", 29);
+		full_exit(data, 2);
+	}
+}
+
+void	execute_exit(t_data *data, t_prcs *process)
+{
+	int	i;
+
+	write(1, "exit\n", 5);
+	i = 0;
+	while (process->argv[i] != NULL)
+		i++;
+	if (i == 1)
+		full_exit(data, -4242);
+	check_numeric_argument(data, process->argv[1]);
+	if (i > 2)
+	{
+		write(2, "exit: too many arguments\n", 26);
+		data->exit_status = 1;
+	}
+	else
+		full_exit(data, (ft_atoi(process->argv[1]) % 256));
+}
+
 // Completely exits the shell, freeing all allocated memory. We save
 // the exit status in an int on the stack because we need to free
 // the data structure itself before we can exit.
@@ -21,7 +59,7 @@
 // in our data structure already, we just pass -1 as the exit_status.
 void	full_exit(t_data *data, int exit_status)
 {
-	if (exit_status == -1)
+	if (exit_status == -4242)
 		exit_status = data->exit_status;
 	cleanup_tokens(data);
 	cleanup_processes(data);

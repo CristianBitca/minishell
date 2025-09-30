@@ -35,11 +35,10 @@ void	child_prcs_file_handling(t_data *data, t_prcs *process)
 
 void	child_prcs_check_exe(t_data *data, t_prcs *process)
 {
-	if (access(process->argv[0], X_OK) != 0)
+	if (ft_strchr(process->argv[0], '/') == NULL)
 	{
 		write (STDERR_FILENO, process->argv[0], ft_strlen(process->argv[0]));
-		if (find_env(data->env, "PATH") != NULL
-			&& ft_strchr(process->argv[0], '/') == NULL)
+		if (find_env(data->env, "PATH") != NULL)
 			write(STDERR_FILENO, ": command not found\n", 21);
 		else
 			write(STDERR_FILENO, ": No such file or directory\n", 29);
@@ -75,7 +74,7 @@ void	execute_in_child(t_data *data, t_prcs *process)
 	if (is_built_in(process->argv[0]) == 1)
 	{
 		execute_built_in(data, process);
-		full_exit(data, -1);
+		full_exit(data, -4242);
 	}
 	child_prcs_check_exe(data, process);
 	envp = make_envp(data);

@@ -20,6 +20,8 @@ int	check_valid_file(char *cmd)
 {
 	struct stat	file_status;
 
+	if (ft_strchr(cmd, '/') == NULL)
+		return (0);
 	if (access(cmd, F_OK) == 0)
 	{
 		if (stat(cmd, &file_status) == -1)

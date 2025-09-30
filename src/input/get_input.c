@@ -64,7 +64,7 @@ char	*get_input(t_data *data)
 			continue ;
 		}
 		if (input == NULL)
-			full_exit(data, -1);
+			full_exit(data, -4242);
 		else
 			break ;
 	}
@@ -92,13 +92,13 @@ void	rl_loop(t_data *data)
 			add_history(input);
 			if (tokenise(data, input) == -1)
 			{
-				(cleanup_tokens(data), free(input));
+				cleanup_tokens(data);
 				continue ;
 			}
 			expand(data);
 			if (create_processes(data) == -2)
 			{
-				(cleanup_tokens(data), cleanup_processes(data), free(input));
+				(cleanup_tokens(data), cleanup_processes(data));
 				continue ;
 			}
 			if (count_processes(data) > 1)

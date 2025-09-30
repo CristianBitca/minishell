@@ -110,6 +110,7 @@ void	cd(t_data *data, char **argv, int out_fd)
 	{
 		write(STDERR_FILENO, "cd: too many arguments\n", 23);
 		data->exit_status = EXIT_FAILURE;
+		return ;
 	}
 	if (path == NULL)
 		cd_home(data);

@@ -98,18 +98,14 @@ int	check_valid_export(t_data *data, char *to_export)
 	if (to_export[0] == '_' && (to_export[1] == '\0'
 			|| to_export[1] == '='))
 		return (0);
+	if (to_export[0] == '-')
+		return (invalid_export_identifier(data, to_export, 2), 0);
 	if (ft_isalpha(to_export[0]) == 0 && to_export[0] != '_')
-	{
-		invalid_export_identifier(data, to_export);
-		return (0);
-	}
+		return (invalid_export_identifier(data, to_export, 1), 0);
 	while (to_export[i] && to_export[i] != '=')
 	{
 		if (ft_isalnum(to_export[i]) == 0 && to_export[i] != '_')
-		{
-			invalid_export_identifier(data, to_export);
-			return (0);
-		}
+			return (invalid_export_identifier(data, to_export, 1), 0);
 		i++;
 	}
 	return (1);
@@ -131,8 +127,11 @@ void	export(t_data *data, char **args, int out_fd)
 	while (*args)
 	{
 		if (check_valid_export(data, *args) == 0)
-			data->exit_status = EXIT_FAILURE;
-		else if (ft_strchr(*args, '=') == 0)
+		{
+			args++;
+			continue ;
+		}
+		if (ft_strchr(*args, '=') == 0)
 			export_without_value(data, *args);
 		else
 			export_with_value(data, *args);
