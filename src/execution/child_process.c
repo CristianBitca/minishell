@@ -13,6 +13,7 @@
 #include "env.h"
 #include "execution.h"
 #include "built_in.h"
+#include "libft.h"
 #include "ms_signals.h"
 
 void	child_prcs_file_handling(t_data *data, t_prcs *process)
@@ -37,7 +38,8 @@ void	child_prcs_check_exe(t_data *data, t_prcs *process)
 	if (access(process->argv[0], X_OK) != 0)
 	{
 		write (STDERR_FILENO, process->argv[0], ft_strlen(process->argv[0]));
-		if (find_env(data->env, "PATH") != NULL)
+		if (find_env(data->env, "PATH") != NULL
+			&& ft_strchr(process->argv[0], '/') == NULL)
 			write(STDERR_FILENO, ": command not found\n", 21);
 		else
 			write(STDERR_FILENO, ": No such file or directory\n", 29);

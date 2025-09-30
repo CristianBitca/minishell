@@ -12,11 +12,12 @@
 
 #include "minishell.h"
 
-int	syntax_error(char *invalid_val)
+int	syntax_error(t_data *data, char *invalid_val)
 {
 	write (STDERR_FILENO, "syntax error near unexpected token '", 36);
 	write (STDERR_FILENO, invalid_val, ft_strlen(invalid_val));
 	write (STDERR_FILENO, "'\n", 2);
+	data->exit_status = 2;
 	return (-1);
 }
 
@@ -31,24 +32,24 @@ int	validate_tokens(t_data *data)
 
 	token = data->tokens;
 	if (token->type == PIPE)
-		return (syntax_error(token->value));
+		return (syntax_error(data, token->value));
 	while (token->next != NULL)
 	{
 		if (token->type == REDIR_HEREDOC && token->next->type != WORD)
-			return (syntax_error(token->next->value));
+			return (syntax_error(data, token->next->value));
 		if (token->type == REDIR_APPEND && token->next->type != WORD)
-			return (syntax_error(token->next->value));
+			return (syntax_error(data, token->next->value));
 		if (token->type == REDIR_IN && token->next->type != WORD)
-			return (syntax_error(token->next->value));
+			return (syntax_error(data, token->next->value));
 		if (token->type == REDIR_OUT && token->next->type != WORD)
-			return (syntax_error(token->next->value));
+			return (syntax_error(data, token->next->value));
 		if (token->type == PIPE && token->next->type == PIPE)
-			return (syntax_error(token->next->value));
+			return (syntax_error(data, token->next->value));
 		token = token->next;
 	}
 	if (token->type == PIPE || token->type == REDIR_APPEND
 		|| token->type == REDIR_IN || token->type == REDIR_HEREDOC
 		|| token->type == REDIR_OUT)
-		return (syntax_error("newline"));
+		return (syntax_error(data, "newline"));
 	return (0);
 }
