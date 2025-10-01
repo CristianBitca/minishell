@@ -16,6 +16,7 @@
 char	*expand_delimiter(char *delimiter, int *exp_flag)
 {
 	t_expand	*exp;
+	char		*temp;
 
 	exp = ft_calloc(sizeof(t_expand), 1);
 	exp->size = ft_strlen(delimiter);
@@ -25,17 +26,15 @@ char	*expand_delimiter(char *delimiter, int *exp_flag)
 		*exp_flag = 0;
 	while (delimiter[exp->pos])
 	{
-		if (delimiter[exp->pos] == '\'')
-			break ;
-		else if (delimiter[exp->pos] == '"')
-			break ;
+		if (delimiter[exp->pos] == '\'' || delimiter[exp->pos] == '"')
+		{
+			split_expand(delimiter, exp);
+			temp = delimiter;
+			delimiter = expand_s_quote(0, exp);
+			free(temp);
+		}
 		else
 			exp->pos++;
-	}
-	if (delimiter[exp->pos] == '\'' || delimiter[exp->pos] == '"')
-	{
-		split_expand(delimiter, exp);
-		delimiter = expand_s_quote(0, exp);
 	}
 	free(exp);
 	return (delimiter);

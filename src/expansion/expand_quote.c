@@ -13,6 +13,20 @@
 #include "minishell.h"
 #include "expansion.h"
 
+int	count_env(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (*input)
+	{
+		if (*input == '$')
+			i++;
+		input++;
+	}
+	return (i);
+}
+
 char	*expand_s_quote(t_token *token, t_expand *exp)
 {
 	char	*new_word;
@@ -34,14 +48,23 @@ char	*expand_s_quote(t_token *token, t_expand *exp)
 	return (new_word);
 }
 
-char	*expand_d_quote(t_token *token, t_expand *exp)
+char	*expand_d_quote(t_data *data, t_token *token, t_expand *exp)
 {
 	char	*new_word;
 	char	*temp;
+	int		count;
 
 	temp = exp->expand;
 	exp->expand = ft_substr(exp->expand, 1, exp->l_expand - 2);
 	free(temp);
+	count = count_env(exp->expand);
+	while (count)
+	{
+		temp = exp->expand;
+		exp->expand = insert_env(data, exp->expand);
+		free(temp);
+		count--;
+	}
 	exp->l_expand = ft_strlen(exp->expand);
 	new_word = ft_strjoin(exp->before, exp->expand);
 	temp = new_word;
@@ -49,7 +72,6 @@ char	*expand_d_quote(t_token *token, t_expand *exp)
 	free(temp);
 	exp->pos = exp->l_before + exp->l_expand;
 	exp->size = ft_strlen(new_word);
-	free(token->value);
-	free_exp_value(exp);
+	(free(token->value), free_exp_value(exp));
 	return (new_word);
 }

@@ -75,6 +75,7 @@ int	read_here_doc(t_data *data, char *delimiter, char *here_doc_path)
 		return (-2);
 	if (close(here_doc_fd) == -1)
 		return (-1);
+	free(delimiter);
 	return (0);
 }
 
@@ -99,7 +100,6 @@ int	convert_here_docs(t_data *data, t_token *traverser, int token_count, int prc
 				free(here_doc_path);
 				return (-2);
 			}
-			free(traverser->next->value);
 			traverser->next->value = here_doc_path;
 			traverser->type = REDIR_IN;
 		}
