@@ -41,7 +41,7 @@ int		check_valid_export(t_data *data, char *to_export);
 void	export(t_data *data, char **args, int out_fd);
 
 //export_utils.c
-void	invalid_export_identifier(t_data *data, char *to_export);
+void	invalid_export_identifier(t_data *data, char *to_export, int exit_status);
 
 //pwd.c
 void	pwd(t_data *data, int out_fd);
@@ -58,6 +58,8 @@ void	cleanup_processes(t_data *data);
 void	cleanup_env(t_data *data);
 
 //exit.c
+void	check_numeric_argument(t_data *data, char *argument);
+void	execute_exit(t_data *data, t_prcs *process);
 void	full_exit(t_data *data, int exit_status);
 
 #endif

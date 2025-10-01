@@ -13,6 +13,7 @@
 #include "env.h"
 #include "execution.h"
 #include "built_in.h"
+#include "libft.h"
 #include "ms_signals.h"
 
 void	child_prcs_file_handling(t_data *data, t_prcs *process)
@@ -34,7 +35,7 @@ void	child_prcs_file_handling(t_data *data, t_prcs *process)
 
 void	child_prcs_check_exe(t_data *data, t_prcs *process)
 {
-	if (access(process->argv[0], X_OK) != 0)
+	if (ft_strchr(process->argv[0], '/') == NULL)
 	{
 		write (STDERR_FILENO, process->argv[0], ft_strlen(process->argv[0]));
 		if (find_env(data->env, "PATH") != NULL)
@@ -73,7 +74,7 @@ void	execute_in_child(t_data *data, t_prcs *process)
 	if (is_built_in(process->argv[0]) == 1)
 	{
 		execute_built_in(data, process);
-		full_exit(data, -1);
+		full_exit(data, -4242);
 	}
 	child_prcs_check_exe(data, process);
 	envp = make_envp(data);

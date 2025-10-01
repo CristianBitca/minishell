@@ -12,6 +12,7 @@
 
 #include "env.h"
 #include "execution.h"
+#include "libft.h"
 #include "minishell.h"
 #include "parser.h"
 
@@ -19,6 +20,8 @@ int	check_valid_file(char *cmd)
 {
 	struct stat	file_status;
 
+	if (ft_strchr(cmd, '/') == NULL)
+		return (0);
 	if (access(cmd, F_OK) == 0)
 	{
 		if (stat(cmd, &file_status) == -1)
@@ -46,6 +49,8 @@ int	check_exe_creation(t_data *data, char *cmd)
 	char	**paths;
 	char	*path;
 
+	if (ft_strchr(cmd, '/') != NULL)
+		return (0);
 	if (access(cmd, F_OK | X_OK) == 0 || is_built_in(cmd) == 1)
 		return (0);
 	path = find_env(data->env, "PATH");

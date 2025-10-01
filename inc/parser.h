@@ -27,7 +27,7 @@ int		allocate_processes(t_data *data);
 int		create_processes(t_data *data);
 
 // assign_process.c
-int		assign_prcs_error(t_data *data, t_prcs *process);
+int		assign_prcs_error(t_prcs *process);
 int		assign_prcs(t_data *data, t_token *first, int tok_c, int prcs_index);
 
 // open_infiles.c

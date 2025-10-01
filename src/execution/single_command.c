@@ -23,7 +23,13 @@ int	single_cmd(t_data *data, t_prcs *process)
 	int	wstatus;
 
 	if (process->argv == NULL || process->argv[0] == NULL)
+	{
+		if (process->argv == NULL)
+			data->exit_status = 1;
+		else if (process->argv[0] == NULL)
+			data->exit_status = 126;
 		return (0);
+	}
 	if (is_built_in(process->argv[0]) == 1)
 		return (execute_built_in(data, process));
 	else

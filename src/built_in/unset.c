@@ -47,6 +47,13 @@ void	unset(t_data *data, char **args)
 		return ;
 	while (*args)
 	{
+		if (*args[0] == '-')
+		{
+			write(2, "unset: minishell does not accept options\n", 42);
+			data->exit_status = 2;
+			args++;
+			continue ;
+		}
 		if (!ft_strncmp(env_node->key, *args, ft_strlen(env_node->key)))
 		{
 			(free(env_node->key), free(env_node->value));
@@ -56,6 +63,6 @@ void	unset(t_data *data, char **args)
 		else
 			unset_search(data->env, *args);
 		args++;
+		data->exit_status = EXIT_SUCCESS;
 	}
-	data->exit_status = EXIT_SUCCESS;
 }

@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **envp)
 	data = ft_calloc(sizeof(t_data), sizeof(t_data));
 	parse_env(data, envp);
 	rl_loop(data);
-	full_exit(data, -1);
+	full_exit(data, -4242);
 	return (0);
 	(void)argc;
 	(void)argv;

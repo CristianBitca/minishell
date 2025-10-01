@@ -87,7 +87,7 @@ char	*get_input(t_data *data)
 			continue ;
 		}
 		if (input == NULL)
-			full_exit(data, -1);
+			full_exit(data, -4242);
 		else
 			break ;
 	}

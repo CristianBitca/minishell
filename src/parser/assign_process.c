@@ -20,12 +20,11 @@
 // Nothing will be written into the pipe for the following process, and
 // whatever is in the read end of the pipe from the previous process will be
 // lost after the pipe is closed.
-int	assign_prcs_error(t_data *data, t_prcs *process)
+int	assign_prcs_error(t_prcs *process)
 {
 	process->argv = NULL;
 	process->infilefd = STDIN_FILENO;
 	process->outfilefd = STDOUT_FILENO;
-	data->exit_status = 1;
 	return (0);
 }
 
@@ -39,7 +38,7 @@ int	assign_prcs(t_data *data, t_token *first, int token_count, int i)
 	process->argv = NULL;
 	here_doc_result = convert_here_docs(data, first, token_count, i);
 	if (here_doc_result == -1)
-		return (assign_prcs_error(data, process));
+		return (assign_prcs_error(process));
 	else if (here_doc_result == -2)
 	{
 		data->exit_status = 130;
@@ -47,10 +46,10 @@ int	assign_prcs(t_data *data, t_token *first, int token_count, int i)
 	}
 	process->infilefd = handle_infiles(first, token_count);
 	if (process->infilefd == -1)
-		return (assign_prcs_error(data, process));
+		return (assign_prcs_error(process));
 	process->outfilefd = handle_outfiles(first, token_count);
 	if (process->outfilefd == -1)
-		return (assign_prcs_error(data, process));
+		return (assign_prcs_error(process));
 	process->argv = make_process_argv(data, first, token_count);
 	return (0);
 }
