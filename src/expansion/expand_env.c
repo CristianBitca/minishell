@@ -105,17 +105,16 @@ char	*expand_env(t_data *data, t_token *token, t_expand *exp)
 	temp = exp->expand;
 	exp->expand = ft_strdup(find_env(data->env, &exp->expand[1]));
 	free(temp);
-	if (ft_strchr(exp->expand, ' ') && exp->exp_heredoc)
-		split_word(data, token, exp, exp->expand);
+	if (ft_strchr(exp->expand, ' '))
+		return (split_word(data, token, exp, exp->expand));
 	exp->l_expand = ft_strlen(exp->expand);
 	new_word = ft_strjoin(exp->before, exp->expand);
 	temp = new_word;
 	new_word = ft_strjoin(new_word, exp->after);
 	exp->pos = exp->l_before + exp->l_expand;
 	exp->size = ft_strlen(new_word);
-	if (ft_strchr(exp->expand, ' ') && exp->exp_heredoc)
-		split_word(data, token, exp, new_word);
-	(free(temp), free_exp_value(exp));
+	free(temp);
+	free_exp_value(exp);
 	if (token != NULL)
 		free(token->value);
 	return (new_word);
