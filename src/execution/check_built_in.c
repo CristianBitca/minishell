@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 #include "built_in.h"
 #include "execution.h"
@@ -36,6 +37,19 @@ int	is_built_in(char *cmd)
 	return (0);
 }
 
+void	execute_env(t_data *data, t_prcs *process)
+{
+	if (process->argv[1])
+	{
+		write(2, "env: '", 6);
+		write(2, process->argv[1], ft_strlen(process->argv[1]));
+		write(2, "': No such file or directory\n", 30);
+		data->exit_status = 127;
+	}
+	else
+		print_envp(data, process->outfilefd);
+}
+
 int	execute_built_in(t_data *data, t_prcs *process)
 {
 	if (ft_strncmp(process->argv[0], "echo\0", 5) == 0)
@@ -49,12 +63,12 @@ int	execute_built_in(t_data *data, t_prcs *process)
 	if (ft_strncmp(process->argv[0], "unset\0", 6) == 0)
 		unset(data, process->argv);
 	if (ft_strncmp(process->argv[0], "env\0", 4) == 0)
-		print_envp(data, process->outfilefd);
+		execute_env(data, process);
 	if (process->infilefd != STDIN_FILENO)
 		close(process->infilefd);
 	if (process->outfilefd != STDOUT_FILENO)
 		close(process->outfilefd);
 	if (ft_strncmp(process->argv[0], "exit\0", 5) == 0)
-		full_exit(data, -1);
+		execute_exit(data, process);
 	return (0);
 }

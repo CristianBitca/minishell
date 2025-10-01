@@ -21,7 +21,30 @@
 #include "ms_signals.h"
 #include <stdlib.h>
 
-extern volatile int g_signal;
+extern volatile int	g_signal;
+
+void	print_tokens(t_data *data)
+{
+
+	//test func to be deleted
+	t_token	*token;
+	char	*number;
+
+	token = data->tokens;
+	while (token != NULL)
+	{
+		if (*token->value == '\0')
+			printf("token value = NULL\n");
+		else
+			printf("token value = %s\n", token->value);
+		number = ft_itoa(token->type);
+		printf("token type = %s\n", number);
+		printf("*******\n");
+		token = token->next;
+		if (number)
+			free(number);
+	}
+}
 
 // Readline will display the prompt created and return string taken from
 // stdin stream. First we set the rl_event_hook function pointer to our own
@@ -64,7 +87,7 @@ char	*get_input(t_data *data)
 			continue ;
 		}
 		if (input == NULL)
-			full_exit(data, -1);
+			full_exit(data, -4242);
 		else
 			break ;
 	}
@@ -92,13 +115,17 @@ void	rl_loop(t_data *data)
 			add_history(input);
 			if (tokenise(data, input) == -1)
 			{
-				(cleanup_tokens(data), free(input));
+				cleanup_tokens(data);
 				continue ;
 			}
+			// printf("Before\n");
+			// print_tokens(data);
 			expand(data);
+			// printf("After\n");
+			// print_tokens(data);
 			if (create_processes(data) == -2)
 			{
-				(cleanup_tokens(data), cleanup_processes(data), free(input));
+				(cleanup_tokens(data), cleanup_processes(data));
 				continue ;
 			}
 			if (count_processes(data) > 1)

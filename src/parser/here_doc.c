@@ -10,11 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 #include "parser.h"
 #include "ms_signals.h"
 #include "expansion.h"
 #include <stdlib.h>
+#include <unistd.h>
 
 extern volatile int	g_signal;
 
@@ -36,7 +38,15 @@ int	here_doc_readline(t_data *data, int here_doc_fd, char *delimiter, int *exp_f
 	rl_event_hook = &ms_rl_event;
 	while (1)
 	{
-		input = readline("> ");
+		if (isatty(STDIN_FILENO))
+			input = readline("> ");
+		else
+		{
+			char	*line;
+			line = ft_get_next_line(STDIN_FILENO);
+			input = ft_strtrim(line, "\n");
+			free(line);
+		}
 		if (g_signal == SIGINT)
 		{
 			rl_replace_line("", 1);
@@ -75,6 +85,7 @@ int	read_here_doc(t_data *data, char *delimiter, char *here_doc_path)
 		return (-2);
 	if (close(here_doc_fd) == -1)
 		return (-1);
+	free(delimiter);
 	return (0);
 }
 
@@ -99,7 +110,6 @@ int	convert_here_docs(t_data *data, t_token *traverser, int token_count, int prc
 				free(here_doc_path);
 				return (-2);
 			}
-			free(traverser->next->value);
 			traverser->next->value = here_doc_path;
 			traverser->type = REDIR_IN;
 		}

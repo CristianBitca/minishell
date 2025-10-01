@@ -22,11 +22,12 @@ void	expand(t_data *data);
 void	free_exp_value(t_expand *exp);
 
 // expand_env.c
+char	*insert_env(t_data *data, char *input);
 char	*expand_exit_code(t_data *data, t_token *token, t_expand *exp);
 char	*invalid_env_expansion(t_token *token, t_expand *exp);
 char	*expand_env(t_data *data, t_token *token, t_expand *exp);
 char	*expand_s_quote(t_token *token, t_expand *exp);
-char	*expand_d_quote(t_token *token, t_expand *exp);
+char	*expand_d_quote(t_data *data, t_token *token, t_expand *exp);
 
 //word_splitting.c
 void	insert_tokens(t_data *data, t_token *node, t_token *tokens);

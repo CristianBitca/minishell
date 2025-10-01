@@ -51,6 +51,7 @@ void	split_expand(char *input, t_expand *exp)
 	exp->after = ft_substr(input, exp->pos, exp->l_after);
 	exp->l_before = exp->size - exp->l_after - exp->l_expand;
 	exp->before = ft_substr(input, 0, exp->l_before);
+	// printf("%s\n%s\n%s\n", exp->before, exp->expand, exp->after);
 }
 
 void	find_expansions(t_data *data, t_token *token)
@@ -63,7 +64,7 @@ void	find_expansions(t_data *data, t_token *token)
 	{
 		if (token->value[exp->pos] == '$' && token->value[exp->pos + 1])
 		{
-			split_expand(token->value, exp);
+			(split_expand(token->value, exp), exp->exp_heredoc = 0);
 			token->value = expand_env(data, token, exp);
 		}
 		else if (token->value[exp->pos] == '\'')
@@ -74,7 +75,7 @@ void	find_expansions(t_data *data, t_token *token)
 		else if (token->value[exp->pos] == '"')
 		{
 			split_expand(token->value, exp);
-			token->value = expand_d_quote(token, exp);
+			token->value = expand_d_quote(data, token, exp);
 		}
 		else
 			exp->pos++;
