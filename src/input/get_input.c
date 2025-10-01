@@ -19,11 +19,7 @@
 #include "parser.h"
 #include "built_in.h"
 #include "ms_signals.h"
-<<<<<<< HEAD
 #include <stdlib.h>
-=======
-#include "libft.h"
->>>>>>> skirwan
 
 extern volatile int	g_signal;
 

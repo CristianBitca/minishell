@@ -89,11 +89,7 @@ int	convert_here_docs(t_data *data, t_token *traverser, int token_count, int prc
 		if (traverser->type == REDIR_HEREDOC)
 		{
 			here_doc_path = create_here_doc_temp_file_path(prcs_index);
-<<<<<<< HEAD
 			read_result = read_here_doc(data, traverser->next->value, here_doc_path);
-=======
-			read_result = read_here_doc(traverser->next->value, here_doc_path);
->>>>>>> skirwan
 			if (read_result == -1)
 			{
 				(perror(here_doc_path), free(here_doc_path));
@@ -104,10 +100,6 @@ int	convert_here_docs(t_data *data, t_token *traverser, int token_count, int prc
 				free(here_doc_path);
 				return (-2);
 			}
-<<<<<<< HEAD
-=======
-			free(traverser->next->value);
->>>>>>> skirwan
 			traverser->next->value = here_doc_path;
 			traverser->type = REDIR_IN;
 		}
