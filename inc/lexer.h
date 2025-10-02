@@ -26,7 +26,7 @@ int		is_operator(char c);
 // create_tokens.c
 void	add_redir_token(t_data *data, t_lexer *lex);
 void	add_operator_token(t_data *data, t_lexer *lexer);
-int		handle_quotes(t_lexer *lex, char end_quote);
+int		handle_quotes(t_data *data, t_lexer *lex, char end_quote);
 int		add_word_token(t_data *data, t_lexer *lexer);
 
 // tonkenise.c
@@ -34,7 +34,7 @@ int		tokenise(t_data *data, char *input);
 void	free_tokens(t_token *token);
 
 // validate_tokens.c
-int		syntax_error(char *invalid_val);
+int		syntax_error(t_data *data, char *invalid_val);
 int		validate_tokens(t_data *data);
 
 #endif

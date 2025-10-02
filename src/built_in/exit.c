@@ -6,12 +6,13 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 16:09:46 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/10 12:03:59 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/10/02 19:30:05 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built_in.h"
 #include "minishell.h"
+#include <unistd.h>
 
 void	check_numeric_argument(t_data *data, char *argument)
 {
@@ -22,11 +23,11 @@ void	check_numeric_argument(t_data *data, char *argument)
 		i++;
 	while (ft_isdigit(argument[i]))
 		i++;
-	if (argument[i] != '\0')
+	if (argument[i] != '\0' || (argument[i] == '\0' && i == 0))
 	{
-		write(2, "exit: ", 6);
-		write(2, argument, ft_strlen(argument));
-		write(2, ": numeric argument required\n", 29);
+		write(STDERR_FILENO, "exit: ", 6);
+		write(STDERR_FILENO, argument, ft_strlen(argument));
+		write(STDERR_FILENO, ": numeric argument required\n", 29);
 		full_exit(data, 2);
 	}
 }
@@ -35,7 +36,6 @@ void	execute_exit(t_data *data, t_prcs *process)
 {
 	int	i;
 
-	write(1, "exit\n", 5);
 	i = 0;
 	while (process->argv[i] != NULL)
 		i++;
@@ -44,7 +44,7 @@ void	execute_exit(t_data *data, t_prcs *process)
 	check_numeric_argument(data, process->argv[1]);
 	if (i > 2)
 	{
-		write(2, "exit: too many arguments\n", 26);
+		write(STDERR_FILENO, "exit: too many arguments\n", 26);
 		data->exit_status = 1;
 	}
 	else

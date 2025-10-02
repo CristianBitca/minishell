@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 09:57:29 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/12 11:57:36 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/10/02 19:19:08 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	check_exe_creation(t_data *data, char *cmd)
 	char	**paths;
 	char	*path;
 
+	if (*cmd == '\0')
+		return (0);
 	if (ft_strchr(cmd, '/') != NULL)
 		return (0);
 	if (access(cmd, F_OK | X_OK) == 0 || is_built_in(cmd) == 1)

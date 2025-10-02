@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:35:27 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/26 15:08:03 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/10/02 20:03:13 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 #include "input.h"
 #include "lexer.h"
 #include "expansion.h"
-#include "env.h"
 #include "parser.h"
 #include "built_in.h"
 #include "ms_signals.h"
-#include <stdlib.h>
 
 extern volatile int g_signal;
 
