@@ -58,7 +58,7 @@ void	child_prcs_check_exe(t_data *data, t_prcs *process)
 		else if (access(cmd, F_OK) == 0)
 			return (current_wd_file_permission_check(data, cmd));
 		else
-		   write(STDERR_FILENO, ": No such file or directory\n", 29);
+			write(STDERR_FILENO, ": No such file or directory\n", 29);
 		full_exit(data, 127);
 	}
 	else if (access(cmd, F_OK) == -1)

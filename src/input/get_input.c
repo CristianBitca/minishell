@@ -19,7 +19,7 @@
 #include "built_in.h"
 #include "ms_signals.h"
 
-extern volatile int g_signal;
+extern volatile int	g_signal;
 
 // Readline will display the prompt created and return string taken from
 // stdin stream. First we set the rl_event_hook function pointer to our own
@@ -44,15 +44,7 @@ char	*get_input(t_data *data)
 	while (1)
 	{
 		prompt = create_prompt(data->exit_status);
-		if (isatty(fileno(stdin)))
-			input = readline(prompt);
-		else
-		{
-			char *line;
-			line = ft_get_next_line(fileno(stdin));
-			input = ft_strtrim(line, "\n");
-			free(line);
-		}
+		input = readline(prompt);
 		free(prompt);
 		if (g_signal == SIGINT)
 		{
@@ -83,27 +75,21 @@ void	rl_loop(t_data *data)
 
 	while (1)
 	{
+		(cleanup_tokens(data), cleanup_processes(data));
 		sigactions_interactive();
 		input = get_input(data);
 		if (input && *input)
 		{
 			add_history(input);
 			if (tokenise(data, input) == -1)
-			{
-				cleanup_tokens(data);
 				continue ;
-			}
 			expand(data);
 			if (create_processes(data) == -2)
-			{
-				(cleanup_tokens(data), cleanup_processes(data));
 				continue ;
-			}
 			if (count_processes(data) > 1)
 				execute_all_processes(data, count_processes(data));
 			else
 				single_cmd(data, data->processes[0]);
-			(cleanup_tokens(data), cleanup_processes(data));
 		}
 	}
 }

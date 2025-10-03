@@ -13,6 +13,15 @@
 #include "execution.h"
 #include "ms_signals.h"
 
+int	invalid_cmd_set_exit_status(t_data *data, char **argv)
+{
+	if (argv == NULL)
+		data->exit_status = 1;
+	else if (argv[0] == NULL)
+		data->exit_status = 126;
+	return (0);
+}
+
 // If we only have one cmd to execute, a built-in command does not fork.
 // We get the exit status from passing the &wstatus pointer to waitpid
 // which receives the return value of the command passed to execve.
@@ -23,13 +32,7 @@ int	single_cmd(t_data *data, t_prcs *process)
 	int	wstatus;
 
 	if (process->argv == NULL || process->argv[0] == NULL)
-	{
-		if (process->argv == NULL)
-			data->exit_status = 1;
-		else if (process->argv[0] == NULL)
-			data->exit_status = 126;
-		return (0);
-	}
+		return (invalid_cmd_set_exit_status(data, process->argv));
 	if (is_built_in(process->argv[0]) == 1)
 		return (execute_built_in(data, process));
 	else

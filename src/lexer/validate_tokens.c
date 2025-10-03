@@ -37,15 +37,11 @@ int	validate_tokens(t_data *data)
 		return (syntax_error(data, token->value));
 	while (token->next != NULL)
 	{
-		if (token->type == REDIR_HEREDOC && token->next->type != WORD)
-			return (syntax_error(data, token->next->value));
-		if (token->type == REDIR_APPEND && token->next->type != WORD)
-			return (syntax_error(data, token->next->value));
-		if (token->type == REDIR_IN && token->next->type != WORD)
-			return (syntax_error(data, token->next->value));
-		if (token->type == REDIR_OUT && token->next->type != WORD)
-			return (syntax_error(data, token->next->value));
-		if (token->type == PIPE && token->next->type == PIPE)
+		if ((token->type == REDIR_HEREDOC && token->next->type != WORD)
+			|| (token->type == REDIR_APPEND && token->next->type != WORD)
+			|| (token->type == REDIR_IN && token->next->type != WORD)
+			|| (token->type == REDIR_OUT && token->next->type != WORD)
+			|| (token->type == PIPE && token->next->type == PIPE))
 			return (syntax_error(data, token->next->value));
 		token = token->next;
 	}

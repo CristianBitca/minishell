@@ -37,7 +37,8 @@ int	tokenise(t_data *data, char *input)
 	lexer->line_size = ft_strlen(input);
 	while (lexer->pos < lexer->line_size)
 	{
-		while (lexer->line[lexer->pos] == ' ' || lexer->line[lexer->pos] == '\t')
+		while (lexer->line[lexer->pos] == ' '
+			|| lexer->line[lexer->pos] == '\t')
 			lexer->pos++;
 		if (is_operator(lexer->line[lexer->pos]) == 1)
 			add_operator_token(data, lexer);

@@ -12,11 +12,11 @@
 
 #include "minishell.h"
 
-void	invalid_export_identifier(t_data *data, char *to_export, int exit_status)
+void	invalid_export_identifier(t_data *data, char *to_export, int ex_status)
 {
 	write (STDERR_FILENO, "export: `", 9);
 	write (STDERR_FILENO, to_export, ft_strlen(to_export));
 	write (STDERR_FILENO, "': not a valid identifier\n", 26);
-	data->exit_status = exit_status;
+	data->exit_status = ex_status;
 	return ;
 }

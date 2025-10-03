@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 #include "expansion.h"
-#include "env.h"
 
 void	free_exp_value(t_expand *exp)
 {

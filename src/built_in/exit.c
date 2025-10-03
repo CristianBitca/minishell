@@ -12,12 +12,11 @@
 
 #include "built_in.h"
 #include "minishell.h"
-#include <unistd.h>
 
 void	check_numeric_argument(t_data *data, char *argument)
 {
 	int	i;
-	
+
 	i = 0;
 	if (argument[i] == '+' || argument[i] == '-')
 		i++;
