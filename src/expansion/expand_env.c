@@ -71,6 +71,27 @@ char	*invalid_env_expansion(t_token *token, t_expand *exp)
 	return (new_word);
 }
 
+char	*slash_env_expansion(t_token *token, t_expand *exp)
+{
+	char	*new_word;
+	char	*temp;
+
+	temp = exp->expand;
+	exp->expand = ft_strdup("$");
+	free(temp);
+	exp->l_expand = ft_strlen(exp->expand);
+	new_word = ft_strjoin(exp->before, exp->expand);
+	temp = new_word;
+	new_word = ft_strjoin(new_word, exp->after);
+	free(temp);
+	if (token != NULL)
+		free(token->value);
+	exp->pos = exp->l_before + exp->l_expand;
+	exp->size = ft_strlen(new_word);
+	free_exp_value(exp);
+	return (new_word);
+}
+
 char	*expand_exit_code(t_data *data, t_token *token, t_expand *exp)
 {
 	char	*new_word;
@@ -100,6 +121,8 @@ char	*expand_env(t_data *data, t_token *token, t_expand *exp)
 
 	if (exp->expand[1] == '?')
 		return (expand_exit_code(data, token, exp));
+	if (!ft_strncmp(exp->expand, "$", 2) && ft_strchr(exp->after, '/'))
+		return (slash_env_expansion(token, exp));
 	if (!find_env(data->env, &exp->expand[1]))
 		return (invalid_env_expansion(token, exp));
 	temp = exp->expand;
