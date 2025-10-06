@@ -17,19 +17,51 @@
 
 void	insert_tokens(t_data *data, t_token *node, t_token *tokens)
 {
+	t_token	*cur;
+
+	cur = node;
 	if (node->prev)
 	{
 		tokens->prev = node->prev;
 		node->prev->next = tokens;
+
 	}
 	else
 		data->tokens = tokens;
-	if (node->next)
+	if (cur->next)
 	{
 		tokens = last_token(tokens);
-		node->next->prev = tokens;
-		tokens->next = node->next;
+		cur->next->prev = tokens;
+		tokens->next = cur->next;
 	}
+}
+
+t_token	*fill_buffer(t_expand *exp, char *input, char **split_tokens, t_token *buffer)
+{
+	char	*temp;
+	int		i;
+
+	i = 0;
+	if (input[0] == ' ' && ft_strlen(exp->before))
+		add_token_back(&buffer, create_token(ft_strdup(exp->before), WORD));
+	else if (ft_strlen(exp->before))
+	{
+		temp = split_tokens[0];
+		split_tokens[0] = ft_strjoin(exp->before, split_tokens[0]);
+		free(temp);
+	}
+	while (split_tokens[i])
+		add_token_back(&buffer, create_token(split_tokens[i++], WORD));
+	i = 0;
+	if (input[ft_strlen(input) - 1] == ' ' && ft_strlen(exp->after))
+		add_token_back(&buffer, create_token(ft_strdup(exp->after), WORD));
+	else if (ft_strlen(exp->after))
+	{
+		temp = last_token(buffer)->value;
+		last_token(buffer)->value = ft_strjoin(last_token(buffer)->value , exp->after);
+		free(temp);
+	}
+	return (buffer);
 }
 
 char	*split_word(t_data *data, t_token *token, t_expand *exp, char *input)
@@ -37,23 +69,16 @@ char	*split_word(t_data *data, t_token *token, t_expand *exp, char *input)
 	t_token	*buffer;
 	char	**split_tokens;
 	char	*new_word;
-	int		i;
 
 	split_tokens = ft_split(input, ' ');
 	buffer = NULL;
-	i = 0;
-	while (split_tokens[i])
-	{
-		add_token_back(&buffer, create_token(split_tokens[i], WORD));
-		i++;
-	}
+	buffer = fill_buffer(exp, input, split_tokens, buffer);
 	new_word = buffer->value;
 	exp->pos = 0;
 	token->type = DELETE;
 	free(token->value);
 	insert_tokens(data, token, buffer);
-	free(split_tokens);
-	free(input);
+	(free(split_tokens), free(input));
 	if (exp->after)
 		(free(exp->after), exp->l_after = 0);
 	if (exp->before)
