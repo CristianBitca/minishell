@@ -6,15 +6,15 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 16:20:51 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/25 15:17:00 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/10/02 19:56:25 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env.h"
 #include "execution.h"
 #include "built_in.h"
-#include "libft.h"
 #include "ms_signals.h"
+#include <unistd.h>
 
 void	child_prcs_file_handling(t_data *data, t_prcs *process)
 {
@@ -33,15 +33,38 @@ void	child_prcs_file_handling(t_data *data, t_prcs *process)
 	return ;
 }
 
+void	current_wd_file_permission_check(t_data *data, char *cmd)
+{
+	if (access(cmd, X_OK) == -1)
+	{
+		write(STDERR_FILENO, cmd, ft_strlen(cmd));
+		write(STDERR_FILENO, ": Permission denied\n", 21);
+		full_exit(data, 126);
+	}
+	return ;
+}
+
 void	child_prcs_check_exe(t_data *data, t_prcs *process)
 {
-	if (ft_strchr(process->argv[0], '/') == NULL)
+	char	*cmd;
+
+	cmd = process->argv[0];
+	if (ft_strchr(cmd, '/') == NULL)
 	{
-		write (STDERR_FILENO, process->argv[0], ft_strlen(process->argv[0]));
+		if (access(cmd, F_OK) == -1)
+			write (STDERR_FILENO, cmd, ft_strlen(cmd));
 		if (find_env(data->env, "PATH") != NULL)
 			write(STDERR_FILENO, ": command not found\n", 21);
+		else if (access(cmd, F_OK) == 0)
+			return (current_wd_file_permission_check(data, cmd));
 		else
 			write(STDERR_FILENO, ": No such file or directory\n", 29);
+		full_exit(data, 127);
+	}
+	else if (access(cmd, F_OK) == -1)
+	{
+		write(STDERR_FILENO, cmd, ft_strlen(cmd));
+		write(STDERR_FILENO, ": No such file or directory\n", 29);
 		full_exit(data, 127);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 12:33:13 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/25 15:50:17 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/10/02 19:42:15 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int		execute_built_in(t_data *data, t_prcs *process);
 
 // child_process.c
 void	child_prcs_file_handling(t_data *data, t_prcs *process);
+void	current_wd_file_permission_check(t_data *data, char *cmd);
 void	child_prcs_check_exe(t_data *data, t_prcs *process);
 void	execute_in_child(t_data *data, t_prcs *process);
 

@@ -22,6 +22,8 @@ int	check_n(char *str)
 		str++;
 	else
 		return (1);
+	if (*str == '\0')
+		return (1);
 	while (*str)
 	{
 		if (*str == 'n')

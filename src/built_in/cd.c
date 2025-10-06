@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 14:02:53 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/03 14:49:42 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/10/02 19:11:03 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,20 @@ void	invalid_cd(t_data *data, char *dest)
 // exit status is set to 1, mimicing bash, rather than a specific error code.
 void	change_directory(t_data *data, char *dest)
 {
-	t_env_var	*old_pwd_var;
-	char		*current_wd;
+	char		*old_wd;
 
-	current_wd = NULL;
+	old_wd = NULL;
 	if (access(dest, F_OK) == 0)
 	{
 		if (find_env(data->env, "OLDPWD") != NULL)
-			current_wd = getcwd(NULL, 0);
+			old_wd = getcwd(NULL, 0);
 		if (chdir(dest) != 0)
 		{
-			(perror(NULL), free(current_wd));
+			(perror(NULL), free(old_wd));
 			data->exit_status = EXIT_FAILURE;
 			return ;
 		}
-		if (current_wd != NULL)
-		{
-			old_pwd_var = find_env_node(data->env, "OLDPWD");
-			free(old_pwd_var->value);
-			old_pwd_var->value = current_wd;
-		}
+		update_environment_after_cd(data, old_wd);
 		data->exit_status = EXIT_SUCCESS;
 	}
 	else

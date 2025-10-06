@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 20:56:10 by cbitca            #+#    #+#             */
-/*   Updated: 2025/08/19 11:19:20 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/10/02 20:03:17 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,17 @@ int	validate_tokens(t_data *data)
 	t_token	*token;
 
 	token = data->tokens;
+	if (token == NULL)
+		return (-1);
 	if (token->type == PIPE)
 		return (syntax_error(data, token->value));
 	while (token->next != NULL)
 	{
-		if (token->type == REDIR_HEREDOC && token->next->type != WORD)
-			return (syntax_error(data, token->next->value));
-		if (token->type == REDIR_APPEND && token->next->type != WORD)
-			return (syntax_error(data, token->next->value));
-		if (token->type == REDIR_IN && token->next->type != WORD)
-			return (syntax_error(data, token->next->value));
-		if (token->type == REDIR_OUT && token->next->type != WORD)
-			return (syntax_error(data, token->next->value));
-		if (token->type == PIPE && token->next->type == PIPE)
+		if ((token->type == REDIR_HEREDOC && token->next->type != WORD)
+			|| (token->type == REDIR_APPEND && token->next->type != WORD)
+			|| (token->type == REDIR_IN && token->next->type != WORD)
+			|| (token->type == REDIR_OUT && token->next->type != WORD)
+			|| (token->type == PIPE && token->next->type == PIPE))
 			return (syntax_error(data, token->next->value));
 		token = token->next;
 	}

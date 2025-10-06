@@ -48,13 +48,19 @@ void	add_operator_token(t_data *data, t_lexer *lexer)
 	lexer->pos++;
 }
 
-int	handle_quotes(t_lexer *lex, char end_quote)
+int	handle_quotes(t_data *data, t_lexer *lex, char end_quote)
 {
 	while (lex->line[lex->pos] != end_quote
 		&& lex->pos < lex->line_size)
 		lex->pos++;
 	if (lex->line[lex->pos] != end_quote)
-		return (syntax_error(&end_quote));
+	{
+		write (STDERR_FILENO, "syntax error near unexpected token '", 36);
+		write (STDERR_FILENO, &end_quote, 1);
+		write (STDERR_FILENO, "'\n", 2);
+		data->exit_status = 2;
+		return (-1);
+	}
 	lex->pos++;
 	return (1);
 }
@@ -66,15 +72,22 @@ int	add_word_token(t_data *data, t_lexer *lex)
 	int		first_char;
 
 	first_char = lex->pos;
+<<<<<<< HEAD
 	while (lex->pos < lex->line_size
 		&& is_operator(lex->line[lex->pos]) == 0
 		&& (lex->line[lex->pos] != ' ') && lex->line[lex->pos] != '\t')
+=======
+	while ((lex->pos < lex->line_size)
+		&& (is_operator(lex->line[lex->pos]) == 0)
+		&& (lex->line[lex->pos] != ' ')
+		&& (lex->line[lex->pos] != '\t'))
+>>>>>>> Fixup
 	{
 		if (lex->line[lex->pos] == '\'' || lex->line[lex->pos] == '"')
 		{
 			end_quote = lex->line[lex->pos];
 			lex->pos++;
-			if (handle_quotes(lex, end_quote) == 0)
+			if (handle_quotes(data, lex, end_quote) == -1)
 				return (-1);
 		}
 		else

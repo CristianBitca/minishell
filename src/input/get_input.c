@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 11:35:27 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/26 15:08:03 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/10/02 20:03:13 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,36 +15,11 @@
 #include "input.h"
 #include "lexer.h"
 #include "expansion.h"
-#include "env.h"
 #include "parser.h"
 #include "built_in.h"
 #include "ms_signals.h"
-#include <stdlib.h>
 
 extern volatile int	g_signal;
-
-void	print_tokens(t_data *data)
-{
-
-	//test func to be deleted
-	t_token	*token;
-	char	*number;
-
-	token = data->tokens;
-	while (token != NULL)
-	{
-		if (*token->value == '\0')
-			printf("token value = NULL\n");
-		else
-			printf("token value = %s\n", token->value);
-		number = ft_itoa(token->type);
-		printf("token type = %s\n", number);
-		printf("*******\n");
-		token = token->next;
-		if (number)
-			free(number);
-	}
-}
 
 // Readline will display the prompt created and return string taken from
 // stdin stream. First we set the rl_event_hook function pointer to our own
@@ -69,15 +44,7 @@ char	*get_input(t_data *data)
 	while (1)
 	{
 		prompt = create_prompt(data->exit_status);
-		if (isatty(fileno(stdin)))
-			input = readline(prompt);
-		else
-		{
-			char *line;
-			line = ft_get_next_line(fileno(stdin));
-			input = ft_strtrim(line, "\n");
-			free(line);
-		}
+		input = readline(prompt);
 		free(prompt);
 		if (g_signal == SIGINT)
 		{
@@ -108,31 +75,21 @@ void	rl_loop(t_data *data)
 
 	while (1)
 	{
+		(cleanup_tokens(data), cleanup_processes(data));
 		sigactions_interactive();
 		input = get_input(data);
 		if (input && *input)
 		{
 			add_history(input);
 			if (tokenise(data, input) == -1)
-			{
-				cleanup_tokens(data);
 				continue ;
-			}
-			// printf("Before\n");
-			// print_tokens(data);
 			expand(data);
-			// printf("After\n");
-			// print_tokens(data);
 			if (create_processes(data) == -2)
-			{
-				(cleanup_tokens(data), cleanup_processes(data));
 				continue ;
-			}
 			if (count_processes(data) > 1)
 				execute_all_processes(data, count_processes(data));
 			else
 				single_cmd(data, data->processes[0]);
-			(cleanup_tokens(data), cleanup_processes(data));
 		}
 	}
 }

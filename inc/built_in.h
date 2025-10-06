@@ -6,7 +6,7 @@
 /*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:54:55 by skirwan           #+#    #+#             */
-/*   Updated: 2025/09/10 12:03:44 by skirwan          ###   ########.fr       */
+/*   Updated: 2025/10/02 19:10:22 by skirwan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ void	change_directory(t_data *data, char *dest);
 void	cd_home(t_data *data);
 void	cd_oldpwd(t_data *data, int out_fd);
 void	cd(t_data *data, char **argv, int out_fd);
+
+// cd_utils.c
+void	update_environment_after_cd(t_data *data, char *old_wd);
 
 //unset.c
 void	unset_search(t_env_var *node, char *find);
