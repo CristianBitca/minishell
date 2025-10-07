@@ -102,7 +102,6 @@ int	convert_here_docs(t_data *data, t_token *trvrsr, int tkn_cnt, int p_index)
 				return (perror(hd_path), free(hd_path), -1);
 			if (read_result == -2)
 				return (free(hd_path), -2);
-			free(trvrsr->next->value);
 			trvrsr->next->value = hd_path;
 			trvrsr->type = REDIR_IN;
 		}

@@ -38,7 +38,7 @@ void	split_expand(char *input, t_expand *exp)
 	exp->start = exp->pos++;
 	while (input[exp->start] == '$' && input[exp->pos]
 		&& input[exp->pos] != '$' && (ft_isalnum(input[exp->pos])
-		|| input[exp->pos] == '_' || input[exp->pos] == '?'))
+			|| input[exp->pos] == '_' || input[exp->pos] == '?'))
 		exp->pos++;
 	while (input[exp->start] == '\''
 		&& input[exp->pos] != '\'' && input[exp->pos])

@@ -22,6 +22,7 @@ void	expand(t_data *data);
 void	free_exp_value(t_expand *exp);
 
 // expand_env.c
+void	check_qmark(t_expand *exp);
 char	*insert_env(t_data *data, char *input);
 char	*expand_exit_code(t_data *data, t_token *token, t_expand *exp);
 char	*invalid_env_expansion(t_token *token, t_expand *exp);

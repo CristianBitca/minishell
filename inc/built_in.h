@@ -44,7 +44,7 @@ int		check_valid_export(t_data *data, char *to_export);
 void	export(t_data *data, char **args, int out_fd);
 
 //export_utils.c
-void	invalid_export_identifier(t_data *data, char *to_export, int exit_status);
+void	invalid_export_identifier(t_data *data, char *to_exp, int exit_status);
 
 //pwd.c
 void	pwd(t_data *data, int out_fd);

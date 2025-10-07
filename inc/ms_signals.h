@@ -20,6 +20,6 @@ void	parent_sigactions_pre_fork(void);
 void	sig_actions_default(void);
 
 // ms_rl_hooks.c
-int	ms_rl_event(void);
+int		ms_rl_event(void);
 
 #endif

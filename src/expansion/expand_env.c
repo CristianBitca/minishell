@@ -15,33 +15,19 @@
 #include "env.h"
 #include "expansion.h"
 
-char	*insert_env(t_data *data, char *input)
+void	check_qmark(t_expand *exp)
 {
-	t_expand	*exp;
-	char		*temp;
-	char		*new_word;
+	char	*temp;
 
-	exp = ft_calloc(sizeof(t_expand), 1);
-	exp->size = ft_strlen(input);
-	while (input[exp->pos] != '$' && input[exp->pos + 1])
-		exp->pos++;
-	split_expand(input, exp);
-	temp = exp->expand;
-	if (exp->expand[1] == ' ' || !exp->expand[1])
-		exp->expand = ft_strdup(exp->expand);
-	else if (exp->expand[1] == '?')
-		exp->expand = ft_itoa(data->exit_status);
-	else if (!find_env(data->env, &exp->expand[1]))
-		exp->expand = ft_strdup("");
-	else
-		exp->expand = ft_strdup(find_env(data->env, &exp->expand[1]));
-	free(temp);
-	exp->l_expand = ft_strlen(exp->expand);
-	new_word = ft_strjoin(exp->before, exp->expand);
-	temp = new_word;
-	new_word = ft_strjoin(new_word, exp->after);
-	(free(temp), free_exp_value(exp), free(exp));
-	return (new_word);
+	if (exp->expand[ft_strlen(exp->expand) - 1] == '?')
+	{
+		temp = exp->expand;
+		exp->expand = ft_substr(exp->expand, 0, ft_strlen(exp->expand) - 1);
+		free(temp);
+		temp = exp->after;
+		exp->after = ft_strjoin("?", exp->after);
+		free(temp);
+	}
 }
 
 // When an invalid char follows $ (any which is not alphabetic or an '_'
@@ -121,6 +107,7 @@ char	*expand_env(t_data *data, t_token *token, t_expand *exp)
 
 	if (exp->expand[1] == '?')
 		return (expand_exit_code(data, token, exp));
+	check_qmark(exp);
 	if (!ft_strncmp(exp->expand, "$", 2) && ft_strchr(exp->after, '/'))
 		return (slash_env_expansion(token, exp));
 	if (!find_env(data->env, &exp->expand[1]))
@@ -136,8 +123,7 @@ char	*expand_env(t_data *data, t_token *token, t_expand *exp)
 	new_word = ft_strjoin(new_word, exp->after);
 	exp->pos = exp->l_before + exp->l_expand;
 	exp->size = ft_strlen(new_word);
-	free(temp);
-	free_exp_value(exp);
+	(free(temp), free_exp_value(exp));
 	if (token != NULL)
 		free(token->value);
 	return (new_word);
