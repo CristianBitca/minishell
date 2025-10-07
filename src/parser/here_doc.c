@@ -54,6 +54,7 @@ int	here_doc_readline(t_data *data, int hd_fd, char *delimiter, int *exp_flag)
 		{
 			rl_replace_line("", 1);
 			g_signal = 0;
+			free(delimiter);
 			return (-1);
 		}
 		if (input == NULL)
@@ -74,16 +75,18 @@ int	read_here_doc(t_data *data, char *delimiter, char *here_doc_path)
 {
 	int		here_doc_fd;
 	int		exp_flag;
+	char	*temp;
 
 	here_doc_fd = open(here_doc_path, O_CREAT | O_TRUNC | O_RDWR, 0644);
 	if (here_doc_fd == -1)
 		return (-1);
-	delimiter = expand_delimiter(delimiter, &exp_flag);
-	if (here_doc_readline(data, here_doc_fd, delimiter, &exp_flag) == -1)
+	temp = ft_strdup(delimiter);
+	temp = expand_delimiter(temp, &exp_flag);
+	if (here_doc_readline(data, here_doc_fd, temp, &exp_flag) == -1)
 		return (-2);
+	free(temp);
 	if (close(here_doc_fd) == -1)
 		return (-1);
-	free(delimiter);
 	return (0);
 }
 

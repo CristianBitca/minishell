@@ -13,6 +13,20 @@
 #include "minishell.h"
 #include "expansion.h"
 
+int	count_quote(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (*input)
+	{
+		if (*input == '\'' || *input == '"')
+			i++;
+		input++;
+	}
+	return (i);
+}
+
 char	*expand_delimiter(char *delimiter, int *exp_flag)
 {
 	t_expand	*exp;
