@@ -85,6 +85,7 @@ int	read_here_doc(t_data *data, char *delimiter, char *here_doc_path)
 	if (here_doc_readline(data, here_doc_fd, temp, &exp_flag) == -1)
 		return (-2);
 	free(temp);
+	free(delimiter);
 	if (close(here_doc_fd) == -1)
 		return (-1);
 	return (0);
