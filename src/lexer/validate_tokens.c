@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+// Exit status for syntax errors is 2
 int	syntax_error(t_data *data, char *invalid_val)
 {
 	write (STDERR_FILENO, "syntax error near unexpected token '", 36);

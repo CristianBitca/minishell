@@ -87,6 +87,7 @@ void	cd_oldpwd(t_data *data, int out_fd)
 	current_wd = getcwd(NULL, 0);
 	write(out_fd, current_wd, ft_strlen(current_wd));
 	write(out_fd, "\n", 1);
+	free(current_wd);
 }
 
 // cd can only have one argument, if we dont have a special case
