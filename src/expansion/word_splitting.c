@@ -37,7 +37,7 @@ void	insert_tokens(t_data *data, t_token *node, t_token *tokens)
 
 char	*remove_quote(char *input)
 {
-	char *temp;
+	char	*temp;
 
 	if (input[0] == '\'' || input[0] == '"')
 	{
@@ -45,7 +45,7 @@ char	*remove_quote(char *input)
 		input = ft_substr(input, 1, ft_strlen(input) - 2);
 		free(temp);
 	}
-	return(input);
+	return (input);
 }
 
 t_token	*fill_buffer(t_expand *exp, char *input, char **split, t_token *buf)
@@ -65,7 +65,7 @@ t_token	*fill_buffer(t_expand *exp, char *input, char **split, t_token *buf)
 	while (split[i])
 		add_token_back(&buf, create_token(split[i++], WORD));
 	i = 0;
-	exp->after = remove_quote(exp->after);	
+	exp->after = remove_quote(exp->after);
 	if (input[ft_strlen(input) - 1] == ' ' && ft_strlen(exp->after))
 		add_token_back(&buf, create_token(ft_strdup(exp->after), WORD));
 	else if (ft_strlen(exp->after))

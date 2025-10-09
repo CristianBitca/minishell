@@ -56,7 +56,6 @@ void	split_expand(char *input, t_expand *exp)
 	exp->after = ft_substr(input, exp->pos, exp->l_after);
 	exp->l_before = exp->size - exp->l_after - exp->l_expand;
 	exp->before = ft_substr(input, 0, exp->l_before);
-	// printf("%s\n%s\n%s\n", exp->before, exp->expand, exp->after);
 }
 
 void	find_expansions(t_data *data, t_token *token)
