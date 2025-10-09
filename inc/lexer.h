@@ -19,6 +19,7 @@
 t_token	*create_token(char *value, t_tokentype type);
 t_token	*last_token(t_token *first_token);
 void	add_token_back(t_token **token_list, t_token *new_token);
+int	count_token(t_token *token);
 
 // is_operator.c
 int		is_operator(char c);

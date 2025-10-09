@@ -35,6 +35,19 @@ void	insert_tokens(t_data *data, t_token *node, t_token *tokens)
 	}
 }
 
+char	*remove_quote(char *input)
+{
+	char *temp;
+
+	if (input[0] == '\'' || input[0] == '"')
+	{
+		temp = input;
+		input = ft_substr(input, 1, ft_strlen(input) - 2);
+		free(temp);
+	}
+	return(input);
+}
+
 t_token	*fill_buffer(t_expand *exp, char *input, char **split, t_token *buf)
 {
 	char	*temp;
@@ -52,6 +65,7 @@ t_token	*fill_buffer(t_expand *exp, char *input, char **split, t_token *buf)
 	while (split[i])
 		add_token_back(&buf, create_token(split[i++], WORD));
 	i = 0;
+	exp->after = remove_quote(exp->after);	
 	if (input[ft_strlen(input) - 1] == ' ' && ft_strlen(exp->after))
 		add_token_back(&buf, create_token(ft_strdup(exp->after), WORD));
 	else if (ft_strlen(exp->after))
@@ -73,7 +87,7 @@ char	*split_word(t_data *data, t_token *token, t_expand *exp, char *input)
 	buffer = NULL;
 	buffer = fill_buffer(exp, input, split_tokens, buffer);
 	new_word = buffer->value;
-	exp->pos = 0;
+	exp->pos = ft_strlen(new_word);
 	token->type = DELETE;
 	free(token->value);
 	insert_tokens(data, token, buffer);

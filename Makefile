@@ -55,19 +55,17 @@ SRC    = main.c \
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
-# Generate object file paths in subdirectories corresponding to src structure
 OBJS = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRCS))
 
-# Rule to create the object directory structure and compile object files
+all: $(LIBFT_A) $(NAME)
+
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR)
 	@mkdir -p $(OBJ_DIR)/$(dir $*)  # Ensure the subdirectories inside obj/ are created
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Ensure the obj directory is created before compiling
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
-all: $(LIBFT_A) $(NAME)
 
 $(LIBFT_A):
 	@echo "Compiling libft..."

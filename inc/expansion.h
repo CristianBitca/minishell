@@ -33,6 +33,7 @@ char	*expand_d_quote(t_data *data, t_token *token, t_expand *exp);
 //word_splitting.c
 void	insert_tokens(t_data *data, t_token *node, t_token *tokens);
 char	*split_word(t_data *data, t_token *token, t_expand *exp, char *input);
+int	check_tokens(t_data *data, char *input);
 
 //expand_heredoc.c
 char	*expand_delimiter(char *delimiter, int *exp_flag);
