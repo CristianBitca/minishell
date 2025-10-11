@@ -15,8 +15,6 @@
 #include "parser.h"
 #include "ms_signals.h"
 #include "expansion.h"
-#include <stdlib.h>
-#include <unistd.h>
 
 extern volatile int	g_signal;
 
@@ -33,7 +31,7 @@ char	*create_here_doc_temp_file_path(int prcs_index)
 
 void	write_to_here_doc(t_data *data, char *input, int hd_fd, int *exp_flag)
 {
-	if (input && *input)
+	if (input)
 	{
 		input = expand_input(data, input, exp_flag);
 		write(hd_fd, input, ft_strlen(input));
@@ -64,7 +62,8 @@ int	here_doc_readline(t_data *data, int hd_fd, char *delimiter, int *exp_flag)
 			write(2, "')\n", 3);
 			return (0);
 		}
-		if (ft_strncmp(input, delimiter, ft_strlen(input)) == 0)
+		if (*input != '\0'
+			&& ft_strncmp(input, delimiter, ft_strlen(input)) == 0)
 			return (0);
 		write_to_here_doc(data, input, hd_fd, exp_flag);
 	}
