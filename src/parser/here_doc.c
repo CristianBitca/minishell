@@ -50,9 +50,8 @@ int	here_doc_readline(t_data *data, int hd_fd, char *delimiter, int *exp_flag)
 		input = readline("> ");
 		if (g_signal == SIGINT)
 		{
-			rl_replace_line("", 1);
+			(rl_replace_line("", 1), free(delimiter));
 			g_signal = 0;
-			free(delimiter);
 			return (-1);
 		}
 		if (input == NULL)

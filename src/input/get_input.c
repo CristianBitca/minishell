@@ -44,15 +44,7 @@ char	*get_input(t_data *data)
 	while (1)
 	{
 		prompt = create_prompt(data->exit_status);
-		if (isatty(fileno(stdin)))
-			input = readline(prompt);
-		else
-		{
-			char *line;
-			line = ft_get_next_line(fileno(stdin));
-			input = ft_strtrim(line, "\n");
-			free(line);
-		}
+		input = readline(prompt);
 		free(prompt);
 		if (g_signal == SIGINT)
 		{
