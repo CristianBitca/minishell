@@ -101,7 +101,7 @@ void	expand(t_data *data)
 		if (token->type == DELETE)
 		{
 			temp = token;
-			token = last_token(data->tokens);
+			token = data->tokens;
 			if (!temp->value)
 				free(temp->value);
 			free(temp);
