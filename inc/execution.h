@@ -23,6 +23,7 @@ int		execute_built_in(t_data *data, t_prcs *process);
 void	child_prcs_file_handling(t_data *data, t_prcs *process);
 void	current_wd_file_permission_check(t_data *data, char *cmd);
 void	child_prcs_check_exe(t_data *data, t_prcs *process);
+void	clean_child_fds(t_data *data, int prcs_no);
 void	execute_in_child(t_data *data, t_prcs *process, int prcs_no);
 
 // single_command.c

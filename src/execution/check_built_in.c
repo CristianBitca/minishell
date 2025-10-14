@@ -14,7 +14,6 @@
 #include "minishell.h"
 #include "built_in.h"
 #include "execution.h"
-#include <unistd.h>
 
 int	is_built_in(char *cmd)
 {
