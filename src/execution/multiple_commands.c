@@ -82,8 +82,8 @@ int	execute_all_processes(t_data *data, int prcs_count)
 		cpids[prcs] = fork();
 		if (cpids[prcs] == 0)
 		{
-			close(pipedes[0]);
-			execute_in_child(data, data->processes[prcs]);
+			(free(cpids), close(pipedes[0]));
+			execute_in_child(data, data->processes[prcs], prcs);
 		}
 		close_fds_post_exe(data->processes[prcs], pipedes);
 		prcs++;

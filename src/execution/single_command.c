@@ -40,7 +40,7 @@ int	single_cmd(t_data *data, t_prcs *process)
 		parent_sigactions_pre_fork();
 		cpid = fork();
 		if (cpid == 0)
-			execute_in_child(data, process);
+			execute_in_child(data, process, 0);
 		else
 			waitpid(cpid, &wstatus, 0);
 	}

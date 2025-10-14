@@ -14,7 +14,6 @@
 #include "execution.h"
 #include "built_in.h"
 #include "ms_signals.h"
-#include <unistd.h>
 
 void	child_prcs_file_handling(t_data *data, t_prcs *process)
 {
@@ -69,6 +68,20 @@ void	child_prcs_check_exe(t_data *data, t_prcs *process)
 	}
 }
 
+void	clean_child_fds(t_data *data, int prcs_no)
+{
+	if (data->processes == NULL)
+		return ;
+	while (data->processes[prcs_no] != NULL)
+	{
+		if (data->processes[prcs_no]->infilefd != STDIN_FILENO)
+			close(data->processes[prcs_no]->infilefd);
+		if (data->processes[prcs_no]->outfilefd != STDOUT_FILENO)
+			close(data->processes[prcs_no]->outfilefd);
+		prcs_no++;
+	}
+}
+
 // On success execve does not return, so we must get the exit_status of the last
 // command in the waitpid command rather than through a return value.
 // If our command is a built in, we do not call execve and exit with the status
@@ -83,25 +96,25 @@ void	child_prcs_check_exe(t_data *data, t_prcs *process)
 // If successful execve will commandeer the whole process with the command
 // passed to execute, and will exit with the status of that command. If execve
 // returns it has failed, so we will free and exit again with EXIT_FAILURE
-void	execute_in_child(t_data *data, t_prcs *process)
+void	execute_in_child(t_data *data, t_prcs *process, int prcs_no)
 {
 	int		execve_status;
 	char	**envp;
 
 	sig_actions_default();
 	if (process->argv == NULL)
-		full_exit(data, 1);
+		(clean_child_fds(data, prcs_no), full_exit(data, 1));
 	if (process->argv[0] == NULL)
-		full_exit(data, 126);
+		(clean_child_fds(data, prcs_no), full_exit(data, 126));
 	child_prcs_file_handling(data, process);
 	if (is_built_in(process->argv[0]) == 1)
 	{
 		execute_built_in(data, process);
-		full_exit(data, -4242);
+		(clean_child_fds(data, prcs_no), full_exit(data, -4242));
 	}
 	child_prcs_check_exe(data, process);
 	envp = make_envp(data);
 	execve_status = execve(process->argv[0], process->argv, envp);
 	if (execve_status < 0)
-		(free_envp(envp), full_exit(data, 1));
+		(clean_child_fds(data, prcs_no), free_envp(envp), full_exit(data, 1));
 }

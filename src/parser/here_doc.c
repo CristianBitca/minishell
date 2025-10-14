@@ -63,7 +63,7 @@ int	here_doc_readline(t_data *data, int hd_fd, char *delimiter, int *exp_flag)
 			return (0);
 		}
 		if (*input != '\0'
-			&& ft_strncmp(input, delimiter, ft_strlen(input)) == 0)
+			&& ft_strncmp(input, delimiter, ft_strlen(delimiter)) == 0)
 			return (0);
 		write_to_here_doc(data, input, hd_fd, exp_flag);
 	}
