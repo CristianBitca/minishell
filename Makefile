@@ -57,15 +57,22 @@ SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
 OBJS = $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRCS))
 
-all: $(LIBFT_A) $(NAME)
+# ── Submodules ────────────────────────────────────────────────────────────────
+
+submodule:
+	@echo "Initialising and updating git submodules..."
+	git submodule update --init --recursive
+
+# ── Primary targets ───────────────────────────────────────────────────────────
+
+all: submodule $(LIBFT_A) $(NAME)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR)
-	@mkdir -p $(OBJ_DIR)/$(dir $*)  # Ensure the subdirectories inside obj/ are created
+	@mkdir -p $(OBJ_DIR)/$(dir $*)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
-
 
 $(LIBFT_A):
 	@echo "Compiling libft..."
@@ -74,6 +81,8 @@ $(LIBFT_A):
 $(NAME): $(OBJS)
 	@echo "Compiling $(NAME)..."
 	$(CC) $(CFLAGS) $(OBJS) -I$(INC_DIR) $(LIBFT_LIB) -lreadline -o $(NAME)
+
+# ── Cleanup ───────────────────────────────────────────────────────────────────
 
 clean:
 	@echo "Cleaning object files..."
@@ -90,4 +99,4 @@ re: fclean all
 run: all
 	./$(NAME)
 
-.PHONY: all clean fclean re run
+.PHONY: all clean fclean re run submodule
