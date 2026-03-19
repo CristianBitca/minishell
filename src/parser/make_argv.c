@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_argv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skirwan <skirwan@student.42london.com>     +#+  +:+       +#+        */
+/*   By: cbitca <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 11:51:47 by skirwan           #+#    #+#             */
-/*   Updated: 2025/10/02 19:20:30 by skirwan          ###   ########.fr       */
+/*   Updated: 2026/03/19 09:45:11 by cbitca           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,8 @@ void	add_arguments(char **argv, t_token *traverser, int token_count)
 	{
 		if (traverser->type == WORD && traverser->prev->type == WORD)
 		{
-			if (argv + i != NULL)
-			{
-				argv[i] = ft_strdup(traverser->value);
-				i++;
-			}
+			argv[i] = ft_strdup(traverser->value);
+			i++;
 		}
 		traverser = traverser->next;
 	}
